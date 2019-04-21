@@ -9,6 +9,12 @@ import Shops from './components/shops'
 import Providers from './components/providers'
 import PetOwns from './components/petOwns'
 import AddUp from './components/addUp'
+import ShopManage from './components/shopManage'
+import Apply from './components/apply'
+import Goods from './components/goods'
+import Services from './components/services'
+import Orders from './components/orders'
+import ShopAddup from './components/shopAddup'
 
 Vue.use(Router)
 
@@ -53,6 +59,32 @@ export default new Router({
         {
           path:"/manage/addUp",
           component:AddUp
+        }
+      ]
+    },
+    {
+      path: "/shopManage",
+      component: ShopManage,
+      children:[
+        {
+          path:"/shopManage/apply",
+          component:Apply
+        },
+        {
+          path:"/shopManage/goods",
+          component:Goods
+        },
+        {
+          path:"/shopManage/services",
+          component:Services
+        },
+        {
+          path:"/shopManage/orders",
+          component:Orders
+        },
+        {
+          path:"/shopManage/shopAddup",
+          component:ShopAddup
         }
       ]
     }

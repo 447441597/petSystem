@@ -1,20 +1,21 @@
 <template>
   <div>
-    <el-button type="primary" @click="dialogFormVisible = true">添加商品</el-button>
-    <el-button type="primary">修改商品</el-button>
-    <el-button type="primary">删除商品</el-button>
     <Add></Add>
+    <Datalist></Datalist>
   </div>
 </template>
 
 <script>
 import Add from './add'
+import Datalist from './datalist'
 export default {
   components: {
-    Add
+    Add,
+    Datalist
   },
   data() {
     return {
+
     };
   },
   methods: {

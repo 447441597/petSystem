@@ -1,5 +1,6 @@
 <template>
 <div>
+    <el-button type="primary" @click="dialogFormVisible = true">添加商品</el-button>
    <el-dialog title="增加商品" :visible.sync="dialogFormVisible" width="35%">
       <el-form :model="form">
         <el-form-item label="商品名称：" :label-width="formLabelWidth">

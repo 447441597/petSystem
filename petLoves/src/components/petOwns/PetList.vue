@@ -13,7 +13,21 @@
 </template>
 
 <script>
-export default {};
+export default {
+  created() {
+    this.show();
+  },
+  methods: {
+    show() {
+      axios({
+        method: "get",
+        url: "/petOwns"
+      }).then(res => {
+        console.log(res.data);
+      });
+    }
+  }
+};
 </script>
 
 <style>

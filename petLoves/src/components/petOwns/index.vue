@@ -7,6 +7,7 @@
 
 <script>
 import PetList from "./PetList";
+import moduleName from ''
 export default {
   components: {
     PetList

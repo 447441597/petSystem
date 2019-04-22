@@ -49,6 +49,8 @@
                 </el-menu-item>
                  <el-menu-item index="/shopManage/orders">
                   <i class="el-icon-menu"></i>
+
+                  <!-- ///// -->
                   <router-link to="/shopManage/orders">订单管理</router-link>
                 </el-menu-item>
                  <el-menu-item index="/shopManage/shopAddup">

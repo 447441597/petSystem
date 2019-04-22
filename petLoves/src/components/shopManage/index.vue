@@ -4,7 +4,7 @@
       <el-header style="background:#0099cc;height:100px;line-height:100px;margin:0">
         <el-row>
           <el-col :span="8">
-            <h1 style="color:white;margin:0">平台管理</h1>
+            <h1 style="color:white;margin:0">门店管理</h1>
           </el-col>
            <el-col :span="12">
             <div style="height:10px">

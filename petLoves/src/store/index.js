@@ -1,10 +1,10 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import zyz from './zyz'
+import orders from './ordrers'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   modules:{
-    zyz,
+    orders,
   }
 })

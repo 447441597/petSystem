@@ -83,7 +83,7 @@ export default {
     this.setInfo();
   },
   methods: {
-    ...mapActions(["setInfo"])
+    ...mapActions(["getInfo"])
   }
 };
 </script>

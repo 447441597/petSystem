@@ -22,7 +22,7 @@ export default {
     }
   },
   actions: {
-    setInfo({ commit }, payload = {}) {
+    getInfo({ commit }, payload = {}) {
       let page = payload.page || 1;
       let rows = payload.rows || 5;
       axios({

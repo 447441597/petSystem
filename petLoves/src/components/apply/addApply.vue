@@ -1,7 +1,7 @@
 <template>
     <div>
        <el-button type="primary"  @click="dialogFormVisible = true">申请门店</el-button>
-       <el-button type="primary"  @click="dialogVisible = true"  >申请进度</el-button>
+       <el-button type="primary"   @click="open" >申请进度</el-button>
        <el-dialog title="门店注册" :visible.sync="dialogFormVisible">
          <el-form :model="form">
            <el-form-item label="门店名称" :label-width="formLabelWidth">
@@ -68,10 +68,10 @@
               <el-button type="primary"  @click="add" >确 定</el-button>
            </div>
        </el-dialog>
-       <!-- <el-dialog
+       <el-dialog
          title="申请进度"
          :visible.sync="dialogVisible"
-         :before-close="handleClose">
+        >
         <el-steps :space="400" :active="0" finish-status="success">
           <el-step title="审核中"></el-step>
           <el-step title="已审核"></el-step>
@@ -80,19 +80,20 @@
         <el-button @click="dialogVisible = false">取 消</el-button>
          <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
         </span>
-      </el-dialog> -->
+      </el-dialog>
     </div>
 </template>
 
 <script>
 import axios from "axios";
-import { createNamespacedHelpers } from "vuex";
-const { mapActions } = createNamespacedHelpers("lwj");
+// import { createNamespacedHelpers } from "vuex";
+// const { mapActions } = createNamespacedHelpers("lwj");
 export default {
   data() {
     return {
       dialogFormVisible: false,
       dialogVisible: false,
+      active:0,
       form: {
         name: "",
         businessNum: "",
@@ -131,10 +132,13 @@ export default {
           arr
         }
       }).then(res => {
-        console.log(res);
+        // console.log(res);
         this.dialogFormVisible = false;
       });
       // this.disabled = false;
+    },
+    open(){
+      this.dialogVisible = true;
     }
   }
 };

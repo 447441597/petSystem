@@ -1,5 +1,5 @@
 <template>
-  <el-table :data="students" style="width: 100%">
+  <el-table :data="services" style="width: 100%">
     <el-table-column label="服务名" prop="name"></el-table-column>
     <el-table-column label="服务类别" prop="types"></el-table-column>
     <el-table-column label="服务时间段" prop="time"></el-table-column>
@@ -17,21 +17,21 @@
 </template>
 
 <script>
-// import StudentItem from "./StudentItem";
+// import StudentItem from "./StudentItem"; createNamespacedHelpers
 import { createNamespacedHelpers } from "vuex";
 import axios from "axios";
-const { mapState, mapActions } = createNamespacedHelpers("studentsModule");
+const { mapState, mapActions } = createNamespacedHelpers("services");
 export default {
-  data() {
-    return {
-      dialogVisible: false
-    };
+  
+  created(){
+      this.getServices();
+      console.log("created");
   },
   computed: {
-    // ...mapState(["students","pagination"])
+    ...mapState(["services","pagination"])
   },
   methods: {
-    // ...mapActions(["getStudents", "setStudent", "setVisible"]),
+    ...mapActions(["getServices"]),
     // handleEdit(index, row) {
     //   this.setVisible(true);
     //   axios({

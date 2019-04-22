@@ -1,6 +1,7 @@
 <template>
     <div>
-  <template>
+      <div>{{ordersType}}</div>
+  <!-- <template>
   <el-table
     :data="orders"
     height="250"
@@ -29,19 +30,20 @@
       label="订单信息">
     </el-table-column>
   </el-table>
-</template>
+</template> -->
 
     </div>
 </template>
 
 <script>
 import { createNamespacedHelpers } from "vuex";
-const { mapState, mapActions } = createNamespacedHelpers("zyz");
+const { mapState, mapActions } = createNamespacedHelpers("orders");
 export default {
+  props:['ordersType'],
   computed: {
     ...mapState(["orders"])
   },
-  methods: {}
+  methods: {},
 };
 </script>
 

@@ -14,7 +14,7 @@ router.get('/',async function(res,req){
   if(type && value){
     option = {[type]:value}
   }
-  let data = await clientInformation.get('/lovePets')
+  let data = await client.get("/lovePets")
   console.log(data,'data')
 });
 

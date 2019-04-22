@@ -4,16 +4,7 @@ import zyz from './zyz'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
-  state: {
-
-  },
-  mutations: {
-
-  },
-  actions: {
-
-  },
   modules:{
-    zyz
+    zyz,
   }
 })

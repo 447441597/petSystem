@@ -3,9 +3,6 @@
     <Addprovider ></Addprovider>
     <Tableprovider ></Tableprovider>
  
-
- 
-    
     </div>
 </template>
 

@@ -11,7 +11,7 @@
               <el-input v-model="form.businessNum" autocomplete="off"></el-input>
            </el-form-item>
            <el-form-item label="营业执照" :label-width="formLabelWidth">
-             <el-upload
+             <!-- <el-upload
                      class="upload-demo"
                      action="https://jsonplaceholder.typicode.com/posts/"
                      :on-preview="handlePreview"
@@ -22,7 +22,7 @@
                      :on-exceed="handleExceed"
                      :file-list="fileList">
                 <el-button size="small" type="primary">点击上传</el-button>
-              </el-upload>
+              </el-upload> -->
            </el-form-item>
            <el-form-item label="法人" :label-width="formLabelWidth">
               <el-input v-model="form.legalPerson" autocomplete="off"></el-input>
@@ -31,7 +31,7 @@
               <el-input v-model="form.tel" autocomplete="off"></el-input>
            </el-form-item>
             <el-form-item label="头图" :label-width="formLabelWidth">
-              <el-upload
+              <!-- <el-upload
                      class="upload-demo"
                      action="https://jsonplaceholder.typicode.com/posts/"
                      :on-preview="handlePreview"
@@ -42,7 +42,7 @@
                      :on-exceed="handleExceed"
                      :file-list="fileList">
                 <el-button size="small" type="primary">点击上传</el-button>
-              </el-upload>
+              </el-upload> -->
            </el-form-item>
             <el-form-item label="特色" :label-width="formLabelWidth">
               <el-input v-model="form.feature" autocomplete="off"></el-input>
@@ -68,7 +68,7 @@
               <el-button type="primary"  @click="add" >确 定</el-button>
            </div>
        </el-dialog>
-       <el-dialog
+       <!-- <el-dialog
          title="申请进度"
          :visible.sync="dialogVisible"
          :before-close="handleClose">
@@ -80,7 +80,7 @@
         <el-button @click="dialogVisible = false">取 消</el-button>
          <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
         </span>
-      </el-dialog>
+      </el-dialog> -->
     </div>
 </template>
 
@@ -110,6 +110,7 @@ export default {
     add() {
         this.dialogFormVisible = false;
         // this.disabled = false;
+        console.log(this.form.name);
     },
   }
 };

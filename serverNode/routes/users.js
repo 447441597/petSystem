@@ -51,7 +51,6 @@ router.post("/shopRegister", async function(req,res){
   let privilege = 0;//0为门店管理员用户
   //获取请求数据
   let {phone,pwd} = req.body;
-  
     let data = await client.post("/users",{phone,pwd,privilege});
     res.send(data);
   });
@@ -89,7 +88,9 @@ router.get("/:id",async function(req,res){
 router.delete("/:id",async function(req,res){
   //获取URL后面的参数id
   let id = req.params.id;
+  console.log(id)
   let data = await client.delete("/users/"+id);
+  console.log(data)
   res.send(data);
 });
 

@@ -1,16 +1,16 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
+
 import axios from 'axios'
-
-Vue.use(Vuex)
-
-export default new Vuex.Store({
+import Vue from "vue";
+import Vuex from "vuex";
+export default {
+    namespaced:true,
     state: {
         persons: [],
     },
     mutations: {
-        setPersons(state, person) {
-            state.person = person
+        setPerson(state, person) {
+            state.persons = person
+            console.log("state",state)
         },
     },
     actions: {
@@ -18,7 +18,7 @@ export default new Vuex.Store({
             commit
         }, payload = {}, ) {
             let page = payload.page || 1;
-            let rows = payload.rows || 5;
+            let rows = payload.rows || 10;
             let type = payload.type || "";
             let value = payload.value || "";
             axios({
@@ -31,9 +31,10 @@ export default new Vuex.Store({
                     value
                 }
             }).then((res) => {
-                console.log(res.data)               commit("setPersons", res.data.rows)
+                console.log(res.data)
+                commit("setPerson", res.data.rows)
                 // commit("setPagination",res.data)
             })
         },
     }
-})
+}

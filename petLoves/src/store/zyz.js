@@ -7,9 +7,7 @@ Vue.use(Vuex);
 export default {
   namespaced: true,
   state: {
-    shopsOrders: [],
-    servicesOrders: [],
-    selected: true
+    orders: [],
   },
   mutations: {
     setShopsOrders(state, data) {
@@ -18,12 +16,10 @@ export default {
     setServicesOrders(state, data) {
       state.servicesOrders = data;
     },
-    setSelected(state, data) {
-      state.selected = data;
-    }
   },
   actions: {
-    getOrders({ commit }, payload = {}) {
+    getOrders({ commit }, payload = {page:1,rows:4}) {
+        // console.log('objectobjectobjectobject')
       let page = payload.page;
       let rows = payload.rows;
       axios({
@@ -36,6 +32,7 @@ export default {
       }).then(res => {
         console.log(res, "res");
         // commit('setShopsOrders',)
+
       });
     }
   }

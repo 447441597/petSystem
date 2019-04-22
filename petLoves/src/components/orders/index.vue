@@ -8,6 +8,7 @@
                 <h2>服务订单</h2>
                 <el-button style="float: left; padding: 3px" type="success" round>未完成订单</el-button>
                 <el-button style="float: left; padding: 3px" type="success" round>已完成订单</el-button>
+                <el-button style="float: left; padding: 3px" type="success" round>全部订单</el-button>                
             </div>
             <tabcomponent />
         </el-card>
@@ -18,6 +19,7 @@
                 <h2>商品订单</h2>
                 <el-button style="float: left; padding: 3px" type="success" round>未完成订单</el-button>
                 <el-button style="float: left; padding: 3px;" type="success" round>已完成订单</el-button>
+                <el-button style="float: left; padding: 3px" type="success" round>全部订单</el-button>                
             </div>
             <tabcomponent />
         </el-card>

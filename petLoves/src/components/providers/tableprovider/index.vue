@@ -85,5 +85,5 @@ export default {
 </script>
 
 <style>
-.box-card{width: 70%;margin: auto}
+/* .box-card{width: 70%;margin: auto} */
 </style>

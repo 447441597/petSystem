@@ -1,7 +1,5 @@
 var express = require('express');
 var router = express.Router();
-const db = require('ykt-mongo');
-const toObjectId = require('mongodb').ObjectID;
 const client = require('ykt-http-client');
 client.url('localhost:8080');
 /* GET home page. */

@@ -1,7 +1,6 @@
 <template>
     <div>
-      <div>{{ordersType}}</div>
-  <!-- <template>
+  <template>
   <el-table
     :data="orders"
     height="250"
@@ -30,7 +29,7 @@
       label="订单信息">
     </el-table-column>
   </el-table>
-</template> -->
+</template>
 
     </div>
 </template>

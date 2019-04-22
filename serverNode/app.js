@@ -55,7 +55,7 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
-app.listen(3000,function(){
+app.listen(3005,function(){
   console.log("服务器已经启动...");
 })
 module.exports = app;

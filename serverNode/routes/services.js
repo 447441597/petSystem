@@ -32,9 +32,9 @@ router.get('/:_id',async function(req,res){
 router.post('/',async function(req,res){
     let {name,type,time,applyGuige,serverGuige,useTime,shopsId,price,types} = req.body;
 
-  let data = await client.post('/students',{name,type,time,applyGuige,serverGuige,useTime,price,shops:{$ref:'shops',$id:shopsId},types});
-  await changeClassCount(classesId,1);
+  let data = await client.post('/services',{name,type,time,applyGuige,serverGuige,useTime,price,shops:{$ref:'shops',$id:shopsId},types});
   res.send(data);
+  console.log(data);
 })
 
 //修改服务

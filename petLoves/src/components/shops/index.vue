@@ -79,8 +79,11 @@ import { createNamespacedHelpers } from "vuex";
 import axios from "axios";
 const { mapActions } = createNamespacedHelpers("lwj");
 export default {
+  data() {
+    return {};
+  },
   created() {
-    this.setInfo();
+    this.getInfo();
   },
   methods: {
     ...mapActions(["getInfo"])

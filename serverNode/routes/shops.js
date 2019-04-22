@@ -5,7 +5,7 @@ client.url("localhost:8080");
 
 /* GET home page. */
 router.get('/',async function(req,res){
-    console.log(123)
+    // console.log(123)
     let page = req.query.page;
     let rows = req.query.rows;
     let data = await client.get('/shops',{page,rows});

@@ -7,9 +7,17 @@
 
 <script>
 import PetList from "./PetList";
+import { createNamespacedHelpers } from "vuex";
+const { mapState, mapActions } = createNamespacedHelpers("petowns");
 export default {
   components: {
     PetList
+  },
+  created(){
+    this.setPet();
+  },
+  methods: {
+    ...mapActions(['setPet'])
   }
 };
 </script>

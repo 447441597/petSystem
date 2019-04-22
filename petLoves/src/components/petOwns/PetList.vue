@@ -1,6 +1,6 @@
 <template>
   <el-table
-    :data="tableData"
+    :data="pet"
     border
     style="width: 100%">
     <el-table-column
@@ -8,22 +8,22 @@
       label="头像"
       width="150">
       <template slot-scope="scope">
-        <el-button type="text" size="small">查看</el-button>
+         <img :src="src+scope.row.headImage" width="40" height="40" class="head_pic"/>
       </template>
     </el-table-column>
     <el-table-column
       prop="nickname"
       label="昵称"
-      width="120">
+      width="100">
     </el-table-column>
     <el-table-column
       prop="truename"
       label="真实姓名"
-      width="120">
+      width="100">
     </el-table-column>
     <el-table-column
       label="会员卡"
-      width="120">
+      width="100">
       <template slot-scope="scope">
         <el-button type="text" size="small">查看</el-button>
       </template>
@@ -41,43 +41,45 @@
      <el-table-column
       prop="area"
       label="区域"
-      width="120">
+      width="100">
+    </el-table-column>
+     <el-table-column
+      prop="truename"
+      label="状态"
+      width="100">
+      <template slot-scope="scope">
+        <el-button type="text" size="small" >查看</el-button>
+      </template>
     </el-table-column>
     <el-table-column
       fixed="right"
       label="拥有的宠物"
       width="100">
       <template slot-scope="scope">
-        <el-button type="text" size="small" @click="look">查看</el-button>
+        <el-button type="text" size="small" >查看</el-button>
       </template>
     </el-table-column>
+   
   </el-table>
 </template>
 
 <script>
-import axios from 'axios'
+import axios from "axios";
+import { createNamespacedHelpers } from "vuex";
+const { mapState, mapActions } = createNamespacedHelpers("petowns");
 export default {
-  created() {
-    this.show();
-  },
-  methods: {
-    look(){
-      console.log(this.data.tableData);
-    },
-    show() {
-      axios({
-        method: "get",
-        url: "/petOwns"
-      }).then(res => {
-        this.tableData = res.data;
-        console.log(res.data);
-      });
+  data(){
+    return{
+      src:"http://192.168.195.2:3005/images/"
     }
   },
-  data() {
-    return {
-      tableData:''
-    };
+  computed: {
+    ...mapState(["pet"])
+  },
+  methods: {
+    look(index,row){
+      console.log(row.headImage);
+    }
   }
 };
 </script>

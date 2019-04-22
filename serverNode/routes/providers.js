@@ -35,9 +35,11 @@ router.get('/:_id',async function(req,res){
 //增加学生
 router.post('/',async function(req,res){
   let name=req.body.name;
-  let age=req.body.age;
-  let gender=req.body.gender;
-  let data = await client.post('/providers',{name,age,gender});
+  let person=req.body.person;
+  let phone=req.body.phone;
+  let address=req.body.address;
+  let number=req.body.number;
+  let data = await client.post('/providers',{name,person,phone,address,number});
   res.send(data);
   console.log(data)
 })
@@ -45,11 +47,13 @@ router.post('/',async function(req,res){
 //修改学生
 router.put('/:_id',async function(req,res){
   let name=req.body.name;
-  let age=req.body.age;
-  let gender=req.body.gender;
+  let person=req.body.person;
+  let phone=req.body.phone;
+  let address=req.body.address;
+  let number=req.body.number;
     let _id = toObjectId(req.params._id)
   //修改学生信息
-  let data = await client.put('/providers/'+_id,{name,age,gender});
+  let data = await client.put('/providers/'+_id,{name,person,phone,address,number});
   res.send(data);
 })
 

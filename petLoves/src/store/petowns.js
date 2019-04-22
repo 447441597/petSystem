@@ -8,18 +8,7 @@ export default new Vuex.Store({
 
     },
     mutations: {
-        show() {
-            axios({
-                method: "get",
-                url: "",
-                params: {
-                    page, rows
-                }
-            }).then(res => {
-                state.students = res.data.rows;
-                state.pagination = res.data
-            });
-        }
+       
     },
     actions: {
 

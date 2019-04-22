@@ -17,15 +17,15 @@
       width="180">
     </el-table-column>
     <el-table-column
-      prop="address"
+      prop="services.price"
       label="价格">
     </el-table-column>
     <el-table-column
-      prop="address"
+      prop="status"
       label="状态">
     </el-table-column>
     <el-table-column
-      prop="address"
+      prop="services.name"
       label="订单信息">
     </el-table-column>
   </el-table>
@@ -38,9 +38,8 @@
 import { createNamespacedHelpers } from "vuex";
 const { mapState, mapActions } = createNamespacedHelpers("orders");
 export default {
-  props:['ordersType'],
   computed: {
-    ...mapState(["orders"])
+    ...mapState(['orders'])
   },
   methods: {},
 };

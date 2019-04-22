@@ -85,37 +85,58 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
   data() {
     return {
       dialogFormVisible: false,
-      dialogVisible:false,
+      dialogVisible: false,
       form: {
-          name:"",
-          businessNum:"",
-          legalPerson:"",
-          tel:"",
-          feature:"",
-          vipLeval:"",
-          rate:"",
-          assistantname:"",
-          assistantlevel:"",
-          assistantphone:""
+        name: "",
+        businessNum: "",
+        legalPerson: "",
+        tel: "",
+        feature: "",
+        vipLeval: "",
+        rate: "",
+        assistantname: "",
+        assistantlevel: "",
+        assistantphone: ""
       },
-      formLabelWidth: "120px",
-    //   disabled:true
+      formLabelWidth: "120px"
+      //   disabled:true
     };
   },
-  methods:{
+  methods: {
     add() {
+      let arr = [];
+      arr.push({
+        assistantname: this.form.assistantname,
+        assistantlevel: this.form.assistantlevel,
+        assistantphone: this.form.assistantphone
+      });
+      axios({
+        method: "post",
+        url: "/applys",
+        data: {
+          name: this.form.name,
+          businessNum: this.form.businessNum,
+          tel: this.form.tel,
+          legalPerson: this.form.legalPerson,
+          feature: this.form.feature,
+          vipLeval: this.form.vipLeval,
+          rate: this.form.rate,
+          arr
+        }
+      }).then(res => {
+        console.log(res);
         this.dialogFormVisible = false;
-        // this.disabled = false;
-        console.log(this.form.name);
-    },
+      });
+      // this.disabled = false;
+    }
   }
 };
 </script>
 
 <style>
-
 </style>

@@ -4,8 +4,8 @@ const client = require('ykt-http-client');
 client.url('127.0.0.1:8080');
 
 router.get('/',async function(req,res){
-  let {page,rows,type,value}=req.query;
-  // console.log(req.query,'请求所有订单信息')
+  let {page,rows,type,value,ordersType}=req.query;
+  console.log(req.query,'请求所有订单信息')
   let option = {};
   if(type && value){
     option = {[type]:value}

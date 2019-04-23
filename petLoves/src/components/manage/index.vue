@@ -42,7 +42,6 @@
                 <el-menu-item index="/manage/shops">
                   <i class="el-icon-menu"></i>
                   <router-link to="/manage/shops">门店管理</router-link>
-                   
                 </el-menu-item>
                 <el-menu-item index="/manage/petOwns">
                   <i class="el-icon-setting"></i>

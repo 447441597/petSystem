@@ -1,6 +1,14 @@
 <template>
     <div>
-       <el-table
+         <!-- <el-button type="primary"  @click="selected(true)" style="margin-bottom:20px">门店管理</el-button> -->
+       <el-button type="primary"  style="margin-bottom:20px">申请进度</el-button>
+      <!-- <template v-if="select"> -->
+         <!-- <el-card class="box-card" > -->
+          <!-- <div slot="header" class="clearfix"> -->
+          <!-- <h2>申请门店</h2> -->
+          <!-- </div> -->
+   
+    <el-table
     :data="shops"
     style="width: 100%">
     <el-table-column
@@ -16,6 +24,11 @@
       <el-table-column
       label="营业执照"
       prop="businessImage"
+      width="120">
+    </el-table-column>
+     <el-table-column
+      label="地址"
+      prop="address"
       width="120">
     </el-table-column>
      <el-table-column
@@ -70,27 +83,28 @@
           @click="handleDelete(scope.$index, scope.row)" type="danger" icon="el-icon-delete" circle></el-button>
       </template>
     </el-table-column>
-  </el-table>
+     </el-table>
+   <!-- </el-card> -->
+  <!-- </template> -->
     </div>
 </template>
 
 <script>
 import { createNamespacedHelpers } from "vuex";
 import axios from "axios";
-const { mapActions,mapState } = createNamespacedHelpers("lwj");
+const { mapActions, mapState } = createNamespacedHelpers("lwj");
 export default {
   data() {
     return {};
   },
   created() {
-    this.setInfo();
-    console.log("created")
+    this.setshops();
   },
-   computed: {
-    ...mapState(["info","pagiNation"])
+  computed: {
+    ...mapState(["shops", "pagiNation"])
   },
   methods: {
-    ...mapActions(["setInfo"])
+    ...mapActions(["setshops"])
   }
 };
 </script>

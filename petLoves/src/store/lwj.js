@@ -5,15 +5,15 @@ Vue.use(Vuex)
 export default {
   namespaced: true,
   state: {
-    info: [],
+    shops: [],
     pagiNation: {},
     active: 0,
     type:"",
     value:""
   },
   mutations: {
-    setInfo(state, info) {
-      state.info = info;
+    setshops(state, shops) {
+      state.shops = shops;
     //   console.log(state,"147")
     },
     setpagiNation(state, pagiNation) {
@@ -24,7 +24,7 @@ export default {
     }
   },
   actions: {
-    setInfo({ commit}, payload = {}) {
+    setshops({ commit}, payload = {}) {
       let page = payload.page || 1;
       let rows = payload.rows || 5;
       let type = this.state.type || "";
@@ -35,9 +35,14 @@ export default {
         params: { page, rows,type,value }
       }).then(res => {
         // console.log(res);
-        commit("setInfo", res.data.rows);
+        commit("setshops", res.data.rows);
         commit("setpagiNation", res.data);
+        // commit("setActive",)
       });
     }
   }
 };
+
+
+
+

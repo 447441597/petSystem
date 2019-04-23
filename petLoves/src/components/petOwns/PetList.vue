@@ -1,8 +1,10 @@
 <template>
   <el-table
-    :data="pet"
+    :data="pet.rows"
     border
-    style="width: 100%">
+    style="width: 100%"
+    row-key="_id"
+    >
     <el-table-column
       fixed
       label="头像"
@@ -25,7 +27,9 @@
       label="会员卡"
       prop="truename"
       width="100">
-      <el-button type="primary" size="small" >查看</el-button>
+      <template slot-scope="scope">
+      <el-button type="primary" size="small" @click="vip(scope.$index, scope.row)" >查看</el-button>
+      </template>
     </el-table-column>
     <el-table-column
       prop="phone"
@@ -46,8 +50,9 @@
       prop="truename"
       label="状态"
       width="100">
-      <template slot-scope="scope">
-        <el-button type="primary" size="small" >查看</el-button>
+      <template slot-scope="scope" >
+        <el-button type="primary" size="small" v-if="scope.row.store" @click="setsto(scope.$index, scope.row)">拉黑</el-button>
+        <el-button type="primary" size="small" v-else @click="setsto(scope.$index, scope.row)">恢复</el-button>
       </template>
     </el-table-column>
     <el-table-column
@@ -58,7 +63,6 @@
         <el-button type="primary" size="small" @click="look(scope.$index, scope.row)" >查看</el-button>
       </template>
     </el-table-column>
-   
   </el-table>
 </template>
 
@@ -78,9 +82,33 @@ export default {
     ...mapState(["pet"])
   },
   methods: {
-    ...mapMutations(["setIdent"]),
-    look(index,row) {
+    ...mapMutations(["setIdent", "setPets", "setVip", "vips"]),
+    ...mapActions(["setPet"]),
+    vip(index, row) {
+      axios({
+        method: "get",
+        url: "/petOwns/id/" + row._id
+      }).then(res => {
+        let arr = [];
+        for (let i in res.data) {
+          arr.push(res.data[i].shops);
+        }
+        this.vips(arr);
+      });
+      this.setVip(row);
+    },
+    look(index, row) {
+      this.setPets(row.pets);
       this.setIdent();
+    },
+    setsto(index, row) {
+      axios({
+        method: "put",
+        url: "/petOwns/mod/" + row._id,
+        data: row
+      }).then(res => {
+        this.setPet();
+      });
     }
   }
 };

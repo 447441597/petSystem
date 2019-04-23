@@ -28,7 +28,6 @@ export default {
           ordersType
         }
       }).then(res => {
-        console.log(res.data.rows,'请求会的数据')
         commit('setShopsOrders',res.data.rows);
       });
     }

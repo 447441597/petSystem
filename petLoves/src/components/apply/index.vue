@@ -1,12 +1,13 @@
 <template>
     <div>
-        <h1>申请</h1>
+      <Add-apply></Add-apply>
     </div>
 </template>
 
 <script>
+import AddApply from "./addApply.vue";
 export default {
-
+ components: { AddApply }
 }
 </script>
 

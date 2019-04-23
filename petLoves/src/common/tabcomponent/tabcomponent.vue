@@ -33,7 +33,7 @@
   <div class="block">
   <el-pagination
     layout="prev, pager, next"
-    :total="pagination.total" @size-change="pageChange(pagination.eachpage)">
+    :total="~~(pagination.total)" @current-change="pageChange">
   </el-pagination>
 </div>
 </template>
@@ -43,16 +43,20 @@
 
 <script>
 import { createNamespacedHelpers } from "vuex";
-const { mapState, mapActions } = createNamespacedHelpers("orders");
+const { mapState, mapActions } = createNamespacedHelpers("ordrers");
 export default {
   created() {
-    this.getOrders(0);
+    // this.getOrders(0);
   },
   computed: {
     ...mapState(["orders",'pagination'])
   },
   methods: {
-    ...mapActions(["getOrders"])
+    // ...mapActions(["getOrders"]),
+    pageChange(i){
+      console.log(i,'i')
+      console.log(this.pagination)
+    }
   }
 };
 </script>

@@ -1,34 +1,23 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-<<<<<<< HEAD
-import zyz from './zyz'
-import lwj from './lwj'
-=======
 
 
-import orders from './ordrers'
+// import orders from './ordrers'
 // import users from './users'
 // import petowns from './petowns'
-import services from './services'
-// import lwj from './lwj'
+// import services from './services'
+import lwj from './lwj'
 // import yj from './yj'
 // import goods from 'goods'
->>>>>>> 75527f090fd40ab850838611fc856e85dccaa862
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   modules:{
-<<<<<<< HEAD
-<<<<<<< HEAD
-    zyz,lwj
-=======
     // zyz,
-=======
-    orders,
->>>>>>> 462b781f6d4ad3180dea12d053e73d849df872db
+    lwj,
+    // orders,
     // users,petowns,
-    services,
+    // services,
     // goods,lwj,yj
->>>>>>> 75527f090fd40ab850838611fc856e85dccaa862
   }
 })

@@ -1,6 +1,5 @@
 var express = require('express');
 var router = express.Router();
-const toObjectId = require('mongodb').ObjectID;
 const client = require('ykt-http-client');
 client.url("localhost:8080");
 
@@ -26,10 +25,16 @@ router.get('/',async function(req, res) {
   res.send(data);
   console.log(data,"123")
 });
-
-router.delete('/:_id',async function(req,res){
-    let _id =toObjectId(req.params._id);
-    let data = await client.delete('/shops/'+ _id);
+//删除
+router.delete('/:id',async function(req,res){
+    let id = req.params.id;
+    let data = await client.delete('/shops/'+ id);
     res.send(data);
   });
+  //根据id查询
+  router.get('/:id',async function(req,res){
+    let id = req.params.id;
+    let data = await client.get('/shops/'+id);
+    res.send(data);
+  })
 module.exports = router;

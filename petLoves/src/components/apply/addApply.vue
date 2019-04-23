@@ -9,7 +9,7 @@
                  </div>
          <el-form :model="form">
            <el-form-item label="门店名称" :label-width="formLabelWidth">
-              <el-input v-model="form.name" autocomplete="off"></el-input>
+              <el-input v-model="form.storeName" autocomplete="off"></el-input>
            </el-form-item>
            <el-form-item label="营业执照号码" :label-width="formLabelWidth">
               <el-input v-model="form.businessNum" autocomplete="off"></el-input>
@@ -98,9 +98,9 @@ export default {
   data() {
     return {
       select: true,
-      active: 0,
+      // active: 0,
       form: {
-        name: "",
+        storeName: "",
         businessNum: "",
         legalPerson: "",
         address:"",
@@ -113,29 +113,29 @@ export default {
         assistantphone: ""
       },
       formLabelWidth: "120px"
-      //   disabled:true
     };
   },
-  // computed: {
-  //   ...mapState(["active" ])
-  // },
+  computed: {
+    ...mapState(["active" ])
+  },
   methods: {
      ...mapMutations(["setActive"]),
     selected(data) {
       this.select = data;
     },
     add() {
-      let arr = [];
-      arr.push({
+      let assistant = [];
+      assistant.push({
         assistantname: this.form.assistantname,
         assistantlevel: this.form.assistantlevel,
         assistantphone: this.form.assistantphone
       });
+      console.log(this.form.storeName)
       axios({
         method: "post",
         url: "/applys",
         data: {
-          name: this.form.name,
+          name: this.form.storeName,
           businessNum: this.form.businessNum,
           tel: this.form.tel,
           legalPerson: this.form.legalPerson,
@@ -143,15 +143,13 @@ export default {
           vipLeval: this.form.vipLeval,
           rate: this.form.rate,
           address:this.form.address,
-          arr
+          assistant
         }
       }).then(res => {
         console.log(res);
-        if(this.setActive(0)){
-          this.active++;
-          if(this.active==1){
-            this.active==1
-          }
+        if(this.active==0){
+          this.setActive(1)
+          console.log(this.active,'this.active')
         }
       });
     }

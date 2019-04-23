@@ -7,11 +7,15 @@ Vue.use(Vuex)
 export default {
     namespaced: true,
     state: {
-        pet: []
+        pet: [],
+        Identity: false
     },
     mutations: {
         setState(state, pet) {
             state.pet = pet
+        },
+        setIdent(state, Identity) {
+            state.Identity = !(state.Identity)
         }
     },
     actions: {

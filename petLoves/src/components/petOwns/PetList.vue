@@ -23,10 +23,9 @@
     </el-table-column>
     <el-table-column
       label="会员卡"
+      prop="truename"
       width="100">
-      <template slot-scope="scope">
-        <el-button type="text" size="small">查看</el-button>
-      </template>
+      <el-button type="primary" size="small" >查看</el-button>
     </el-table-column>
     <el-table-column
       prop="phone"
@@ -48,7 +47,7 @@
       label="状态"
       width="100">
       <template slot-scope="scope">
-        <el-button type="text" size="small" >查看</el-button>
+        <el-button type="primary" size="small" >查看</el-button>
       </template>
     </el-table-column>
     <el-table-column
@@ -56,7 +55,7 @@
       label="拥有的宠物"
       width="100">
       <template slot-scope="scope">
-        <el-button type="text" size="small" >查看</el-button>
+        <el-button type="primary" size="small" @click="look(scope.$index, scope.row)" >查看</el-button>
       </template>
     </el-table-column>
    
@@ -66,19 +65,22 @@
 <script>
 import axios from "axios";
 import { createNamespacedHelpers } from "vuex";
-const { mapState, mapActions } = createNamespacedHelpers("petowns");
+const { mapState, mapActions, mapMutations } = createNamespacedHelpers(
+  "petowns"
+);
 export default {
-  data(){
-    return{
-      src:"http://192.168.195.2:3005/images/"
-    }
+  data() {
+    return {
+      src: "http://192.168.195.2:3005/images/"
+    };
   },
   computed: {
     ...mapState(["pet"])
   },
   methods: {
-    look(index,row){
-      console.log(row.headImage);
+    ...mapMutations(["setIdent"]),
+    look(index,row) {
+      this.setIdent();
     }
   }
 };

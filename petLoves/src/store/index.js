@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 
 
-import zyz from './zyz'
+// import zyz from './zyz'
 // import users from './users'
 import petowns from './petowns'
 import services from './services'
@@ -13,6 +13,6 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   modules: {
-    zyz, petowns, services
+     petowns, services
   }
 })

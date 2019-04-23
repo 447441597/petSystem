@@ -10,7 +10,7 @@
                 <el-button style="float: left; padding: 3px" type="success" round @click="finish">已完成订单</el-button>
                 <el-button style="float: left; padding: 3px" type="success" round @click="allOrders">全部订单</el-button>                
             </div>
-            <tabcomponent :ordersType="orders"/>
+            <tabcomponent/>
         </el-card>
         </template>
         <template v-else>
@@ -21,7 +21,7 @@
                 <el-button style="float: left; padding: 3px" type="success" round @click="finish">已完成订单</el-button>
                 <el-button style="float: left; padding: 3px" type="success" round @click="allOrders">全部订单</el-button>                
             </div>
-            <tabcomponent :ordersType="orders"/>
+            <tabcomponent/>
         </el-card>
         </template>
     </div>
@@ -33,11 +33,6 @@ import axios from "axios";
 import { createNamespacedHelpers } from "vuex";
 const { mapState, mapActions } = createNamespacedHelpers("orders");
 export default {
-  data() {
-    return {
-      orders: "1"
-    };
-  },
   components: {
     tabcomponent
   },
@@ -51,24 +46,6 @@ export default {
   },
   methods: {
     ...mapActions(["getOrders"]),
-    getOrders(ordersType) {
-      console.log(ordersType, "objectobjectobjectobject");
-      let page = 1;
-      let rows = 5;
-      ordersType = ordersType;
-        axios({
-          method: "get",
-          url: "/orders",
-          params: {
-            page,
-            rows,
-            ordersType
-          }
-        }).then(res => {
-          console.log(res, "res0");
-          // commit('setShopsOrders',)
-        });
-    },
     servicesSelected() {
         //服务订单
       this.select = true;

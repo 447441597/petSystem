@@ -1,9 +1,9 @@
 <template>
-<div>
-   <el-row>
-           <el-button type="primary" @click="dialogFormVisible = true">添加商品</el-button>
+    <div>
+        <el-row>
+            <el-button type="primary" @click="updatadialog = true">修改商品</el-button>
         </el-row>
-   <el-dialog title="增加商品" :visible.sync="dialogFormVisible" width="35%">
+         <el-dialog title="修改商品" :visible.sync="updatadialog " width="35%">
       <el-form :model="form">
         <el-form-item label="商品名称：" :label-width="formLabelWidth">
           <el-input v-model="form.name" autocomplete="off"></el-input>
@@ -51,29 +51,26 @@
           <el-upload
             action="https://jsonplaceholder.typicode.com/posts/"
             list-type="picture-card"
-            :on-change='Add'
+          
           >
             <i class="el-icon-plus"></i>
           </el-upload>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogFormVisible = false">取 消</el-button>
-        <el-button type="primary" @click="dialogFormVisible = false;add()" >确 定</el-button>
+        <el-button @click="updatadialog  = false">取 消</el-button>
+        <el-button type="primary" @click="updatadialog  = false;add()" >确 定</el-button>
       </div>
     </el-dialog>
-</div>
+    </div>
 </template>
 
 <script>
-import axios from 'axios'
 export default {
-data() {
-    return {
-         dialogImageUrl: "",
-      dialogFormVisible: false,
-       images:[],
-      form: {
+data(){
+    return{
+        updatadialog:false,
+         form: {
         name: "",
         type: "",
         material: "",
@@ -89,42 +86,9 @@ data() {
         features: "",
         price: ""
       },
-      formLabelWidth: "140px"
-    };
-  },
-  methods: {
-       handleClose(done) {
-      this.$confirm("确认关闭？")
-        .then(_ => {
-          done();
-        })
-        .catch(_ => {});
-    },
-    Add(file, fileList){
-      let arr=[]
-      for(let i=0;i<fileList.length;i++){
-        arr.push(fileList[i].name)
-      }
-      console.log(arr,'上传的所有的图片')
-      this.images=arr
-    },
-    addimg(a){
-      console.log(a.file,'a.file')
-     
-    },
-    add(){
-      console.log(this.images,4566)
-      console.log(this.dialogImageUrl,'111')
-      let adddata = this.form
-      axios({
-        method: "post",
-        url: "goods/add",
-        data:adddata
-      }).then(res => {
-       console.log('添加成功')
-      });
+       formLabelWidth: "140px"
     }
-  }
+}
 }
 </script>
 

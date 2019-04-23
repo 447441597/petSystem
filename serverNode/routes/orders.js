@@ -20,22 +20,28 @@ router.get("/", async function(req, res) {
     ref: ["petOwns", "services", "shops", "goods"],
     ...option
   });
-  // console.log(data1.rows,'data1')
+  // console.log(data1.rows[0].services, "data1");
   if (ordersType == 0) {
-    //请求服务订单
+    //请求商品订单
     for (let i = 0; i < data1.rows.length; i++) {
       // console.log(data1.rows[i], "data1[i]");
-      delete data1.rows[i].goods;
+      if (data1.rows[i].status.indexOf("订单") > -1) {
+        data.push(data1.rows[i]);
+      }
     }
+    data1.rows = data;
     info = data1;
     res.send(data1);
     // console.log(data1, "data");
   } else if (ordersType == 1) {
-    //请求商品订单
+    //请求服务订单
     for (let i = 0; i < data1.rows.length; i++) {
-      // console.log(data1.rows[i], "data1[i]");
-      delete data1.rows[i].services;
+      if (data1.rows[i].status.indexOf("服务") > -1) {
+        // console.log(data1.rows[i].services, "data1[i]");
+        data.push(data1.rows[i]);
+      }
     }
+    data1.rows = data;
     info = data1;
     res.send(data1);
     // console.log(data1, "data");
@@ -44,34 +50,49 @@ router.get("/", async function(req, res) {
 
 router.get("/status", function(req, res) {
   let { page, rows, type, value, status } = req.query;
-  // console.log(status, "请求所有订单信息");
+  // console.log(status, "请求订单信息");
+  let dataInfo = {};
   let option = {};
   let data = [];
   if (type && value) {
     option = { [type]: value };
   }
   // console.log(info, "info");
+
   if (status == 0) {
     //请求全部服务订单
     res.send(info);
   } else if (status == 1) {
     //请求未完成订单
     for (let i = 0; i < info.rows.length; i++) {
-      // console.log(data1.rows[i], "data1[i]");
-      if (info.rows[i].status == "未完成") {
+      if (info.rows[i].status.indexOf("未完成") > -1) {
         data.push(info.rows[i]);
       }
     }
-    res.send(data);
-    // console.log(data, "data");
+
+    dataInfo = {
+      rows: data,
+      curpage: info.curpage,
+      eachpage: info.eachpage,
+      maxpage: info.maxpage,
+      maxpage: info.maxpage
+    };
+    res.send(dataInfo);
   } else if (status == 2) {
     //请求已完成订单
     for (let i = 0; i < info.rows.length; i++) {
-      if (info.rows[i].status == "已完成") {
+      if (info.rows[i].status.indexOf("已完成") > -1) {
         data.push(info.rows[i]);
       }
     }
-    res.send(data);
+    dataInfo = {
+      rows: data,
+      curpage: info.curpage,
+      eachpage: info.eachpage,
+      maxpage: info.maxpage,
+      maxpage: info.maxpage
+    };
+    res.send(dataInfo);
     // console.log(data, "data");
   }
 });
@@ -85,34 +106,34 @@ router.post("/", async function(req, res) {
 
 // 取消订单
 router.delete("/:id", async function(req, res) {
-  let id = req.params.id
-  console.log("取消订单",id);
-  let data = await client.delete('/orders/'+id);
+  let id = req.params.id;
+  console.log("取消订单", id);
+  let data = await client.delete("/orders/" + id);
   res.send(data);
 });
 
 // 修改状态
-router.put('/:id',async function(req,res){
+router.put("/:id", async function(req, res) {
   let id = req.params.id;
   let status = req.body.status;
-  let data = await client.get('/orders/'+id);
-  data.status = '已完成';
-  let data1 = await client.put('/orders/'+id,data);
-  console.log(data1,'data1修改状态');
+  let data = await client.get("/orders/" + id);
+  data.status = "已完成";
+  let data1 = await client.put("/orders/" + id, data);
+  console.log(data1, "data1修改状态");
   res.send({
-    status:'ok'
+    status: "ok"
   });
-})
+});
 
 // 书写评论
-router.put('/:id',async function(req,res){
+router.put("/:id", async function(req, res) {
   let id = req.params.id;
   let evaluate = req.body.evaluate;
-  let data = await client.get('/orders/'+id);
+  let data = await client.get("/orders/" + id);
   data.evaluate = evaluate;
-  let data1 = await client.put('/orders/'+id,data);
-  console.log(data1,'data1写评论');
+  let data1 = await client.put("/orders/" + id, data);
+  console.log(data1, "data1写评论");
   res.send(data1);
-})
+});
 
 module.exports = router;

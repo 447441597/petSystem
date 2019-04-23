@@ -18,8 +18,9 @@ export default {
       state.orders = data;
     },
     setPagination(state, data) {
-      state.pagination = data;
-      // console.log(state.pagination,'pagination')
+      state.pagination.total = data.total,
+      state.pagination.eachpage = data.eachpage
+      console.log(state.pagination,'pagination')
     }
   },
   actions: {
@@ -36,10 +37,7 @@ export default {
           ordersType
         }
       }).then(res => {
-        commit("setPagination", {
-          total: res.data.total,
-          eachpage: res.data.eachpage
-        });
+        commit("setPagination", res.data);
         console.log(res.data, "请求会的数据");
         commit("setShopsOrders", res.data.rows);
       });
@@ -58,6 +56,7 @@ export default {
         }
       }).then(res => {
         // console.log(res.data.rows, "请求来的状态数据");
+        commit("setPagination", res.data);
         commit("setShopsOrders", res.data.rows);
       });
     }

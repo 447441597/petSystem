@@ -17,7 +17,7 @@
       width="180">
     </el-table-column>
     <el-table-column
-      prop="services.price"
+      prop="goods.price"
       label="价格">
     </el-table-column>
     <el-table-column
@@ -32,7 +32,7 @@
   <div class="block">
   <el-pagination
     layout="prev, pager, next"
-    :total="pagination.total" @size-change="pageChange(pagination.eachpage)">
+    :total="~~(pagination.total)" @current-change="pageChange">
   </el-pagination>
 </div>
 </template>
@@ -42,12 +42,15 @@
 
 <script>
 import { createNamespacedHelpers } from "vuex";
-const { mapState, mapActions } = createNamespacedHelpers("orders");
+const { mapState, mapActions } = createNamespacedHelpers("ordrers");
 export default {
   computed: {
     ...mapState(["orders","pagination"])
   },
   methods: {
+    pageChange(i){
+      console.log(i)
+    }
   }
 };
 </script>

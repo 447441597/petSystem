@@ -22,7 +22,7 @@ import tabcomponent from "../../common/tabcomponent/tabcomponent.vue";
 import tabshopscomponent from "../../common/tabcomponent/tabshopscomponent.vue";
 import axios from "axios";
 import { createNamespacedHelpers } from "vuex";
-const { mapState, mapActions } = createNamespacedHelpers("orders");
+const { mapState, mapActions } = createNamespacedHelpers("ordrers");
 export default {
   components: {
     tabcomponent,

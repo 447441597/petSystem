@@ -1,6 +1,9 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+<<<<<<< HEAD
 
+=======
+>>>>>>> lwj
 
 // import orders from './ordrers'
 // import users from './users'
@@ -12,6 +15,15 @@ import lwj from './lwj'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
+<<<<<<< HEAD
+  state: {
+
+  },
+  modules: {
+    lwj
+  },
+  actions: {}
+=======
   modules:{
     // zyz,
     lwj,
@@ -20,4 +32,13 @@ export default new Vuex.Store({
     // services,
     // goods,lwj,yj
   }
+>>>>>>> main
 })
+
+
+
+
+
+
+
+

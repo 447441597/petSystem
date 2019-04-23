@@ -1,8 +1,12 @@
 <template>
     <div>
-       <el-button type="primary"  @click="dialogFormVisible = true">申请门店</el-button>
-       <el-button type="primary"  @click="dialogVisible = true"  >申请进度</el-button>
-       <el-dialog title="门店注册" :visible.sync="dialogFormVisible">
+       <el-button type="primary"  @click="selected(true)" style="margin-bottom:20px">申请门店</el-button>
+       <el-button type="primary"    @click="selected(false)"  style="margin-bottom:20px">申请进度</el-button>
+          <template v-if="select">
+            <el-card class="box-card" >
+               <div slot="header" class="clearfix">
+                  <h2>申请门店</h2>
+                 </div>
          <el-form :model="form">
            <el-form-item label="门店名称" :label-width="formLabelWidth">
               <el-input v-model="form.name" autocomplete="off"></el-input>
@@ -23,6 +27,10 @@
                      :file-list="fileList">
                 <el-button size="small" type="primary">点击上传</el-button>
               </el-upload> -->
+        
+           </el-form-item>
+           <el-form-item label="地址" :label-width="formLabelWidth">
+              <el-input v-model="form.address" autocomplete="off"></el-input>
            </el-form-item>
            <el-form-item label="法人" :label-width="formLabelWidth">
               <el-input v-model="form.legalPerson" autocomplete="off"></el-input>
@@ -63,40 +71,41 @@
               <el-input v-model="form.assistantphone" autocomplete="off"></el-input>
            </el-form-item>
         </el-form>
-           <div slot="footer" class="dialog-footer">
+           <div class="footer">
               <el-button @click="dialogFormVisible = false">取 消</el-button>
               <el-button type="primary"  @click="add" >确 定</el-button>
            </div>
-       </el-dialog>
-       <!-- <el-dialog
-         title="申请进度"
-         :visible.sync="dialogVisible"
-         :before-close="handleClose">
-        <el-steps :space="400" :active="0" finish-status="success">
+       </el-card>
+        </template>
+         <template v-else>
+           <el-card class="box-card" >
+              <div slot="header" class="clearfix">
+                  <h2>审核进度</h2>
+                 </div>
+        <el-steps :space="400" :active="0" >
           <el-step title="审核中"></el-step>
           <el-step title="已审核"></el-step>
         </el-steps>
-        <span slot="footer" class="dialog-footer">
-        <el-button @click="dialogVisible = false">取 消</el-button>
-         <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
-        </span>
-      </el-dialog> -->
+       </el-card>
+       </template>
     </div>
 </template>
 
 <script>
 import axios from "axios";
-import { createNamespacedHelpers } from "vuex";
-const { mapActions } = createNamespacedHelpers("lwj");
+// import { createNamespacedHelpers } from "vuex";
+// const { mapActions } = createNamespacedHelpers("lwj");
 export default {
   data() {
     return {
-      dialogFormVisible: false,
-      dialogVisible: false,
+      showPosition: false,
+      select: true,
+      active: 0,
       form: {
         name: "",
         businessNum: "",
         legalPerson: "",
+        address:"",
         tel: "",
         feature: "",
         vipLeval: "",
@@ -110,6 +119,9 @@ export default {
     };
   },
   methods: {
+    selected(data) {
+      this.select = data;
+    },
     add() {
       let arr = [];
       arr.push({
@@ -128,17 +140,19 @@ export default {
           feature: this.form.feature,
           vipLeval: this.form.vipLeval,
           rate: this.form.rate,
+          address:this.form.address,
           arr
         }
       }).then(res => {
         console.log(res);
-        this.dialogFormVisible = false;
       });
-      // this.disabled = false;
     }
   }
 };
 </script>
 
 <style>
+.footer {
+  text-align: center;
+}
 </style>

@@ -7,6 +7,7 @@ router.get('/',async function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
+//查询所有的商品
 let which;
 router.get('/data',async function(req, res) {
   let page = req.query.page;
@@ -26,4 +27,18 @@ router.get('/data',async function(req, res) {
   res.send(data);
 });
 
-module.exports = router;
+//增加商品
+router.post('/add',async function(req,res){
+  let {name,type,material,applyGuige,exGuige,Packing,taste,specialFunc,addr,keepDate,productionDate,provider,features,price,images}=req.body
+  
+  let data = await client.post('/goods',{name,type,material,applyGuige,exGuige,Packing,taste,specialFunc,addr,keepDate,productionDate,provider,features,price,images});
+  res.send(data);
+})
+
+//删除商品
+router.delete('/:id', async (req, res) => {
+  let id = req.params.id;
+  let data = await client.delete("/goods/" + id);
+  res.send(data)
+})
+module.exports = router

@@ -81,21 +81,11 @@
       <template slot-scope="scope">
         <el-button
           size="mini"
-          @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+          @click="handleEdit(scope)">编辑</el-button>
         <el-button
           size="mini"
           type="danger"
-          @click="handleDelete(scope.$index, scope.row)">删除</el-button>
-         <!-- <el-popover
-            width="160"
-            v-model="visible2" >
-            <p>确定删除这个学生？</p>
-             <div style="text-align: right; margin: 0">
-             <el-button size="mini" type="text" @click="visible2 = false">取消</el-button>
-             <el-button type="primary" size="mini"   @click="handleDelete(scope.$index, scope.row)">确定</el-button>
-             </div>
-             <el-button slot="reference"  type="danger" size="mini">删除</el-button>
-          </el-popover> -->
+         @click='del(scope.$index,scope.row)'>删除</el-button>
       </template>
     </el-table-column>
   </el-table>
@@ -106,8 +96,44 @@ import axios from 'axios'
 export default {
 data() {
     return {
-    data:[]
+    data:[],
+    visible2:false
     };
+  },
+  methods: {
+     del(index,row){
+         console.log(row,index)
+          const h = this.$createElement;
+          this.$confirm("此操作将永久删除该商品, 是否继续?", "提示", {
+          message: h('p', null, [
+            h('p', { style: 'color: red;font-size:20px' }, '此操作将永久删除该商品, 是否继续?'),
+            h('p', { style: 'color: red' }, `商品名字:${row.name} `),
+            h('p', { style: 'color: red' }, `商品类型:${row.type} `),
+             h('p', { style: 'color: red' }, `商品产地:${row.addr} `)
+          ]),
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      })
+       .then(() => {
+          axios({
+            method: "delete",
+            url: "/goods/" + row._id
+          }).then(res => {
+            this.setStudents();
+          });
+          this.$message({
+            type: "success",
+            message: "删除成功!"
+          });
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消删除"
+          });
+        });
+     }
   },
   created(){
      axios({

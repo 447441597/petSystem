@@ -9,6 +9,7 @@ var usersRouter = require('./routes/users');
 var shopsRouter = require('./routes/shops');
 var petOwnsRouter = require('./routes/petOwns');
 var providersRouter = require('./routes/providers');
+var serverTypesRouter = require('./routes/serverTypes');
 
 var goodsRouter = require('./routes/goods');
 var servicesRouter = require('./routes/services');
@@ -39,7 +40,7 @@ app.use('/services', servicesRouter);
 app.use('/applys', applysRouter);
 app.use('/orders',ordersRouter);
 app.use('/evaluations',evaluationsRouter)
-
+app.use('/serverTypes',serverTypesRouter);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));

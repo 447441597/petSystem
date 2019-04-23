@@ -1,12 +1,12 @@
 <template>
-<div>
-   <el-row>
-           <el-button type="primary" @click="dialogFormVisible = true">添加商品</el-button>
-        </el-row>
-   <el-dialog title="增加商品" :visible.sync="dialogFormVisible" width="35%">
+  <div>
+    <el-row>
+      <el-button type="primary" @click="dialogFormVisible = true">添加商品</el-button>
+    </el-row>
+    <el-dialog title="增加商品" :visible.sync="dialogFormVisible" width="35%">
       <el-form :model="form">
         <el-form-item label="商品名称：" :label-width="formLabelWidth">
-          <el-input v-model="form.name" autocomplete="off"></el-input>
+          <el-input v-model="form.goodsName" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="商品类型：" :label-width="formLabelWidth">
           <el-input v-model="form.type" autocomplete="off"></el-input>
@@ -51,7 +51,7 @@
           <el-upload
             action="https://jsonplaceholder.typicode.com/posts/"
             list-type="picture-card"
-            :on-change='Add'
+            :on-change="Add"
           >
             <i class="el-icon-plus"></i>
           </el-upload>
@@ -59,22 +59,22 @@
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">取 消</el-button>
-        <el-button type="primary" @click="dialogFormVisible = false;add()" >确 定</el-button>
+        <el-button type="primary" @click="dialogFormVisible = false;add()">确 定</el-button>
       </div>
     </el-dialog>
-</div>
+  </div>
 </template>
 
 <script>
-import axios from 'axios'
+import axios from "axios";
 export default {
-data() {
+  data() {
     return {
-         dialogImageUrl: "",
+      dialogImageUrl: "",
       dialogFormVisible: false,
-       images:[],
+      images: [],
       form: {
-        name: "",
+        goodsName: "",
         type: "",
         material: "",
         applyGuige: "",
@@ -93,41 +93,39 @@ data() {
     };
   },
   methods: {
-       handleClose(done) {
+    handleClose(done) {
       this.$confirm("确认关闭？")
         .then(_ => {
           done();
         })
         .catch(_ => {});
     },
-    Add(file, fileList){
-      let arr=[]
-      for(let i=0;i<fileList.length;i++){
-        arr.push(fileList[i].name)
+    Add(file, fileList) {
+      let arr = [];
+      for (let i = 0; i < fileList.length; i++) {
+        arr.push(fileList[i].goodsName);
       }
-      console.log(arr,'上传的所有的图片')
-      this.images=arr
+      console.log(arr, "上传的所有的图片");
+      this.images = arr;
     },
-    addimg(a){
-      console.log(a.file,'a.file')
-     
+    addimg(a) {
+      console.log(a.file, "a.file");
     },
-    add(){
-      console.log(this.images,4566)
-      console.log(this.dialogImageUrl,'111')
-      let adddata = this.form
+    add() {
+      console.log(this.images, 4566);
+      console.log(this.dialogImageUrl, "111");
+      let adddata = this.form;
       axios({
         method: "post",
         url: "goods/add",
-        data:adddata
+        data: adddata
       }).then(res => {
-       console.log('添加成功')
+        console.log("添加成功");
       });
     }
   }
-}
+};
 </script>
 
 <style>
-
 </style>

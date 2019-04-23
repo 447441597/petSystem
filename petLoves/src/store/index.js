@@ -1,19 +1,19 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-// import users from './users'
-import orders from './ordrers'
+import ordrers from './ordrers'
+import users from './users'
 import petowns from './petowns'
 import services from './services'
-// import lwj from './lwj'
+import lwj from './lwj'
+import goods from "./goods"
 // import yj from './yj'
-// import goods from 'goods'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
 
   modules: {
-    petowns, services ,orders
+    petowns, services,ordrers,users,lwj,goods
   },
   state: {
 

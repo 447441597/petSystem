@@ -6,9 +6,9 @@ client.url('localhost:8080');
 
 //增加
 router.post('/',async function(req,res){
-  let {name,businessNum,legalPerson,tel,address,feature,vipLeval,rate,arr} = req.body;
+  let {name,businessNum,legalPerson,tel,address,feature,vipLeval,rate,assistant} = req.body;
   console.log(req.body);
-  let data = await client.post('/shops',{name,businessNum,legalPerson,tel,feature,vipLeval,rate,arr});
+  let data = await client.post('/shops',{name,businessNum,legalPerson,tel,feature,vipLeval,rate,assistant});
   res.send(data);
   console.log(data)
 })

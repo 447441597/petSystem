@@ -1,13 +1,11 @@
 <template>
     <div>
-         <!-- <el-button type="primary"  @click="selected(true)" style="margin-bottom:20px">门店管理</el-button> -->
-       <el-button type="primary"  style="margin-bottom:20px">申请进度</el-button>
-      <!-- <template v-if="select"> -->
-         <!-- <el-card class="box-card" > -->
-          <!-- <div slot="header" class="clearfix"> -->
-          <!-- <h2>申请门店</h2> -->
-          <!-- </div> -->
-   
+  <el-button type="primary"  @click="selected(true)" style="margin-bottom:20px">门店管理</el-button>
+  <template v-if="select">
+      <el-card class="box-card" >
+        <div slot="header" class="clearfix">
+          <h2>门店管理</h2>
+        </div>
     <el-table
     :data="shops"
     style="width: 100%">
@@ -77,25 +75,42 @@
       width="120">
     </el-table-column>
     <el-table-column label="操作">
-      <template slot-scope="scope">
+      <template slot-scope="scope" class="scope">
         <el-button
           size="mini"
           @click="handleDelete(scope.$index, scope.row)" type="danger" icon="el-icon-delete" circle></el-button>
+          <el-button
+          size="mini"
+          @click="handleEdit(scope.$index, scope.row)" icon="el-icon-edit" type="primary" circle></el-button>
+           <el-button type="primary"  @click="handlexamine(scope.$index, scope.row)" size="mini" style="margin-bottom:20px">审核</el-button>
       </template>
     </el-table-column>
      </el-table>
-   <!-- </el-card> -->
-  <!-- </template> -->
+   </el-card>
+  </template>
+<template v-else>
+        <el-card class="box-card" >
+          <div slot="header" class="clearfix">
+            <h2>审核进度</h2>
+          </div>
+        <el-steps :space="400" :active="active" >
+          <el-step title="审核中"></el-step>
+          <el-step title="已审核"></el-step>
+        </el-steps>
+       </el-card>
+       </template>
     </div>
 </template>
 
 <script>
-import { createNamespacedHelpers } from "vuex";
+import { createNamespacedHelpers, mapMutations } from "vuex";
 import axios from "axios";
 const { mapActions, mapState } = createNamespacedHelpers("lwj");
 export default {
   data() {
-    return {};
+    return {
+      select: true
+    };
   },
   created() {
     this.setshops();
@@ -104,10 +119,48 @@ export default {
     ...mapState(["shops", "pagiNation"])
   },
   methods: {
-    ...mapActions(["setshops"])
+    ...mapActions(["setshops","setShop"]),
+    ...mapMutations(["setActive"]),
+    selected(data) {
+      this.select = data;
+    },
+    handlexamine(index, row) {
+      this.select=false;
+      let id = row._id;
+      console.log(id, "id");
+       this.setShop(id);
+    },
+    handleDelete(index, row) {
+      let id = row._id;
+      this.$confirm(`门店名称:${row.name}`, "删除提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        showClose: false,
+        type: "warning"
+      })
+        .then(() => {
+          axios({
+            method: "delete",
+            url: "/shops/" + id
+          }).then(res => {
+            console.log(res);
+            this.setshops();
+            this.$message("删除成功");
+          });
+        })
+        .catch(() => {
+          this.$message("取消删除");
+        });
+    }
   }
 };
 </script>
 
 <style>
+.el-card {
+  width: 100%;
+}
+.cell {
+  text-align: center;
+}
 </style>

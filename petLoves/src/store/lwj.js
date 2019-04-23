@@ -6,6 +6,7 @@ export default {
   namespaced: true,
   state: {
     shops: [],
+    shop:{},
     pagiNation: {},
     active: 0,
     type:"",
@@ -21,6 +22,9 @@ export default {
     },
     setActive(state, active) {
       state.active = active;
+    },
+    setShop(state,shop){
+      state.shop = shop
     }
   },
   actions: {
@@ -37,7 +41,15 @@ export default {
         // console.log(res);
         commit("setshops", res.data.rows);
         commit("setpagiNation", res.data);
-        // commit("setActive",)
+      });
+    },
+    setShop({ commit }, id) {
+      axios({
+        method: "get",
+        url: "/shops/" + id
+      }).then(res => {
+        commit("setShop", res.data);
+        commit("setActive",0);
       });
     }
   }

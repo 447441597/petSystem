@@ -17,7 +17,7 @@ router.get('/',async function(req, res) {
   } else {
     which = {};
   }
-  let data = await client.get('/services',{page,rows,submitType:'findJoin',ref:'shops',...which});
+  let data = await client.get('/services',{page,rows,submitType:'findJoin',ref:['shops','serverTypes'],...which});
   res.send(data);
 });
 
@@ -29,9 +29,9 @@ router.get('/:_id',async function(req,res){
 
 //增加服务
 router.post('/',async function(req,res){
-    let {name,type,time,applyGuige,serverGuige,useTime,shopsId,price,types,level} = req.body;
+    let {name,type,time,applyGuige,serverGuige,useTime,shopsId,price,typesId,level} = req.body;
 
-  let data = await client.post('/services',{name,type,time,applyGuige,serverGuige,useTime,price,shops:{$ref:'shops',$id:shopsId},types,level});
+  let data = await client.post('/services',{name,type,time,applyGuige,serverGuige,useTime,price,shops:{$ref:'shops',$id:shopsId},serverTypes:{$ref:'serverTypes',$id:typesId},level});
   res.send(data);
   console.log(data);
 })
@@ -52,4 +52,9 @@ router.delete('/:_id',async function(req,res){
   res.send(data);
 });
 
+router.get('/serverTypes',async function(req,res){
+    let data = await client.get('/serverTypes');
+    console.log(data);
+    res.send(data);
+})
 module.exports = router;

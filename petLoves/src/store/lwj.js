@@ -37,7 +37,14 @@ export default {
         // console.log(res);
         commit("setshops", res.data.rows);
         commit("setpagiNation", res.data);
-        // commit("setActive",)
+      });
+    },
+    setActive({ commit }, id) {
+      axios({
+        method: "get",
+        url: "/shops/" + id
+      }).then(res => {
+        commit("setActive",0);
       });
     }
   }

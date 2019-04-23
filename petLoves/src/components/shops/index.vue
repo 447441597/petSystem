@@ -104,7 +104,30 @@ export default {
     ...mapState(["shops", "pagiNation"])
   },
   methods: {
-    ...mapActions(["setshops"])
+    ...mapActions(["setshops"]),
+    handleDelete(index, row) {
+      let id = row._id;
+      console.log(id, "id");
+      this.$confirm(`门店名称:${row.name}`, "删除提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        showClose: false,
+        type: "warning"
+      })
+        .then(() => {
+          axios({
+            method: "delete",
+            url: "/shops/" + id
+          }).then((res) => {
+            console.log(res)
+            this.setshops();
+            this.$message("删除成功");
+          });
+        })
+        .catch(() => {
+          this.$message("取消删除");
+        });
+    }
   }
 };
 </script>

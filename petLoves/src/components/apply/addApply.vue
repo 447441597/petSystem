@@ -27,7 +27,6 @@
                      :file-list="fileList">
                 <el-button size="small" type="primary">点击上传</el-button>
               </el-upload> -->
-        
            </el-form-item>
            <el-form-item label="地址" :label-width="formLabelWidth">
               <el-input v-model="form.address" autocomplete="off"></el-input>
@@ -72,8 +71,8 @@
            </el-form-item>
         </el-form>
            <div class="footer">
-              <el-button @click="dialogFormVisible = false">取 消</el-button>
-              <el-button type="primary"  @click="add" >确 定</el-button>
+              <el-button>取 消</el-button>
+              <el-button type="primary"  @click="add" >提交</el-button>
            </div>
        </el-card>
         </template>
@@ -82,7 +81,7 @@
               <div slot="header" class="clearfix">
                   <h2>审核进度</h2>
                  </div>
-        <el-steps :space="400" :active="0" >
+        <el-steps :space="400" :active="active" >
           <el-step title="审核中"></el-step>
           <el-step title="已审核"></el-step>
         </el-steps>
@@ -93,12 +92,11 @@
 
 <script>
 import axios from "axios";
-// import { createNamespacedHelpers } from "vuex";
-// const { mapActions } = createNamespacedHelpers("lwj");
+import { createNamespacedHelpers } from "vuex";
+const { mapActions,mapState,mapMutations } = createNamespacedHelpers("lwj");
 export default {
   data() {
     return {
-      showPosition: false,
       select: true,
       active: 0,
       form: {
@@ -118,7 +116,11 @@ export default {
       //   disabled:true
     };
   },
+  // computed: {
+  //   ...mapState(["active" ])
+  // },
   methods: {
+     ...mapMutations(["setActive"]),
     selected(data) {
       this.select = data;
     },
@@ -145,6 +147,12 @@ export default {
         }
       }).then(res => {
         console.log(res);
+        if(this.setActive(0)){
+          this.active++;
+          if(this.active==1){
+            this.active==1
+          }
+        }
       });
     }
   }

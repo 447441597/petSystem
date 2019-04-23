@@ -29,7 +29,10 @@ export default {
     tabshopscomponent
   },
   created() {
-    this.getOrders();
+    let playload = {
+      ordersType: 1
+    };
+    this.getOrders(playload);
   },
   data() {
     return {
@@ -37,12 +40,19 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["getOrders","getOrdersStatus"]),
+    ...mapActions(["getOrders", "getOrdersStatus", "getServicesOrders"]),
     clg(value) {
       if (value.label == "商品订单") {
-        this.getOrders(1);
+        let playload = {
+          ordersType: 0
+        };
+        this.getOrders(playload);
       } else if (value.label == "服务订单") {
-        this.getOrders(0);  
+        // this.getServicesOrders();
+        let playload = {
+          ordersType: 1
+        };
+        this.getOrders(playload);
       }
     },
     unfinished() {

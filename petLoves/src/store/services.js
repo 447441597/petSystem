@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import axios from 'axios'
+import { stat } from "fs";
 Vue.use(Vuex);
 
 export default {
@@ -12,7 +13,9 @@ export default {
         eachpage:""
     },
     value: "",
-    serverTypes:[]
+    serverTypes:[],
+    levels:[],
+  
   },
   mutations: {
     getServices(state, services) {
@@ -25,6 +28,12 @@ export default {
     },
     getTypes(state,serverTypes){
         state.serverTypes = serverTypes;
+    },
+    getLevel(state,levels){
+      state.levels = levels;
+    },
+    getTime(state,times){
+      state.times = times
     }
   },
   actions: {
@@ -46,6 +55,16 @@ export default {
         }
       }).then(res => {
         console.log(res.data, "services");
+        
+        console.log(res.data.rows);
+        for(let  i = 0; i<res.data.rows.length;i++){
+          let str = " "
+          for(let j = 0;j < res.data.rows[i].time.length;j++){
+            str = str + res.data.rows[i].time[j].timeSlot;
+          }
+          res.data.rows[i].times = str
+        }
+        console.log(res.data.rows);
         commit("getPagination",res.data);
         commit("getServices", res.data.rows);
       });
@@ -60,6 +79,15 @@ export default {
             console.log(res.data,"types")
             commit("getTypes",res.data);
         })
+    },
+    getLevel({commit},shopId){
+      axios({
+        method:"get",
+        url:"/shops/"+shopId,
+      }).then((res) => {
+        console.log(res.data,"assistant");
+        commit("getLevel",res.data.assistant);
+      })
     }
   }
 };

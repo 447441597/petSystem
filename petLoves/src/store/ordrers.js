@@ -47,23 +47,23 @@ export default {
         commit("setShopsOrders", res.data.rows);
       });
     },
-    // getOrdersStatus({ commit }, status) {
-    //   let page = 1;
-    //   let rows = 5;
-    //   status = status || 0;
-    //   axios({
-    //     method: "get",
-    //     url: "/orders/status",
-    //     params: {
-    //       page,
-    //       rows,
-    //       status
-    //     }
-    //   }).then(res => {
-    //     // console.log(res.data.rows, "请求来的状态数据");
-    //     commit("setPagination", res.data);
-    //     commit("setShopsOrders", res.data.rows);
-    //   });
-    // }
+    getOrdersStatus({ commit }, playload) {
+      let page = 1;
+      let rows = 5;
+      let status = playload.ordersType || 0;
+      axios({
+        method: "get",
+        url: "/orders/status",
+        params: {
+          page,
+          rows,
+          status
+        }
+      }).then(res => {
+        // console.log(res.data, "请求来的状态数据");
+        commit("setPagination", res.data);
+        commit("setShopsOrders", res.data.rows);
+      });
+    }
   }
 };

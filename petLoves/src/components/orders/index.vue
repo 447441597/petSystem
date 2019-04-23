@@ -57,15 +57,24 @@ export default {
     },
     unfinished() {
       // 未完成订单
-      this.getOrdersStatus(1);
+      let playload = {
+          ordersType: 1
+        };
+      this.getOrdersStatus(playload);
     },
     finish() {
       // 完成订单
-      this.getOrdersStatus(2);
+      let playload = {
+          ordersType: 2
+        };
+      this.getOrdersStatus(playload);
     },
     allOrders() {
       // 全部订单
-      this.getOrdersStatus(0);
+      let playload = {
+          ordersType: 0
+        };
+      this.getOrdersStatus(playload);
     }
   }
 };

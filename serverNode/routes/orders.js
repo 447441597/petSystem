@@ -20,9 +20,9 @@ router.get("/", async function(req, res) {
     ref: ["petOwns", "services", "shops", "goods"],
     ...option
   });
-  // console.log(data1, "data1");
+  // console.log(data1.rows[0].services, "data1");
   if (ordersType == 0) {
-    //请求服务订单
+    //请求商品订单
     for (let i = 0; i < data1.rows.length; i++) {
       // console.log(data1.rows[i], "data1[i]");
       if (data1.rows[i].status.indexOf("订单") > -1) {
@@ -32,52 +32,67 @@ router.get("/", async function(req, res) {
     data1.rows = data;
     info = data1;
     res.send(data1);
-    console.log(data1, "data");
+    // console.log(data1, "data");
   } else if (ordersType == 1) {
-    //请求商品订单
+    //请求服务订单
     for (let i = 0; i < data1.rows.length; i++) {
-      // console.log(data1.rows[i], "data1[i]");
       if (data1.rows[i].status.indexOf("服务") > -1) {
+        // console.log(data1.rows[i].services, "data1[i]");
         data.push(data1.rows[i]);
       }
     }
     data1.rows = data;
     info = data1;
     res.send(data1);
-    console.log(data1, "data");
+    // console.log(data1, "data");
   }
 });
 
 router.get("/status", function(req, res) {
   let { page, rows, type, value, status } = req.query;
-  // console.log(status, "请求所有订单信息");
+  // console.log(status, "请求订单信息");
+  let dataInfo = {};
   let option = {};
   let data = [];
   if (type && value) {
     option = { [type]: value };
   }
   // console.log(info, "info");
+
   if (status == 0) {
     //请求全部服务订单
     res.send(info);
   } else if (status == 1) {
     //请求未完成订单
     for (let i = 0; i < info.rows.length; i++) {
-      // console.log(data1.rows[i], "data1[i]");
-      if (info.rows[i].status == "未完成") {
+      if (info.rows[i].status.indexOf("未完成") > -1) {
         data.push(info.rows[i]);
       }
     }
-    res.send(data);
-    // console.log(data, "data");
+
+    dataInfo = {
+      rows: data,
+      curpage: info.curpage,
+      eachpage: info.eachpage,
+      maxpage: info.maxpage,
+      maxpage: info.maxpage
+    };
+    res.send(dataInfo);
   } else if (status == 2) {
     //请求已完成订单
     for (let i = 0; i < info.rows.length; i++) {
-      if (info.rows[i].status == "已完成") {
+      if (info.rows[i].status.indexOf("已完成") > -1) {
         data.push(info.rows[i]);
       }
     }
-    res.send(data);
+    dataInfo = {
+      rows: data,
+      curpage: info.curpage,
+      eachpage: info.eachpage,
+      maxpage: info.maxpage,
+      maxpage: info.maxpage
+    };
+    res.send(dataInfo);
     // console.log(data, "data");
   }
 });

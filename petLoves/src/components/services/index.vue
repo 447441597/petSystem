@@ -7,7 +7,9 @@
         <AddServer></AddServer>
       </el-col>
 
-      <el-col :span="8"></el-col>
+      <el-col :span="8">
+        <SearchServer></SearchServer>
+      </el-col>
     </el-row>
     <el-table :data="services" style="width: 100%" row-key="_id">
       <el-table-column label="服务名" prop="serviceName" style="width:20px"></el-table-column>
@@ -30,6 +32,7 @@
         </template>
       </el-table-column>
     </el-table>
+    <Page></Page>
   </div>
 </template>
 
@@ -39,7 +42,9 @@ import { createNamespacedHelpers } from "vuex";
 import axios from "axios";
 import AddServer from "./AddServer.vue";
 import UpdateServer from "./UpdateServer.vue";
-import Times from './Times.vue'
+import Times from './Times.vue';
+import SearchServer from './SearchServer.vue';
+import Page from './Page.vue'
 const { mapState, mapActions } = createNamespacedHelpers("services");
 
 export default {
@@ -82,7 +87,9 @@ export default {
   components: {
     AddServer,
     UpdateServer,
-    Times
+    Times,
+    SearchServer,
+    Page
   }
 };
 </script>

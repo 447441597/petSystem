@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import axios from 'axios'
+import axios from "axios";
+import { stat } from "fs";
 
 Vue.use(Vuex);
 
@@ -8,58 +9,65 @@ export default {
   namespaced: true,
   state: {
     services: [],
-    service:{},
+    service: {},
     type: "",
-    times:[],
+    times: [],
     pagination: {
-        eachpage:""
+      eachpage: ""
     },
     value: "",
-    serverTypes:[],
-    levels:[],
-    dialogFormVisible:false,
-    timeVisible:false
+    serverTypes: [],
+    levels: [],
+    dialogFormVisible: false,
+    timeVisible: false
   },
   mutations: {
     getServices(state, services) {
-      
       state.services = services;
       console.log(state);
     },
-    getPagination(state,pagination){
-        state.pagination = pagination;
+    getPagination(state, pagination) {
+      state.pagination = pagination;
     },
-    getTypes(state,serverTypes){
-        state.serverTypes = serverTypes;
+    getTypes(state, serverTypes) {
+      state.serverTypes = serverTypes;
     },
-    getLevel(state,levels){
+    getLevel(state, levels) {
       state.levels = levels;
     },
-    getTime(state,times){
-      state.times = times
+    getTime(state, times) {
+      state.times = times;
     },
-    setVisible(state,dialogFormVisible){
-      state.dialogFormVisible = dialogFormVisible
+    setVisible(state, dialogFormVisible) {
+      state.dialogFormVisible = dialogFormVisible;
     },
-    setService(state,service){
+    setService(state, service) {
       state.service = service;
-      console.log(service,"设置修改信息")
+      console.log(service, "设置修改信息");
     },
-    setTimeVisible(state,timeVisible){
-      console.log(timeVisible,"timeVisible")
-      state.timeVisible = timeVisible
+    setTimeVisible(state, timeVisible) {
+      console.log(timeVisible, "timeVisible");
+      state.timeVisible = timeVisible;
     },
-    setTimes(state,time){
-      state.times = time
+    setTimes(state, time) {
+      state.times = time;
+    },
+    setSearch(state, search) {
+      (state.type = search.type), (state.value = search.value);
+      console.log(4444, search.type, search.value);
+      // console.log(search.type,search.value,"type","value")
+    },
+    setPagesize(state, pageSize) {
+      state.pagination.eachpage = pageSize;
     }
   },
   actions: {
     getServices({ commit }, getPage = {}) {
       let page = getPage.page || 1;
       let rows = getPage.eachpage || 5;
-      let type = this.state.type || "";
-      let value = this.state.value || "";
-      console.log("getPage", getPage);
+      let type = this.state.services.type || "";
+      let value = this.state.services.value || "";
+      console.log("type,value", type, value);
       console.log("xixi", this.state);
       axios({
         method: "get",
@@ -72,59 +80,65 @@ export default {
         }
       }).then(res => {
         console.log(res.data, "services");
-        
+
         console.log(res.data.rows);
-        for(let  i = 0; i<res.data.rows.length;i++){
-          let str = " "
-          for(let j = 0;j < res.data.rows[i].time.length;j++){
+        for (let i = 0; i < res.data.rows.length; i++) {
+          let str = " ";
+          for (let j = 0; j < res.data.rows[i].time.length; j++) {
             str = str + res.data.rows[i].time[j].timeSlot;
           }
-          res.data.rows[i].times = str
+          res.data.rows[i].times = str;
         }
         console.log(res.data.rows);
-        commit("getPagination",res.data);
+        commit("getPagination", res.data);
         commit("getServices", res.data.rows);
       });
     },
-    getTypes({commit},serverTypes){
-        console.log(22);
-        axios({
-            method:"get",
-            url:"/serverTypes",
-
-        }).then((res) => {
-            console.log(res.data,"types")
-            commit("getTypes",res.data);
-        })
-    },
-    getLevel({commit},shopId){
+    getTypes({ commit }, serverTypes) {
+      console.log(22);
       axios({
-        method:"get",
-        url:"/shops/"+shopId,
-      }).then((res) => {
-        console.log(res.data,"assistant");
-        commit("getLevel",res.data.assistant);
-      })
+        method: "get",
+        url: "/serverTypes"
+      }).then(res => {
+        console.log(res.data, "types");
+        commit("getTypes", res.data);
+      });
     },
-    setVisible({commit},visible){
-      commit("setVisible",visible);
-    },
-    setService({commit},service){
-      console.log(service,"修改的服务")
-      commit("setService",service);
-    },
-    setTimeVisible({commit},visible){
-      commit("setTimeVisible",visible);
-    },
-    getService({commit},serviceId){
+    getLevel({ commit }, shopId) {
       axios({
-        method:"get",
-        url:"/services/"+serviceId,
-      }).then((res) => {
-        console.log(res.data,"要查看的时间");
-        commit("getService",res.data);
-        commit("setTimes",res.data.time)
-      })
+        method: "get",
+        url: "/shops/" + shopId
+      }).then(res => {
+        console.log(res.data, "assistant");
+        commit("getLevel", res.data.assistant);
+      });
+    },
+    setVisible({ commit }, visible) {
+      commit("setVisible", visible);
+    },
+    setService({ commit }, service) {
+      console.log(service, "修改的服务");
+      commit("setService", service);
+    },
+    setTimeVisible({ commit }, visible) {
+      commit("setTimeVisible", visible);
+    },
+    getService({ commit }, serviceId) {
+      axios({
+        method: "get",
+        url: "/services/" + serviceId
+      }).then(res => {
+        console.log(res.data, "要查看的时间");
+        commit("getService", res.data);
+        commit("setTimes", res.data.time);
+      });
+    },
+    setSearch({ commit }, search = { type, value }) {
+      console.log(search, "search");
+      commit("setSearch", search);
+    },
+    setPagesize({ commit }, size) {
+      commit("setPagesize", size);
     }
   }
 };

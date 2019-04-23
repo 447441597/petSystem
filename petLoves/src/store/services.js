@@ -11,7 +11,8 @@ export default {
     pagination: {
         eachpage:""
     },
-    value: ""
+    value: "",
+    serverTypes:[]
   },
   mutations: {
     getServices(state, services) {
@@ -21,6 +22,9 @@ export default {
     },
     getPagination(state,pagination){
         state.pagination = pagination;
+    },
+    getTypes(state,serverTypes){
+        state.serverTypes = serverTypes;
     }
   },
   actions: {
@@ -45,6 +49,17 @@ export default {
         commit("getPagination",res.data);
         commit("getServices", res.data.rows);
       });
+    },
+    getTypes({commit},serverTypes){
+        console.log(22);
+        axios({
+            method:"get",
+            url:"/serverTypes",
+
+        }).then((res) => {
+            console.log(res.data,"types")
+            commit("getTypes",res.data);
+        })
     }
   }
 };

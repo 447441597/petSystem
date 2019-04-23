@@ -6,7 +6,7 @@ import lwj from './lwj'
 =======
 
 
-// import zyz from './zyz'
+import orders from './ordrers'
 // import users from './users'
 // import petowns from './petowns'
 import services from './services'
@@ -19,9 +19,13 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   modules:{
 <<<<<<< HEAD
+<<<<<<< HEAD
     zyz,lwj
 =======
     // zyz,
+=======
+    orders,
+>>>>>>> 462b781f6d4ad3180dea12d053e73d849df872db
     // users,petowns,
     services,
     // goods,lwj,yj

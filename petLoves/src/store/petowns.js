@@ -8,20 +8,36 @@ export default {
     namespaced: true,
     state: {
         pet: [],
-        Identity: false
+        Identity: false,
+        pets: [],
+        vip:false,
+        vipcard:[],
+        total:''
     },
     mutations: {
-        setState(state, pet) {
-            state.pet = pet
+        setState(state, pet) { 
+            state.pet = pet;
         },
         setIdent(state, Identity) {
-            state.Identity = !(state.Identity)
+            state.Identity = !(state.Identity);
+        },
+        setVip(state){
+            state.vip = !(state.vip);
+        },
+        setPets(state, pets) {
+            state.pets = pets;
+        },
+        vips(state,arr){
+            state.vipcard = arr;
+        },
+        settotal(state,total){
+            state.total = total;
         }
     },
     actions: {
         setPet({ commit }, payload = {}) {
             let page = payload.page || 1;
-            let rows = payload.rows || 10;
+            let rows = payload.rows || 5;
             let type = payload.type || '';
             let value = payload.value || '';
             axios({
@@ -31,7 +47,8 @@ export default {
                     page, rows, type, value
                 }
             }).then(res => {
-                commit("setState", res.data.rows)
+                commit('settotal',res.data.total);
+                commit("setState", res.data);
             });
         }
     }

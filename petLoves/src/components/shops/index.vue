@@ -11,7 +11,7 @@
     style="width: 100%">
     <el-table-column
       label="姓名"
-      prop="name"
+      prop="shopsName"
       width="120">
     </el-table-column>
     <el-table-column
@@ -132,7 +132,7 @@ export default {
     },
     handleDelete(index, row) {
       let id = row._id;
-      this.$confirm(`门店名称:${row.name}`, "删除提示", {
+      this.$confirm(`门店名称:${row.shopsName}`, "删除提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         showClose: false,

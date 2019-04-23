@@ -9,7 +9,7 @@
                  </div>
          <el-form :model="form">
            <el-form-item label="门店名称" :label-width="formLabelWidth">
-              <el-input v-model="form.name" autocomplete="off"></el-input>
+              <el-input v-model="form.storeName" autocomplete="off"></el-input>
            </el-form-item>
            <el-form-item label="营业执照号码" :label-width="formLabelWidth">
               <el-input v-model="form.businessNum" autocomplete="off"></el-input>
@@ -102,7 +102,7 @@ export default {
       select: true,
       active: 0,
       form: {
-        name: "",
+        storeName: "",
         businessNum: "",
         legalPerson: "",
         address:"",
@@ -129,11 +129,12 @@ export default {
         assistantlevel: this.form.assistantlevel,
         assistantphone: this.form.assistantphone
       });
+      console.log(this.form.storeName)
       axios({
         method: "post",
         url: "/applys",
         data: {
-          name: this.form.name,
+          // name: this.form.name,
           businessNum: this.form.businessNum,
           tel: this.form.tel,
           legalPerson: this.form.legalPerson,

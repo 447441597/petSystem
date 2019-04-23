@@ -1,21 +1,24 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import axios from 'axios'
-import { stat } from "fs";
+
 Vue.use(Vuex);
 
 export default {
   namespaced: true,
   state: {
     services: [],
+    service:{},
     type: "",
+    times:[],
     pagination: {
         eachpage:""
     },
     value: "",
     serverTypes:[],
     levels:[],
-  
+    dialogFormVisible:false,
+    timeVisible:false
   },
   mutations: {
     getServices(state, services) {
@@ -34,6 +37,20 @@ export default {
     },
     getTime(state,times){
       state.times = times
+    },
+    setVisible(state,dialogFormVisible){
+      state.dialogFormVisible = dialogFormVisible
+    },
+    setService(state,service){
+      state.service = service;
+      console.log(service,"设置修改信息")
+    },
+    setTimeVisible(state,timeVisible){
+      console.log(timeVisible,"timeVisible")
+      state.timeVisible = timeVisible
+    },
+    setTimes(state,time){
+      state.times = time
     }
   },
   actions: {
@@ -87,6 +104,26 @@ export default {
       }).then((res) => {
         console.log(res.data,"assistant");
         commit("getLevel",res.data.assistant);
+      })
+    },
+    setVisible({commit},visible){
+      commit("setVisible",visible);
+    },
+    setService({commit},service){
+      console.log(service,"修改的服务")
+      commit("setService",service);
+    },
+    setTimeVisible({commit},visible){
+      commit("setTimeVisible",visible);
+    },
+    getService({commit},serviceId){
+      axios({
+        method:"get",
+        url:"/services/"+serviceId,
+      }).then((res) => {
+        console.log(res.data,"要查看的时间");
+        commit("getService",res.data);
+        commit("setTimes",res.data.time)
       })
     }
   }

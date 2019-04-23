@@ -1,6 +1,6 @@
 <template>
      <el-table
-    :data="data"
+    :data="show"
     style="width: 100%">
     <el-table-column
       label="名称"
@@ -93,24 +93,32 @@
 
 <script>
 import axios from 'axios'
+import { createNamespacedHelpers} from 'vuex'
+const { mapActions, mapState, mapMutations} = createNamespacedHelpers("goods");
 export default {
 data() {
     return {
-    data:[],
+    // data:[],
     visible2:false
     };
   },
+  computed: {
+      ...mapState(["show"])
+  },
   methods: {
+      ...mapActions(["getshow"]),
+    //   ...mapMutations([])
+      ...mapMutations(['setshow']),
      del(index,row){
          console.log(row,index)
           const h = this.$createElement;
           this.$confirm("此操作将永久删除该商品, 是否继续?", "提示", {
-          message: h('p', null, [
-            h('p', { style: 'color: red;font-size:20px' }, '此操作将永久删除该商品, 是否继续?'),
-            h('p', { style: 'color: red' }, `商品名字:${row.name} `),
-            h('p', { style: 'color: red' }, `商品类型:${row.type} `),
-             h('p', { style: 'color: red' }, `商品产地:${row.addr} `)
-          ]),
+        //   message: h('p', null, [
+        //     h('p', { style: 'color: red;font-size:20px' }, '此操作将永久删除该商品, 是否继续?'),
+        //     h('p', { style: 'color: red' }, `商品名字:${row.name} `),
+        //     h('p', { style: 'color: red' }, `商品类型:${row.type} `),
+        //      h('p', { style: 'color: red' }, `商品产地:${row.addr} `)
+        //   ]),
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning"
@@ -136,13 +144,14 @@ data() {
      }
   },
   created(){
-     axios({
-        method: "get",
-        url: "goods/data"
-      }).then(res => {
-       console.log(res.data)
-       this.data=res.data
-      });
+      this.getshow();
+    //  axios({
+    //     method: "get",
+    //     url: "goods/data"
+    //   }).then(res => {
+    //    console.log(res.data)
+    //    this.data=res.data
+    //   });
   }
 }
 

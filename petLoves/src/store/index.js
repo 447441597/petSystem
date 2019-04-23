@@ -8,7 +8,7 @@ import orders from './ordrers'
 import services from './services'
 // import lwj from './lwj'
 // import yj from './yj'
-// import goods from 'goods'
+import goods from './goods'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -16,6 +16,7 @@ export default new Vuex.Store({
     orders,
     // users,petowns,
     services,
-    // goods,lwj,yj
+    goods,
+    // lwj,yj
   }
 })

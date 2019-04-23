@@ -25,7 +25,8 @@ router.get('/',async function(req, res) {
 
 //根据ID查询学生
 router.get('/:_id',async function(req,res){
-  let _id = toObjectId(req.params._id);
+  console.log(req.params._id,'_id')
+  let _id = (req.params._id);
   let data = await client.get('/providers/'+_id);
   res.send(data);
 })
@@ -44,12 +45,13 @@ router.post('/',async function(req,res){
 
 //修改学生
 router.put('/:_id',async function(req,res){
+  console.log('object',req.body)
   let name=req.body.name;
   let person=req.body.person;
   let phone=req.body.phone;
   let address=req.body.address;
   let number=req.body.number;
-    let _id = toObjectId(req.params._id)
+    let _id = (req.params._id)
   //修改学生信息
   let data = await client.put('/providers/'+_id,{name,person,phone,address,number});
   res.send(data);
@@ -57,7 +59,8 @@ router.put('/:_id',async function(req,res){
 
 //删除学生
 router.delete('/:_id',async function(req,res){
-  let _id =toObjectId(req.params._id);
+  let _id =(req.params._id);
+  console.log(_id,'_id')
   let data = await client.delete('/providers/'+ _id);
   res.send(data);
 });

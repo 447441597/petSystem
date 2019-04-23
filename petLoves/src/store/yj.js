@@ -1,14 +1,16 @@
 import axios from 'axios'
-
+import Vue from 'vue'
+import Vuex from 'vuex'
+Vue.use(Vuex)
 export default{
     namespaced:true,
     state: {
-        Providers: [],
-        Provider:{},
+        providers: [],
+        provider:{},
         pagination:{},
         visible:false,
-        
-        searchInfo: {
+    
+        search: {
             value: "",
             type: ""
           },
@@ -16,6 +18,8 @@ export default{
     mutations: {
         setProviders(state, providers) {
             state.providers = providers
+            console.log(state,state)
+           
         },
         provider(state,provider){
             state.provider = provider
@@ -27,18 +31,18 @@ export default{
             state.visible = visible
         },
 
-        setSearch(state, data) {
-            state.searchInfo = data;
+        setSearch(state, search) {
+            state.search = search;
           },
           
        
     },
     actions: {
-        setProviders({commit}, payload = {},) {
+        setProviders({commit,state}, payload = {},) {
             let page = payload.page || 1;
             let rows = payload.rows || 5;
-            let type = payload.type ||"";
-            let value =payload.value ||"";
+            let type = state.search.type ||"";
+            let value =state.search.value ||"";
             axios({
                 method: "get",
                 url: "/providers",
@@ -51,6 +55,7 @@ export default{
             }).then((res)=>{
                 commit("setProviders",res.data.rows)
                 commit("setPagination",res.data)
+                commit("setSearch",{type,value})
             })
         },
         updateprovider({commit},id){
@@ -59,14 +64,18 @@ export default{
                 method:"get",
                 url:"/providers/"+id,
              }).then((res)=>{
-                 console.log(res.data)
+                 console.log(res.data,'查询当前列')
+                 console.log(res.data,'查询当前列')
                 commit("provider",res.data)
                 commit("setVisible",true)
                 commit("setUpVisible",false)
+                
                
                
              })
         },
+
+
 
     }
 }

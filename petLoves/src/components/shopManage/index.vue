@@ -47,12 +47,14 @@
                   <i class="el-icon-menu"></i>
                   <router-link to="/shopManage/services">服务管理</router-link>
                 </el-menu-item>
+                  <!-- ///// -->
+
                  <el-menu-item index="/shopManage/orders">
                   <i class="el-icon-menu"></i>
-
-                  <!-- ///// -->
                   <router-link to="/shopManage/orders">订单管理</router-link>
                 </el-menu-item>
+                
+                  <!-- ///// -->
                  <el-menu-item index="/shopManage/shopAddup">
                   <i class="el-icon-setting"></i>
                   <router-link to="/shopManage/shopAddup">统计</router-link>

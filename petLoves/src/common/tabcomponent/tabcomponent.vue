@@ -5,6 +5,7 @@
     :data="orders"
     height="250"
     border
+    
     style="width: 100%">
     <el-table-column
       prop="petOwns.nickname"

@@ -6,7 +6,7 @@ client.url('localhost:8080');
 let which;
 router.get('/',async function(req,res){
     let data = await client.get('/serverTypes');
-    console.log(data);
+    // console.log(data);
     res.send(data);
 })
 module.exports = router;

@@ -1,43 +1,38 @@
 <template>
     <div>
-        <el-button type="success"  @click="servicesSelected">服务订单</el-button>
-        <el-button type="success"  @click="shopsSelected">商品订单</el-button>
-        <template v-if="select">
-        <el-card class="box-card" >
-            <div slot="header" class="clearfix">
-                <h2>服务订单</h2>
+      <el-tabs type="border-card" @tab-click='clg'>
+    <el-tab-pane label="服务订单">
+    <el-button style="float: left; padding: 3px" type="success" round @click="unfinished">未完成订单</el-button>
+    <el-button style="float: left; padding: 3px" type="success" round @click="finish">已完成订单</el-button>
+    <el-button style="float: left; padding: 3px" type="success" round @click="allOrders">全部订单</el-button>
+    <tabcomponent/>
+    </el-tab-pane>
+    <el-tab-pane label="商品订单">
                 <el-button style="float: left; padding: 3px" type="success" round @click="unfinished">未完成订单</el-button>
                 <el-button style="float: left; padding: 3px" type="success" round @click="finish">已完成订单</el-button>
-                <el-button style="float: left; padding: 3px" type="success" round @click="allOrders">全部订单</el-button>                
-            </div>
-            <tabcomponent/>
-        </el-card>
-        </template>
-        <template v-else>
-        <el-card class="box-card">
-            <div slot="header" class="clearfix">
-                <h2>商品订单</h2>
-                <el-button style="float: left; padding: 3px" type="success" round @click="unfinished">未完成订单</el-button>
-                <el-button style="float: left; padding: 3px" type="success" round @click="finish">已完成订单</el-button>
-                <el-button style="float: left; padding: 3px" type="success" round @click="allOrders">全部订单</el-button>                
-            </div>
-            <tabcomponent/>
-        </el-card>
-        </template>
+                <el-button style="float: left; padding: 3px" type="success" round @click="allOrders">全部订单</el-button> 
+            <tabshopscomponent />
+    </el-tab-pane>
+  </el-tabs>
     </div>
 </template>
 
 <script>
 import tabcomponent from "../../common/tabcomponent/tabcomponent.vue";
+import tabshopscomponent from "../../common/tabcomponent/tabshopscomponent.vue";
 import axios from "axios";
 import { createNamespacedHelpers } from "vuex";
-const { mapState, mapActions } = createNamespacedHelpers("orders");
+const { mapState, mapActions } = createNamespacedHelpers("ordrers");
 export default {
   components: {
-    tabcomponent
+    tabcomponent,
+    tabshopscomponent
   },
   created() {
-    this.getOrders();
+    let playload = {
+      ordersType: 1
+    };
+    this.getOrders(playload);
   },
   data() {
     return {
@@ -45,28 +40,41 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["getOrders"]),
-    servicesSelected() {
-        //服务订单
-      this.select = true;
-      this.getOrders(0);
-    },
-    shopsSelected() {
-        //商品订单
-      this.select = false;
-      this.getOrders(1);
+    ...mapActions(["getOrders", "getOrdersStatus", "getServicesOrders"]),
+    clg(value) {
+      if (value.label == "商品订单") {
+        let playload = {
+          ordersType: 0
+        };
+        this.getOrders(playload);
+      } else if (value.label == "服务订单") {
+        // this.getServicesOrders();
+        let playload = {
+          ordersType: 1
+        };
+        this.getOrders(playload);
+      }
     },
     unfinished() {
       // 未完成订单
-      this.getOrders(2);
+      let playload = {
+          ordersType: 1
+        };
+      this.getOrdersStatus(playload);
     },
     finish() {
       // 完成订单
-      this.getOrders(3);
+      let playload = {
+          ordersType: 2
+        };
+      this.getOrdersStatus(playload);
     },
     allOrders() {
       // 全部订单
-      this.getOrders(4);
+      let playload = {
+          ordersType: 0
+        };
+      this.getOrdersStatus(playload);
     }
   }
 };

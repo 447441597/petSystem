@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/447441597/petSystem/issues"
   },
-  "homepage": "https://github.com/447441597/petSystem#readme"
+  "homepage": "https://github.com/447441597/petSystem#readme",
+  "dependencies": {
+    "cache-loader": "^3.0.0"
+  }
 }

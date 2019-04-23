@@ -84,8 +84,13 @@
     :data="shops"
     style="width: 100%">
     <el-table-column
+<<<<<<< HEAD
       label="门店名称"
       prop="storeName"
+=======
+      label="姓名"
+      prop="shopsName"
+>>>>>>> main
       width="120">
     </el-table-column>
     <el-table-column
@@ -236,8 +241,12 @@ export default {
     },
     handleDelete(index, row) {
       let id = row._id;
+<<<<<<< HEAD
       console.log(id, "id");
       this.$confirm(`门店名称:${row.storeName}`, "删除提示", {
+=======
+      this.$confirm(`门店名称:${row.shopsName}`, "删除提示", {
+>>>>>>> main
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         showClose: false,

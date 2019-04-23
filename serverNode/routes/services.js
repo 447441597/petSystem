@@ -17,30 +17,35 @@ router.get('/',async function(req, res) {
   } else {
     which = {};
   }
-  let data = await client.get('/services',{page,rows,submitType:'findJoin',ref:['shops','serverTypes'],...which});
+  let data = await client.get('/services',{page,rows,submitType:'findJoin',ref:['shops'],...which});
   res.send(data);
 });
 
 //根据ID查询服务
-router.get('/:_id',async function(req,res){
-  let data = await client.get('/services/'+_id);
+router.get('/:id',async function(req,res){
+  let id = req.params.id;
+  console.log(id);
+  let data = await client.get('/services/'+id);
   res.send(data);
 })
 
 //增加服务
 router.post('/',async function(req,res){
-    let {name,type,time,applyGuige,serverGuige,useTime,shopsId,price,typesId,level} = req.body;
-
-  let data = await client.post('/services',{name,type,time,applyGuige,serverGuige,useTime,price,shops:{$ref:'shops',$id:shopsId},serverTypes:{$ref:'serverTypes',$id:typesId},level});
+    let {serviceName,type,time,applyGuige,serverGuige,useTime,shopsId,price,level,serverType} = req.body;
+console.log(serverType);
+  let data = await client.post('/services',{serviceName,type,time,applyGuige,serverGuige,useTime,price,shops:{$ref:'shops',$id:shopsId},serverType,level});
   res.send(data);
   console.log(data);
 })
 
 //修改服务
 router.put('/:_id',async function(req,res){
- let {name,type,time,applyGuige,serverGuige,useTime,shopsId,price,types,level} = req.body;
- console.log(name,type,time,applyGuige,serverGuige,useTime,waiterId,price,types)
-  let data = await client.put('/services/'+_id,{name,type,time,applyGuige,serverGuige,useTime,price,shops:{$ref:'shops',$id:shopsId},types,level});
+  let id = req.params._id;
+ let {serviceName,type,time,applyGuige,serverGuige,useTime,shopsId,price,level,serverType} = req.body;
+ 
+  console.log("xiugai",id,price)
+//  console.log(name,type,time,applyGuige,serverGuige,useTime,waiterId,price,types)
+  let data = await client.put('/services/'+id,{serviceName,type,time,applyGuige,serverGuige,useTime,price,serverType,level});
   res.send(data);
 });
 

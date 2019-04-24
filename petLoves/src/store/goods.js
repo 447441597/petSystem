@@ -16,9 +16,11 @@ export default {
         },
         updt(state,data){
             state.updt= data
+            //   console.log("stata",state.updt.images[0])
         },
         setVisible(state,Visible){
             state.updatadialog = Visible  
+          
         },
         setVisible1(state,Visible){
             state.updatadialog = Visible  
@@ -30,7 +32,7 @@ export default {
     actions:{
         getshow({commit}, payload = {},) {
             let page = payload.page || 1;
-            let rows = payload.rows || 10;
+            let rows = payload.rows || 5;
             let type = payload.type ||"";
             let value =payload.value ||"";
             axios({
@@ -49,12 +51,12 @@ export default {
             })
         },
        Updata({commit},id){
-            // console.log(id,'11')
+            // console.log(id,'修改传的id')
             axios({
                 method:"get",
                 url:"/goods/"+id,
              }).then((res)=>{
-                //  console.log(res.data)
+                //  console.log(res.data,'shuju')
                 commit("updt",res.data)
                 commit("setVisible",true)
              })

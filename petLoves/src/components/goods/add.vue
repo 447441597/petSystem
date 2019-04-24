@@ -57,6 +57,13 @@
             <i class="el-icon-plus"></i>
           </el-upload>
         </el-form-item>
+                <el-form-item label="小图：" :label-width="formLabelWidth">
+          <el-upload action="goods/upload" list-type="picture-card"
+          :on-success='handleSuccess1'
+          >
+            <i class="el-icon-plus"></i>
+          </el-upload>
+        </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">取 消</el-button>
@@ -75,7 +82,8 @@ export default {
     return {
       dialogImageUrl: "",
       dialogFormVisible: false,
-      images: [],
+      img: [],
+      minimum:[],
       form: {
         goodsName: "",
         type: "",
@@ -90,7 +98,10 @@ export default {
         productionDate: "",
         provider: "",
         features: "",
-        price: ""
+        price: "",
+        number:'',
+        images:'',
+        miniimg:''
       },
       formLabelWidth: "140px"
     };
@@ -105,9 +116,18 @@ export default {
         .catch(_ => {});
     },
     handleSuccess(response,file,fileList){
+        // console.log(response,'上传的图片')
+        this.img.push(response)
+        this.form.images=this.img
+        // console.log(this.img,'上传的图片列表')
+        //  console.log(this.form,'上传的图片')
+    },
+    handleSuccess1(response,file,fileList){
         console.log(response,'上传的图片')
-        this.images.push(response)
-        console.log(this.images,'上传的图片列表')
+        this.minimum.push(response)
+        this.form.miniimg=this.minimum
+        // console.log(this.img,'上传的图片列表')
+        //  console.log(this.form,'上传的图片')
     },
     add() {
       let adddata = this.form;
@@ -115,10 +135,7 @@ export default {
       axios({
         method: "post",
         url: "goods/add",
-        data: {
-          adddata,
-          img
-        }
+        data: this.form
       }).then(res => {
         console.log("添加成功");
         this.getshow();

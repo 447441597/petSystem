@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import Vue from "vue";
 import Vuex from "vuex";
 import yj from "./yj";
@@ -12,13 +13,43 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   modules: {
+=======
+import Vue from 'vue'
+import Vuex from 'vuex'
+import yj from './yj'
+import goods from './goods'
+import lwj from './lwj'
+import ordrers from './ordrers'
+import petowns from './petowns'
+import services from './services'
+Vue.use(Vuex)
+
+export default new Vuex.Store({
+  modules:{
+    ordrers,
+>>>>>>> ql
     petowns,
     services,
     ordrers,
     users,
     lwj,
     goods,
+<<<<<<< HEAD
     yj,
     serverType
   },
 });
+=======
+    lwj,yj
+  }
+
+})
+
+
+
+
+
+
+
+
+>>>>>>> ql

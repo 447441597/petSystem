@@ -14,8 +14,17 @@
     <el-table-column label="供应商" prop="provider" width="180"></el-table-column>
     <el-table-column label="特色说明" prop="features" width="180"></el-table-column>
     <el-table-column label="价格" prop="price" width="180"></el-table-column>
-     <el-table-column label="库存" prop="number" width="180"></el-table-column>
-    <el-table-column label="图片" prop="images" width="180"></el-table-column>
+    <el-table-column label="库存" prop="number" width="180"></el-table-column>
+    <el-table-column label="图片" width="180">
+        <template slot-scope="scope">
+        <img :src="src+scope.row.images[0]" width="80" height="80"/>
+         </template>
+    </el-table-column>
+    <el-table-column label="小图" width="180">
+        <template slot-scope="scope">
+        <img :src="src+scope.row.miniimg[0]" width="80" height="80"/>
+         </template>
+    </el-table-column>
     <el-table-column label="操作" width="180">
       <template slot-scope="scope">
         <el-button size="mini" @click="handleEdit(scope.$index,scope.row)">修改</el-button>
@@ -26,25 +35,25 @@
 </template>
 
 <script>
-import axios from 'axios'
-import { createNamespacedHelpers} from 'vuex'
-const { mapActions, mapState, mapMutations} = createNamespacedHelpers("goods");
+import axios from "axios";
+import { createNamespacedHelpers } from "vuex";
+const { mapActions, mapState, mapMutations } = createNamespacedHelpers("goods");
 export default {
   data() {
     return {
-    // data:[],
-    visible2:false
+    src:'http://localhost:3005/images/',
+      visible2: false
     };
   },
   computed: {
-      ...mapState(["show"])
+    ...mapState(["show"])
   },
   methods: {
-      ...mapActions(["getshow"]),
-     del(index,row){
-         console.log(row,index)
-          const h = this.$createElement;
-          this.$confirm("此操作将永久删除该商品, 是否继续?", "提示", {
+    ...mapActions(["getshow"]),
+    ...mapMutations(["setVisible"]),
+    del(index, row) {
+      const h = this.$createElement;
+      this.$confirm("此操作将永久删除该商品, 是否继续?", "提示", {
         //   message: h('p', null, [
         //     h('p', { style: 'color: red;font-size:20px' }, '此操作将永久删除该商品, 是否继续?'),
         //     h('p', { style: 'color: red' }, `商品名字:${row.name} `),
@@ -74,15 +83,16 @@ export default {
           });
         });
     },
-      ...mapActions(["Updata"]),
-     handleEdit(index,row){
-         let id = row._id
-    //   console.log(id)
-      this.Updata(id)
-  }
+    ...mapActions(["Updata"]),
+    handleEdit(index, row) {
+      let id = row._id;
+      //   console.log(id)
+      this.Updata(id);
+      this.setVisible();
+    }
   },
-  created(){
-      this.getshow();
+  created() {
+    this.getshow();
     //  axios({
     //     method: "get",
     //     url: "goods/data"

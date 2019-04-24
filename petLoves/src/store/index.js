@@ -15,7 +15,5 @@ export default new Vuex.Store({
     petowns, services,ordrers,users,lwj,goods,yj,serverType
   }
 
-})
-
-
+});
 

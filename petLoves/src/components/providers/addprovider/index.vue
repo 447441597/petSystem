@@ -7,9 +7,9 @@
 <el-row>
    <el-button  type="primary" @click="dialogFormVisible = true">增加供应商</el-button>
  <div class="sousuo">
-  <el-input placeholder="请输入内容" v-model="search.value" class="input-with-select">
-    <el-select v-model="search.type" slot="prepend" placeholder="请选择">
-       <el-option label="供应商名称" value="name" ></el-option>
+  <el-input placeholder="请输入内容" v-model="proSearch.value" class="input-with-select">
+    <el-select v-model="proSearch.type" slot="prepend" placeholder="请选择">
+       <el-option label="供应商名称" value="providerName" ></el-option>
       <el-option label="供应商电话"  value="phone" ></el-option>
       <el-option label="供应商地址" value="address"  ></el-option>
     </el-select>
@@ -23,7 +23,7 @@
     <el-dialog title="增加供应商" :visible.sync="dialogFormVisible">
       <el-form  :model="form">
         <el-form-item label="供应商名称" :label-width="formLabelWidth">
-          <el-input v-model="form.name" autocomplete="off"></el-input>
+          <el-input v-model="form.providerName" autocomplete="off"></el-input>
         </el-form-item>
          <el-form-item label="营业执照号" :label-width="formLabelWidth">
           <el-input v-model="form.number" autocomplete="off"></el-input>
@@ -57,7 +57,7 @@ data() {
       dialogFormVisible: false,
       form: {
         address: "",
-        name: "",
+        providerName: "",
         number: "",
         person: "",
         phone: "",
@@ -72,25 +72,25 @@ data() {
     };
   },
   computed: {
-    ...mapState(["search"]),
+    ...mapState(["proSearch"]),
     value: {
       get() {
-        return this.search.value;
+        return this.proSearch.value;
       },
       set(value) {
         this.setSearch({
-          ...this.search,
+          ...this.proSearch,
           value
         });
       }
     },
     type: {
       get() {
-        return this.search.type;
+        return this.proSearch.type;
       },
       set(type) {
         this.setSearch({
-          ...this.search,
+          ...this.proSearch,
           type
         });
       }
@@ -108,14 +108,14 @@ data() {
         method: "post",
         url: "/providers",
         data: {
-          name: this.form.name,
+          providerName: this.form.providerName,
           phone: this.form.phone,
           person: this.form.person,
           address: this.form.address,
           number: this.form.number,
         }
       }).then(() => {
-        this.form.name="";
+        this.form.providerName="";
         this.form.phone="";
         this.form.person="";
         this.form.address="";
@@ -129,8 +129,8 @@ data() {
     searchBtn() {
       console.log(123123);
       this.setProviders({
-        type: this.search.type,
-        value: this.search.value
+        type: this.proSearch.type,
+        value: this.proSearch.value
       });
     }
     

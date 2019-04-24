@@ -10,7 +10,7 @@ export default{
         pagination:{},
         visible:false,
     
-        search: {
+        proSearch: {
             value: "",
             type: ""
           },
@@ -31,8 +31,8 @@ export default{
             state.visible = visible
         },
 
-        setSearch(state, search) {
-            state.search = search;
+        setSearch(state, proSearch) {
+            state.proSearch = proSearch;
           },
           
        
@@ -41,8 +41,8 @@ export default{
         setProviders({commit,state}, payload = {},) {
             let page = payload.page || 1;
             let rows = payload.rows || 5;
-            let type = state.search.type ||"";
-            let value =state.search.value ||"";
+            let type = state.proSearch.type ||"";
+            let value =state.proSearch.value ||"";
             axios({
                 method: "get",
                 url: "/providers",
@@ -65,10 +65,10 @@ export default{
                 url:"/providers/"+id,
              }).then((res)=>{
                  console.log(res.data,'查询当前列')
-                 console.log(res.data,'查询当前列')
+                 console.log(res.data,'查询当前列') 
                 commit("provider",res.data)
                 commit("setVisible",true)
-                commit("setUpVisible",false)
+                // commit("setUpVisible",false)
                 
                
                

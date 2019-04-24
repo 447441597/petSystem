@@ -3,17 +3,18 @@
     <el-container style="height:100%">
       <el-header style="background:#0099cc;height:100px;line-height:100px;margin:0">
         <el-row>
-          <el-col :span="8">
+          <el-col :span="4">
             <h1 style="color:white;margin:0">门店管理</h1>
           </el-col>
-           <el-col :span="12">
+           <el-col :span="15">
             <div style="height:10px">
             </div>
           </el-col>
-          <el-col :span="2">
-            <div>
-              <span style="color:white">{{user}}</span>
-            </div>
+          <el-col :span="5">
+              <div id="top">
+              <span style="margin-right:5px;color:white">欢迎用户:{{content}}</span>
+              <el-button type="danger" @click="del">注销</el-button>
+              </div>
           </el-col>
           <!-- <el-col :span="2">
             <el-button type="info" icon="el-icon-back" circle size="mini" @click="logout"></el-button>
@@ -52,10 +53,30 @@
                 </el-menu-item>
                 
                   <!-- ///// -->
-                 <el-menu-item index="/shopManage/shopAddup">
-                  <i class="el-icon-setting"></i>
-                  <router-link to="/shopManage/shopAddup">统计</router-link>
-                </el-menu-item>
+                 <el-submenu index="/shopManage/addUp">
+                  <template slot="title">
+                    <i class="el-icon-location"></i>
+                    <span>统计</span>
+                  </template>
+                  <el-menu-item-group>
+                    <template slot="title">销售量统计</template>
+                    <el-menu-item index="1-1">
+                      <router-link to="/shopManage/GoodsSaleNum">门店商品销售量统计</router-link>
+                    </el-menu-item>
+                    <el-menu-item index="1-2">
+                      <router-link to="/shopManage/ServiceSaleNum">门店服务销售统计</router-link>
+                    </el-menu-item>
+                  </el-menu-item-group>
+                  <el-menu-item-group>
+                    <template slot="title">销售额统计</template>
+                    <el-menu-item index="1-1">
+                       <router-link to="/shopManage/GoodsMoney">商品销售额统计</router-link>
+                    </el-menu-item>
+                    <el-menu-item index="1-2">
+                       <router-link to="/shopManage/ServiceMoney">服务销售额统计</router-link>
+                    </el-menu-item>
+                  </el-menu-item-group>
+                </el-submenu>
                 
               </el-menu>
             </el-col>
@@ -73,46 +94,44 @@
 import axios from "axios";
 export default {
   created() {
-    // axios({
-    //   method: "get",
-    //   url: "/getSession"
-    // }).then(res => {
-    //   console.log(res);
-    //   if (res.data) {
-    //     this.user = res.data;
-    //   } else {
-    //     this.$router.push({ path: "/login" });
-    //   }
-    // });
-    this.defaultIndex = this.$router.history.current.path;
+    this.getsession();
+    console.log("进入生命周期");
   },
   data() {
     return {
       user: "",
-      defaultIndex: ""
+      defaultIndex: "",
+      content: ""
     };
   },
-  methods: {
-    logout() {
-      axios({
-        method: "get",
-        url: "/removeSession"
-      }).then(res => {
-        this.$router.push({ path: "/login" });
-      });
-    },
 
-    select() {
+  methods: {
+    getsession() {
       axios({
         method: "get",
         url: "/getSession"
       }).then(res => {
-        console.log(res);
-        if (res.data) {
+        console.log(res.data.phone);
+        if (res.data.phone&&res.data.privilege==0) {
+          console.log("进来啦");
+          this.content = res.data.phone;
         } else {
           this.$router.push({ path: "/login" });
         }
       });
+    },
+    removesession() {
+      axios({
+        type: "get",
+        url: "/removeSession"
+      }).then(res => {
+        console.log(res.data.phone);
+        this.content = "";
+        this.$router.push({ path: "/login" });
+      });
+    },
+    del() {
+      this.removesession();
     }
   }
 };
@@ -124,7 +143,6 @@ a {
   color: white;
   width: 100%;
   height: 100%;
-  display:inline-block
+  display: inline-block;
 }
-
 </style>

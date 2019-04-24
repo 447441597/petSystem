@@ -31,9 +31,9 @@ router.get('/data',async function(req, res) {
 
 //增加商品
 router.post('/add',async function(req,res){
-  let {goodsName,type,material,applyGuige,exGuige,Packing,taste,specialFunc,addr,keepDate,productionDate,provider,features,price,images,number}=req.body
-  console.log(req.body,'增加的')
-  let data = await client.post('/goods',{goodsName,type,material,applyGuige,exGuige,Packing,taste,specialFunc,addr,keepDate,productionDate,provider,features,price,images,number});
+  let {goodsName,type,material,applyGuige,exGuige,Packing,taste,specialFunc,addr,keepDate,productionDate,provider,features,price,images,miniimg,number}=req.body
+  console.log(req.body,"123")
+  let data = await client.post('/goods',{goodsName,type,material,applyGuige,exGuige,Packing,taste,specialFunc,addr,keepDate,productionDate,provider,features,price,images,miniimg,number});
   res.send(data);
 })
 
@@ -53,9 +53,9 @@ router.get('/:id', async function (req, res) {
 //修改商品
 router.put('/:id',async function(req,res){
   let id = req.params.id;
-  let {goodsName,type,material,applyGuige,exGuige,Packing,taste,specialFunc,addr,keepDate,productionDate,provider,features,price,images,number}=req.body
-  
-  let data = await client.put('/goods/'+id,{goodsName,type,material,applyGuige,exGuige,Packing,taste,specialFunc,addr,keepDate,productionDate,provider,features,price,images,number});
+  let {goodsName,type,material,applyGuige,exGuige,Packing,taste,specialFunc,addr,keepDate,productionDate,provider,features,price,images,number,miniimg}=req.body
+  console.log(req.body)
+  let data = await client.put('/goods/'+id,{goodsName,type,material,applyGuige,exGuige,Packing,taste,specialFunc,addr,keepDate,productionDate,provider,features,price,images,number,miniimg});
   res.send(data);
 })
 

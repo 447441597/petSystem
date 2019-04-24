@@ -12,7 +12,7 @@ export default {
     service: {},
     type: "",
     times: [],
-    date:"",
+    serverDate:"",
     pagination: {
       eachpage: ""
     },
@@ -60,6 +60,9 @@ export default {
     },
     setPagesize(state, pageSize) {
       state.pagination.eachpage = pageSize;
+    },
+    setServerDate(state,serverDate){
+      state.serverDate = serverDate;
     }
   },
   actions: {
@@ -140,6 +143,10 @@ export default {
     },
     setPagesize({ commit }, size) {
       commit("setPagesize", size);
+    },
+    setServerDate({commit},date){
+      console.log(date,"date");
+      commit("setServerDate",date);
     }
   }
 };

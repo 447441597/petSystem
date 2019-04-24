@@ -31,9 +31,9 @@ router.get('/:id',async function(req,res){
 
 //增加服务
 router.post('/',async function(req,res){
-    let {serviceName,type,time,applyGuige,serverGuige,useTime,shopsId,price,level,serverType} = req.body;
+    let {serverDate,serviceName,type,time,applyGuige,serverGuige,useTime,shopsId,price,level,serverType} = req.body;
 console.log(serverType);
-  let data = await client.post('/services',{serviceName,type,time,applyGuige,serverGuige,useTime,price,shops:{$ref:'shops',$id:shopsId},serverType,level});
+  let data = await client.post('/services',{serverDate,serviceName,type,time,applyGuige,serverGuige,useTime,price,shops:{$ref:'shops',$id:shopsId},serverType,level});
   res.send(data);
   console.log(data);
 })

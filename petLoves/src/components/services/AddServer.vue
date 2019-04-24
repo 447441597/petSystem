@@ -93,15 +93,24 @@ export default {
     // console.log(this.services,"添加")
   },
   computed: {
-    ...mapState(["serverTypes", "services",,"levels"])
+    ...mapState(["serverTypes", "services",,"levels","serverDate"])
   },
   methods: {
     ...mapActions(["getTypes", "getServices","getLevel"]),
     click() {
       let shopId = "5cbc22270ca8acf604b3eaa6";
-      (this.dialogFormVisible = true), this.getTypes();
+      if(this.serverDate){
+         (this.dialogFormVisible = true), this.getTypes();
       this.getLevel(shopId);
       console.log(this.services,"11","levels");
+      } else {
+          this.$message({
+          showClose: true,
+          message: '请先选择日期',
+          type: 'error'
+        });
+      }
+     
     },
     removeTime(item) {
       var index = this.service.time.indexOf(item);
@@ -118,26 +127,31 @@ export default {
     addService() {
       console.log(this.service,"插入的数据");
         (this.dialogFormVisible = false);
-      axios({
-        method: "post",
-        url: "/services",
-        data: {
-          price:this.service.price,
-          serviceName: this.service.serviceName,
-          serverType:this.service.serverType,
-          typesId: this.serverType,
-          time: this.service.time,
-          applyGuige: this.service.applyGuige,
-          serverGuige: this.service.serverGuige,
-          useTime: this.service.useTime,
-          shopsId: this.service.shops,
-          level: this.service.level,
-          seviceType:this.service.serverType
-        }
-      }).then(res => {
-        console.log(res);
-        this.getServices();
-      });
+        let serverDate = this.serverDate
+        console.log(serverDate,"11111111")
+        
+          axios({
+            method: "post",
+            url: "/services",
+            data: {
+              serverDate:serverDate,
+              price:this.service.price,
+              serviceName: this.service.serviceName,
+              serverType:this.service.serverType,
+              typesId: this.serverType,
+              time: this.service.time,
+              applyGuige: this.service.applyGuige,
+              serverGuige: this.service.serverGuige,
+              useTime: this.service.useTime,
+              shopsId: this.service.shops,
+              level: this.service.level,
+              seviceType:this.service.serverType
+            }
+          }).then(res => {
+            console.log(res);
+            this.getServices();
+          });
+       
     }
   }
 };

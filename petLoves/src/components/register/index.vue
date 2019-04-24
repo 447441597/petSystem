@@ -114,7 +114,8 @@ export default {
               url: "/users/shopRegister",
               data: {
                 phone: this.ruleForm2.phone,
-                pwd: this.ruleForm2.checkPass
+                pwd: this.ruleForm2.checkPass,
+                shopsId:""
               }
             }).then(res => {
               this.$router.push({ path: "/login" });

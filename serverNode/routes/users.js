@@ -69,12 +69,14 @@ router.post("/shopRegister", async function (req, res) {
   //获取请求数据
   let {
     phone,
-    pwd
+    pwd,
+    shopsId,
   } = req.body;
   let data = await client.post("/users", {
     phone,
     pwd,
-    privilege
+    privilege,
+    shopsId,
   });
   res.send(data);
 });
@@ -135,13 +137,13 @@ router.put("/:id", async function (req, res) {
     phone,
     pwd,
     privilege,
-    shopid
+    shopsId
   } = req.body;
   let data = await client.put("/users/" + id, {
     phone,
     pwd,
     privilege,
-    shopid
+    shopsId
   });
   res.send(data);
 });

@@ -16,9 +16,6 @@
               <el-button type="danger" @click="del">注销</el-button>
               </div>
           </el-col>
-          <!-- <el-col :span="2">
-            <el-button type="info" icon="el-icon-back" circle size="mini" @click="logout"></el-button>
-          </el-col> -->
         </el-row>
       </el-header>
       <el-container style="height:100%">
@@ -35,10 +32,7 @@
                
               >
                 <el-menu-item index="/shopManage/apply">
-                  <template slot="title">
-                    <i class="el-icon-location"></i>
-                    <router-link to="/shopManage/apply">申请</router-link>
-                  </template>
+                  
                 </el-menu-item>
                 <el-menu-item index="/shopManage/goods">
                   <i class="el-icon-menu"></i>

@@ -1,158 +1,102 @@
 <template>
     <div>
-  <el-button type="primary"  @click="selected(true)" style="margin-bottom:20px">门店管理</el-button>
-  <template v-if="select">
-      <el-card class="box-card" >
-        <div slot="header" class="clearfix">
-          <h2>门店管理</h2>
-        </div>
-    <el-table
-    :data="shops"
-    style="width: 100%">
-    <el-table-column
-      label="姓名"
-      prop="shopsName"
-      width="120">
-    </el-table-column>
-    <el-table-column
-      label="营业执照号码"
-      prop="businessNum"
-      width="120">
-    </el-table-column>
-      <el-table-column
-      label="营业执照"
-      prop="businessImage"
-      width="120">
-    </el-table-column>
-     <el-table-column
-      label="地址"
-      prop="address"
-      width="120">
-    </el-table-column>
-     <el-table-column
-      label="法人"
-      prop="legalPerson"
-      width="120">
-    </el-table-column>
-     <el-table-column
-      label="电话"
-      prop="tel"
-      width="120">
-    </el-table-column>
-     <el-table-column
-      label="头图"
-      prop="headImage"
-      width="120">
-    </el-table-column>
-     <el-table-column
-      label="特色"
-      prop="feature"
-      width="120">
-    </el-table-column>
-    <el-table-column
-      label="VIP等级"
-      prop="vipLeval"
-      width="120">
-    </el-table-column>
-    <el-table-column
-      label="佣金比例"
-      prop="rate"
-      width="120">
-    </el-table-column>
-    <el-table-column
-      label="职员姓名"
-      prop="assistantname"
-      width="120">
-    </el-table-column>
-    <el-table-column
-      label="职员职级"
-      prop="assistantlevel"
-      width="120">
-    </el-table-column>
-    <el-table-column
-      label="职员电话"
-      prop="assistantphone"
-      width="120">
-    </el-table-column>
-    <el-table-column label="操作">
-      <template slot-scope="scope" class="scope">
-        <el-button
-          size="mini"
-          @click="handleDelete(scope.$index, scope.row)" type="danger" icon="el-icon-delete" circle></el-button>
-          <el-button
-          size="mini"
-          @click="handleEdit(scope.$index, scope.row)" icon="el-icon-edit" type="primary" circle></el-button>
-           <el-button type="primary"  @click="handlexamine(scope.$index, scope.row)" size="mini" style="margin-bottom:20px">审核</el-button>
-      </template>
-    </el-table-column>
-     </el-table>
-   </el-card>
-  </template>
-<template v-else>
-        <el-card class="box-card" >
-          <div slot="header" class="clearfix">
-            <h2>审核进度</h2>
-          </div>
-        <el-steps :space="400" :active="active" >
-          <el-step title="审核中"></el-step>
-          <el-step title="已审核"></el-step>
-        </el-steps>
-       </el-card>
-       </template>
+      <el-row>
+  <!-- <el-button type="primary"  @click="selected(true)" style="margin-bottom:20px">门店管理</el-button>
+  <el-button type="primary"  style="margin-bottom:20px" @click="selected(false)">门店审核</el-button> -->
+  <div class="sousuo">
+  <el-input placeholder="请输入内容" v-model="search.value" class="input-with-select">
+    <el-select v-model="search.type" slot="prepend" placeholder="请选择">
+      <el-option label="门店名称" value="storeName"></el-option>
+      <el-option label="地址" value="address"></el-option>
+    </el-select>
+    <el-button slot="append" icon="el-icon-search" @click="searchBtn"></el-button>
+  </el-input>
+</div>
+</el-row>
+ <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
+    <el-tab-pane label="门店管理" name="first"> 
+      <tabstocks></tabstocks>
+    </el-tab-pane>
+    <el-tab-pane label="门店审核" name="second" >
+      <tabexam></tabexam>
+    </el-tab-pane>
+  </el-tabs>
+       <update></update>
     </div>
 </template>
 
 <script>
-import { createNamespacedHelpers, mapMutations } from "vuex";
+import { createNamespacedHelpers } from "vuex";
 import axios from "axios";
-const { mapActions, mapState } = createNamespacedHelpers("lwj");
+import Update from "./update.vue";
+import Page from "./page.vue";
+import Examine from "./examine.vue";
+import Tabstocks from './tabstocks.vue';
+import Tabexam from './tabexam.vue'
+const { mapActions, mapState, mapMutations } = createNamespacedHelpers("lwj");
 export default {
   data() {
     return {
-      select: true
+      // dialogVisible: false,
+      select: true,
+      activeName: "first",
+      info: [],
+      zhiyuan:[]
     };
   },
   created() {
-    this.setshops();
+    this.getok();
+   
+    // this.setshops()
   },
   computed: {
-    ...mapState(["shops", "pagiNation"])
+    ...mapState(["shops", "pagiNation", "search"]),
+    value: {
+      get() {
+        return this.search.value;
+      },
+      set(value) {
+        this.setSearch({
+          ...this.search,
+          value
+        });
+      }
+    },
+    type: {
+      get() {
+        return this.search.type;
+      },
+      set(type) {
+        this.setSearch({
+          ...this.search,
+          type
+        });
+      }
+    }
   },
   methods: {
-    ...mapActions(["setshops","setShop"]),
-    ...mapMutations(["setActive"]),
+    ...mapActions(["setshops", "setShop","getno",'getok']),
+    ...mapMutations(["setActive", "setSearch", "setVisible","setdialogVisible"]),
     selected(data) {
       this.select = data;
     },
-    handlexamine(index, row) {
-      this.select=false;
-      let id = row._id;
-      console.log(id, "id");
-       this.setShop(id);
+    handleClick(value) {
+      console.log(value.label);
+      if(value.label == '门店审核'){
+      this.getno();
+      }else{
+        this.getok()
+      }
     },
-    handleDelete(index, row) {
-      let id = row._id;
-      this.$confirm(`门店名称:${row.shopsName}`, "删除提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        showClose: false,
-        type: "warning"
-      })
-        .then(() => {
-          axios({
-            method: "delete",
-            url: "/shops/" + id
-          }).then(res => {
-            console.log(res);
-            this.setshops();
-            this.$message("删除成功");
-          });
-        })
-        .catch(() => {
-          this.$message("取消删除");
-        });
+    searchBtn() {
+      console.log(123123);
+      this.getok({
+        type: this.search.type,
+        value: this.search.value
+      });
     }
-  }
+  },
+  components: { Update, Page, Examine ,Tabstocks,Tabexam}
 };
 </script>
 
@@ -162,5 +106,21 @@ export default {
 }
 .cell {
   text-align: center;
+}
+.el-input__inner .el-input--prefix {
+  width: 200px;
+}
+.el-select .el-input {
+  width: 130px;
+}
+.input-with-select .el-input-group__prepend {
+  background-color: #fff;
+}
+.el-row {
+  display: flex;
+}
+.sousuo {
+  margin-left: 5px;
+  margin-bottom: 10px;
 }
 </style>

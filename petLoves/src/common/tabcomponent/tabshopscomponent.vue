@@ -85,7 +85,14 @@ export default {
   methods: {
     ...mapActions(["getOrders"]),
     pageChange(i) {
-      console.log(i);
+      console.log(i, "i");
+      // console.log(this.pagination)
+      let playload = {
+        page: i,
+        ordersType: 0
+      };
+      console.log(playload, "playload");
+      this.getOrders(playload);
     },
     handleClick(row) {
       // console.log("详细信息", this.dialogVisible);

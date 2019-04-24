@@ -8,7 +8,6 @@ import Users from './components/users'
 import Shops from './components/shops'
 import Providers from './components/providers'
 import PetOwns from './components/petOwns'
-// import AddUp from './components/addUp'
 import ShopManage from './components/shopManage'
 import Apply from './components/apply'
 import Goods from './components/goods'
@@ -19,26 +18,18 @@ import GoodsRatio from './components/addUp/salesMoney/GoodsRatio'
 import ServicesRatio from './components/addUp/salesMoney/ServicesRatio'
 import GoodsMoneyRatio from './components/addUp/salesMoneyRatio/GoodsMoneyRatio'
 import ServicesMoneyRatio from './components/addUp/salesMoneyRatio/ServicesMoneyRatio'
+import GoodsSaleNum from './components/shopAddup/salesNum/GoodsSaleNum'
+import ServiceSaleNum from './components/shopAddup/salesNum/ServiceSaleNum'
+import GoodsMoney from './components/shopAddup/shopSalesMoney/GoodsMoney'
+import ServiceMoney from './components/shopAddup/shopSalesMoney/ServiceMoney'
 // import SalesMoneyRatio from './components/addUp/salesMoneyRatio'
 
 Vue.use(Router)
 
 export default new Router({
+  mode:"history",
   routes: [
-    // {
-    //   path: '/',
-    //   name: 'home',
-    //   component: Home
-    // },
-    // {
-    //   path: '/about',
-    //   name: 'about',
-    //   // route level code-splitting
-    //   // this generates a separate chunk (about.[hash].js) for this route
-    //   // which is lazy-loaded when the route is visited.
-    //   component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
-    // }
-    { path: "/", component: Register },
+    { path: "/", component: Login },
     { path: "/register", component: Register },
     { path: "/login", component: Login },
     {
@@ -100,8 +91,20 @@ export default new Router({
           component:Orders
         },
         {
-          path:"/shopManage/shopAddup",
-          component:ShopAddup
+          path:"/shopManage/GoodsSaleNum",
+          component:GoodsSaleNum
+        },
+        {
+          path:"/shopManage/ServiceSaleNum",
+          component:ServiceSaleNum
+        },
+        {
+          path:"/shopManage/GoodsMoney",
+          component:GoodsMoney
+        },
+        {
+          path:"/shopManage/ServiceMoney",
+          component:ServiceMoney
         }
       ]
     }

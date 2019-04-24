@@ -56,10 +56,30 @@
                 </el-menu-item>
                 
                   <!-- ///// -->
-                 <el-menu-item index="/shopManage/shopAddup">
-                  <i class="el-icon-setting"></i>
-                  <router-link to="/shopManage/shopAddup">统计</router-link>
-                </el-menu-item>
+                 <el-submenu index="/shopManage/addUp">
+                  <template slot="title">
+                    <i class="el-icon-location"></i>
+                    <span>统计</span>
+                  </template>
+                  <el-menu-item-group>
+                    <template slot="title">销售量统计</template>
+                    <el-menu-item index="1-1">
+                      <router-link to="/shopManage/GoodsSaleNum">门店商品销售量统计</router-link>
+                    </el-menu-item>
+                    <el-menu-item index="1-2">
+                      <router-link to="/shopManage/ServiceSaleNum">门店服务销售统计</router-link>
+                    </el-menu-item>
+                  </el-menu-item-group>
+                  <el-menu-item-group>
+                    <template slot="title">销售额统计</template>
+                    <el-menu-item index="1-1">
+                       <router-link to="/shopManage/GoodsMoney">商品销售额统计</router-link>
+                    </el-menu-item>
+                    <el-menu-item index="1-2">
+                       <router-link to="/shopManage/ServiceMoney">服务销售额统计</router-link>
+                    </el-menu-item>
+                  </el-menu-item-group>
+                </el-submenu>
                 
               </el-menu>
             </el-col>

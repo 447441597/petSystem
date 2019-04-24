@@ -13,13 +13,13 @@ router.get('/', async function (req, res) {
   let type = req.query.type;
   let value = req.query.value;
   if (type && value) {
-    console.log('模糊查询');
+    // console.log('模糊查询');
     which = {
       [type]: value //$regex:value主要作用是模糊查询，相当于正则表达式一样
     }
     console.log(which);
   } else {
-    console.log('查询全部');
+    // console.log('查询全部');
     which = {};
   }
   let data = await client.get('/shops', {
@@ -28,7 +28,7 @@ router.get('/', async function (req, res) {
     ...which
   });
   res.send(data);
-  console.log(data, "123")
+  // console.log(data, "123")
 });
 // 未审核
 router.get("/no", async function (req, res) {
@@ -70,17 +70,14 @@ router.get('/ok', async function (req, res) {
     which = {};
   }
   let data = await client.get('/shops',{page,rows,...which});
-  console.log(data,"shujaaaaaaaaaaaaaaaaaaaaaaaaau")
   for (let i = 0; i < data.rows.length; i++) {
     // console.log(123)
     if (data.rows[i].temp == 1) {
       info.push(data.rows[i]);
     }
   }
-  console.log(info, 'iaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaanfo');
   data.rows = info;
   res.send(data)
-  console.log(data,"d555555555555555555555555ata")
 });
 //删除
 router.delete('/:id', async function (req, res) {
@@ -88,11 +85,13 @@ router.delete('/:id', async function (req, res) {
   let data = await client.delete('/shops/' + id);
   res.send(data);
 });
+
 //根据id查询
 router.get('/:id', async function (req, res) {
   let id = req.params.id;
   let data = await client.get('/shops/' + id);
   res.send(data);
+  console.log(data,"safsadadwdatujrioyjeihuhwetuih")
 })
 
 

@@ -8,6 +8,13 @@
            <el-form-item label="营业执照号码" :label-width="formLabelWidth">
               <el-input v-model="shop.businessNum" autocomplete="off"></el-input>
            </el-form-item>
+             <el-form-item label="营业执照" :label-width="formLabelWidth">
+              <el-upload v-model="shop.businessImage" action="/applys/upload" list-type="picture-card"
+                    :on-success='handleSuccess'
+                    :disabled='true'>
+           <img width="147" height="147" :src="src+shop.businessImage" alt="">
+          </el-upload>
+           </el-form-item>
            <el-form-item label="地址" :label-width="formLabelWidth">
               <el-input v-model="shop.address" autocomplete="off"></el-input>
            </el-form-item>
@@ -16,6 +23,13 @@
            </el-form-item>
             <el-form-item label="电话" :label-width="formLabelWidth">
               <el-input v-model="shop.tel" autocomplete="off"></el-input>
+           </el-form-item>
+            <el-form-item label="门店图片" :label-width="formLabelWidth" prop="headImage">
+              <el-upload v-model="shop.headImage" action="/applys/upload" list-type="picture-card"
+                    :on-success='handleSuccess'
+                    :disabled='true'>
+           <img width="147" height="147" :src="src+shop.headImage" alt="">
+          </el-upload>
            </el-form-item>
             <el-form-item label="特色" :label-width="formLabelWidth">
               <el-input v-model="shop.feature" autocomplete="off"></el-input>
@@ -60,20 +74,19 @@
 <script>
 import axios from "axios";
 import { createNamespacedHelpers } from "vuex";
-const { mapActions, mapState, mapMutations } = createNamespacedHelpers(
-  "lwj"
-);
+const { mapActions, mapState, mapMutations } = createNamespacedHelpers("lwj");
 export default {
-  data(){
-    return{
-      dialogVisible:false,
-      value:"",
-       formLabelWidth: "120px"
-    }
+  data() {
+    return {
+      src: "http://localhost:3005/images/",
+      dialogVisible: false,
+      value: "",
+      formLabelWidth: "120px"
+    };
   },
   computed: {
     ...mapState(["shop", "visible2"]),
-     storeName: {
+    storeName: {
       set(storeName) {
         this.setShop({
           ...this.shop,
@@ -163,11 +176,11 @@ export default {
     }
   },
   methods: {
-    ...mapActions(["setShop", "setshops","getok"]),
+    ...mapActions(["setShop", "setshops", "getok"]),
     ...mapMutations(["setVisible2"]),
     update() {
       let id = this.shop._id;
-      console.log(id,"123123")
+      console.log(id, "123123");
       // console.log(this.form.name, this.form.age, this.form.gender);
       axios({
         method: "put",
@@ -183,13 +196,12 @@ export default {
         message: "修改成功!"
       });
     },
-    updateAssis(){
-      this.dialogVisible = true
+    updateAssis() {
+      this.dialogVisible = true;
     }
   }
 };
 </script>
 
 <style>
-
 </style>

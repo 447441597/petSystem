@@ -54,7 +54,7 @@ router.put("/:_id", async function(req, res) {
   let data = await client.put("/serverTypes/" + id, {
     typeName,
     typePrice,
-    shops: { $ref: "shops", $id: shopsId }
+    // shops: { $ref: "shops", $id: shopsId }
   });
   console.log(data, "修改类型");
   res.send(data);

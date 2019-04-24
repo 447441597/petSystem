@@ -1,7 +1,5 @@
 <template>
-    <div>
-        <h1>统计</h1>
-    </div>
+    <div>销售金额统计</div>
 </template>
 
 <script>

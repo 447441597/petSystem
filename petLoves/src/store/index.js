@@ -17,13 +17,7 @@ export default new Vuex.Store({
   state: {
 
   },
-<<<<<<< HEAD
  
-=======
-  actions: {
-    
-  }
->>>>>>> 4e22087ac5f4382c56e1264bc6d7fa7b3fb7eb62
 
 })
 

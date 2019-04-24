@@ -43,7 +43,7 @@ export default {
             method: "delete",
             url: "/serverTypes/" + row._id
           }).then(res => {
-            this.getServices();
+            this.getTypes();
           });
         })
         .catch(_ => {});

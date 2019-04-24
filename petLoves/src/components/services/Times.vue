@@ -3,9 +3,7 @@
    
     <el-dialog title="工作时间" :visible.sync="timeVisible">
       <el-table :data="times">
-        <el-table-column property="timeSlot" label="工作时间" width="200"></el-table-column>
-        <!-- <el-table-column property="name" label="姓名" width="200"></el-table-column> -->
-        <!-- <el-table-column property="address" label="地址"></el-table-column> -->
+        <el-table-column property="timeSlot" label="工作时间" width="700"></el-table-column>
       </el-table>
       <div slot="footer" class="dialog-footer">
     <el-button @click="cancel">关闭</el-button>

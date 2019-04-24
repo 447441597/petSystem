@@ -11,10 +11,7 @@ import ShopManage from './components/shopManage'
 import Goods from './components/goods'
 import Services from './components/services'
 import Orders from './components/orders'
-import ShopAddup from './components/shopAddup'
-<<<<<<< HEAD
-import Apply from './components/apply/index.vue'
-=======
+// import ShopAddup from './components/shopAddup'
 import GoodsRatio from './components/addUp/salesMoney/GoodsRatio'
 import ServicesRatio from './components/addUp/salesMoney/ServicesRatio'
 import GoodsMoneyRatio from './components/addUp/salesMoneyRatio/GoodsMoneyRatio'
@@ -23,19 +20,15 @@ import GoodsSaleNum from './components/shopAddup/salesNum/GoodsSaleNum'
 import ServiceSaleNum from './components/shopAddup/salesNum/ServiceSaleNum'
 import GoodsMoney from './components/shopAddup/shopSalesMoney/GoodsMoney'
 import ServiceMoney from './components/shopAddup/shopSalesMoney/ServiceMoney'
+import Apply from './components/apply/index.vue'
 // import SalesMoneyRatio from './components/addUp/salesMoneyRatio'
 
->>>>>>> 54b7fc0e18179fe1b47eeb92b036527ca0e994fb
 Vue.use(Router)
 
 export default new Router({
   mode:"history",
   routes: [
-<<<<<<< HEAD
-    { path: "/", component: Register },
-=======
     { path: "/", component: Login },
->>>>>>> 54b7fc0e18179fe1b47eeb92b036527ca0e994fb
     { path: "/register", component: Register },
     { path: "/login", component: Login },
     { path: "/apply", component: Apply },

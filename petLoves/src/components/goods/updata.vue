@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-dialog title="修改商品" :visible.sync="updatadialog " width="35%">
+    <el-dialog title="修改商品" :visible.sync="updatadialog " width="35%" :show-close='false'>
       <el-form>
         <el-form-item label="商品名称：" :label-width="formLabelWidth">
           <el-input v-model="updt.goodsName" autocomplete="off"></el-input>

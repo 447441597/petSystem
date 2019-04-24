@@ -31,9 +31,9 @@ router.get('/data',async function(req, res) {
 
 //增加商品
 router.post('/add',async function(req,res){
-  let {goodsName,type,material,applyGuige,exGuige,Packing,taste,specialFunc,addr,keepDate,productionDate,provider,features,price,images,miniimg,number}=req.body
+  let {goodsName,type,material,applyGuige,exGuige,Packing,taste,specialFunc,addr,keepDate,productionDate,provider,features,price,images,miniimg,number,shopsId}=req.body
   console.log(req.body,"123")
-  let data = await client.post('/goods',{goodsName,type,material,applyGuige,exGuige,Packing,taste,specialFunc,addr,keepDate,productionDate,provider,features,price,images,miniimg,number});
+  let data = await client.post('/goods',{goodsName,type,material,applyGuige,exGuige,Packing,taste,specialFunc,addr,keepDate,productionDate,provider,features,price,images,miniimg,number,shops:{$ref:'shops',$id:shopsId}});
   res.send(data);
 })
 

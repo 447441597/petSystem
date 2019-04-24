@@ -95,7 +95,7 @@ export default {
         url: "/getSession"
       }).then(res => {
         console.log(res.data.phone);
-        if (res.data.phone) {
+        if (res.data.phone&&res.data.privilege==0) {
           console.log("进来啦");
           this.content = res.data.phone;
         } else {

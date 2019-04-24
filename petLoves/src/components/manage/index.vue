@@ -110,7 +110,7 @@ export default {
         url: "/getSession"
       }).then(res => {
         console.log(res.data.phone);
-        if (res.data.phone) {
+        if (res.data.phone&&res.data.privilege==2) {
           this.content = res.data.phone;
         } else {
           this.$router.push({ path: "/login" });

@@ -48,7 +48,7 @@ export default {
           phone: this.person.phone,
           pwd: this.person.pwd,
         }
-      }).then(res => {
+      }).then(res=> {
         this.setPersons();
         this.setVisible1();
       });

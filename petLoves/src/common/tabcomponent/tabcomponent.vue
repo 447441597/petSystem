@@ -101,7 +101,6 @@ export default {
       // console.log(this.pagination)
       let playload = {
         page: i,
-        rows: this.pagination.eachpage,
         ordersType: 0
       };
       console.log(playload, "playload");

@@ -29,9 +29,10 @@ router.get("/", async function(req, res) {
       }
     }
     data1.rows = data;
+    data1.total = data1.rows.length;
     info = data1;
     res.send(data1);
-    // console.log(data1, "data");
+    console.log(data1, "data");
   } else if (ordersType == 1) {
     //请求服务订单
     for (let i = 0; i < data1.rows.length; i++) {
@@ -41,9 +42,10 @@ router.get("/", async function(req, res) {
       }
     }
     data1.rows = data;
+    data1.total = data1.rows.length;
     info = data1;
     res.send(data1);
-    // console.log(data1, "data");
+    console.log(data1, "data");
   }
 });
 

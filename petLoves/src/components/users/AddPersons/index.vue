@@ -37,27 +37,26 @@ export default {
   data() {
     var checkphone = (rule, value, callback) => {
       if (value) {
-         if (/^1\d{10}$/.test(value)) {
-        axios({
-          method: "get",
-          url: "/users/repeat",
-          params: {
-            phone: value
-          }
-        }).then(res => {
-          if (res.data.status == 0) {
-            callback("手机号重复");
-          } else {
-            callback();
-          }
-        });
-      }else{
-         return callback(new Error("手机号格式不正确"));
-      }
-      } else{
+        if (/^1\d{10}$/.test(value)) {
+          axios({
+            method: "get",
+            url: "/users/repeat",
+            params: {
+              phone: value
+            }
+          }).then(res => {
+            if (res.data.status == 0) {
+              callback("手机号重复");
+            } else {
+              callback();
+            }
+          });
+        } else {
+          return callback(new Error("手机号格式不正确"));
+        }
+      } else {
         return callback(new Error("请输入手机号"));
       }
-      
     };
     var validatePass = (rule, value, callback) => {
       if (value === "") {
@@ -94,9 +93,9 @@ export default {
     ...mapActions(["setPersons"]),
     submitForm() {
       if (
-        this.ruleForm2.phone != "" &&
+        /^1\d{10}$/.test(this.ruleForm2.phone)&&
         this.ruleForm2.pwd != "" &&
-        this.ruleForm2.checkPass != ""
+        this.ruleForm2.checkPass!=""
       ) {
         this.centerDialogVisible = false;
         axios({

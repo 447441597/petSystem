@@ -64,9 +64,9 @@ export default {
             }
           }).then(res => {
             console.log(res.data);
-            if (res.data.privilege==2) {
+            if (res.data.privilege=="2") {
               this.$router.push({ path: "/manage" });
-            }else if(res.data.privilege==0){
+            }else if(res.data.privilege=="0"){
               this.$router.push({ path: "/shopManage" });
             } else {
               alert("手机号密码错误");

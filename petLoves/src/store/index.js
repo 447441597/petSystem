@@ -20,5 +20,5 @@ export default new Vuex.Store({
     goods,
     yj,
     serverType
-  }
+  },
 });

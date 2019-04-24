@@ -8,6 +8,7 @@
         </el-row>
         <Table></Table>
         <Updateperson></Updateperson>
+        <Papge></Papge>
     </div>
 </template>
 
@@ -16,6 +17,7 @@ import AddPersons from "./AddPersons";
 import Updateperson from "./Updateperson";
 import SearchPerson from "./SearchPerson";
 import Table from "./Table";
+import Papge from "./Papge";
 import axios from "axios";
 import { createNamespacedHelpers } from "vuex";
 const { mapActions, mapState } = createNamespacedHelpers("users");
@@ -24,7 +26,8 @@ export default {
     AddPersons,
     Table,
     Updateperson,
-    SearchPerson
+    SearchPerson,
+    Papge
   }
 };
 </script>

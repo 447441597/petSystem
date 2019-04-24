@@ -12,6 +12,7 @@ export default {
     service: {},
     type: "",
     times: [],
+    date:"",
     pagination: {
       eachpage: ""
     },

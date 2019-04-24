@@ -48,13 +48,13 @@
           <el-input v-model="updt.number" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="图片：" :label-width="formLabelWidth">
-          <el-upload v-model="updt.images" action="goods/upload" list-type="picture-card"
+          <el-upload v-model="updt.images" action="/goods/upload" list-type="picture-card"
           :on-success='handleSuccess'
           >
            <!-- <img width="147" height="147" :src="src+updt.images[0]" alt=""> -->
             <i class="el-icon-plus"></i>
           </el-upload>
-          <el-upload v-model="updt.images" action="goods/upload" list-type="picture-card"
+          <el-upload v-model="updt.images" action="/goods/upload" list-type="picture-card"
           :on-success='handleSuccess'
            :disabled='true'
           >
@@ -63,13 +63,13 @@
           </el-upload>
         </el-form-item>
                <el-form-item label="小图：" :label-width="formLabelWidth">
-          <el-upload v-model="updt.miniimg" action="goods/upload" list-type="picture-card"
+          <el-upload v-model="updt.miniimg" action="/goods/upload" list-type="picture-card"
           :on-success='handleSuccess1'
           >
            <!-- <img width="147" height="147" :src="src+updt.miniimg[0]" alt=""> -->
             <i class="el-icon-plus"></i>
           </el-upload>
-          <el-upload v-model="updt.miniimg" action="goods/upload" list-type="picture-card"
+          <el-upload v-model="updt.miniimg" action="/goods/upload" list-type="picture-card"
           :on-success='handleSuccess1'
           :disabled='true'
           >

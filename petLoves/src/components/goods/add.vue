@@ -51,7 +51,16 @@
           <el-input v-model="form.number" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="图片：" :label-width="formLabelWidth">
-          <el-upload action="goods/upload" list-type="picture-card">
+          <el-upload action="goods/upload" list-type="picture-card"
+          :on-success='handleSuccess'
+          >
+            <i class="el-icon-plus"></i>
+          </el-upload>
+        </el-form-item>
+                <el-form-item label="小图：" :label-width="formLabelWidth">
+          <el-upload action="goods/upload" list-type="picture-card"
+          :on-success='handleSuccess1'
+          >
             <i class="el-icon-plus"></i>
           </el-upload>
         </el-form-item>
@@ -73,7 +82,8 @@ export default {
     return {
       dialogImageUrl: "",
       dialogFormVisible: false,
-      images: [],
+      img: [],
+      minimum:[],
       form: {
         goodsName: "",
         type: "",
@@ -88,7 +98,10 @@ export default {
         productionDate: "",
         provider: "",
         features: "",
-        price: ""
+        price: "",
+        number:'',
+        images:'',
+        miniimg:''
       },
       formLabelWidth: "140px"
     };
@@ -102,25 +115,27 @@ export default {
         })
         .catch(_ => {});
     },
-    // Add(file, fileList) {
-    //   let arr = [];
-    //   for (let i = 0; i < fileList.length; i++) {
-    //     arr.push(fileList[i].goodsName);
-    //   }
-    //   console.log(arr, "上传的所有的图片");
-    //   this.images = arr;
-    // },
-    // addimg(a) {
-    //   console.log(a.file, "a.file");
-    // },
+    handleSuccess(response,file,fileList){
+        // console.log(response,'上传的图片')
+        this.img.push(response)
+        this.form.images=this.img
+        // console.log(this.img,'上传的图片列表')
+        //  console.log(this.form,'上传的图片')
+    },
+    handleSuccess1(response,file,fileList){
+        console.log(response,'上传的图片')
+        this.minimum.push(response)
+        this.form.miniimg=this.minimum
+        // console.log(this.img,'上传的图片列表')
+        //  console.log(this.form,'上传的图片')
+    },
     add() {
-      // console.log(this.images, 4566);
-      // console.log(this.dialogImageUrl, "111");
       let adddata = this.form;
+      let img = this.images
       axios({
         method: "post",
-        url: "goods/add",
-        data: adddata
+        url: "/goods/add",
+        data: this.form
       }).then(res => {
         console.log("添加成功");
         this.getshow();

@@ -18,7 +18,7 @@ export default {
         setState(state, pet) { 
             state.pet = pet;
         },
-        setIdent(state, Identity) {
+        setIdent(state) {
             state.Identity = !(state.Identity);
         },
         setVip(state){

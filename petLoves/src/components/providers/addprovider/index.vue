@@ -9,7 +9,7 @@
  <div class="sousuo">
   <el-input placeholder="请输入内容" v-model="proSearch.value" class="input-with-select">
     <el-select v-model="proSearch.type" slot="prepend" placeholder="请选择">
-       <el-option label="供应商名称" value="name" ></el-option>
+       <el-option label="供应商名称" value="providerName" ></el-option>
       <el-option label="供应商电话"  value="phone" ></el-option>
       <el-option label="供应商地址" value="address"  ></el-option>
     </el-select>
@@ -23,7 +23,7 @@
     <el-dialog title="增加供应商" :visible.sync="dialogFormVisible">
       <el-form  :model="form">
         <el-form-item label="供应商名称" :label-width="formLabelWidth">
-          <el-input v-model="form.name" autocomplete="off"></el-input>
+          <el-input v-model="form.providerName" autocomplete="off"></el-input>
         </el-form-item>
          <el-form-item label="营业执照号" :label-width="formLabelWidth">
           <el-input v-model="form.number" autocomplete="off"></el-input>
@@ -57,7 +57,7 @@ data() {
       dialogFormVisible: false,
       form: {
         address: "",
-        providersName: "",
+        providerName: "",
         number: "",
         person: "",
         phone: "",
@@ -108,14 +108,14 @@ data() {
         method: "post",
         url: "/providers",
         data: {
-          providersName: this.form.providersName,
+          providerName: this.form.providerName,
           phone: this.form.phone,
           person: this.form.person,
           address: this.form.address,
           number: this.form.number,
         }
       }).then(() => {
-        this.form.providersName="";
+        this.form.providerName="";
         this.form.phone="";
         this.form.person="";
         this.form.address="";

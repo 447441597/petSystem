@@ -47,12 +47,11 @@
         <el-form-item label="价格：" :label-width="formLabelWidth">
           <el-input v-model="form.price" autocomplete="off"></el-input>
         </el-form-item>
+        <el-form-item label="库存：" :label-width="formLabelWidth">
+          <el-input v-model="form.number" autocomplete="off"></el-input>
+        </el-form-item>
         <el-form-item label="图片：" :label-width="formLabelWidth">
-          <el-upload
-            action="https://jsonplaceholder.typicode.com/posts/"
-            list-type="picture-card"
-            :on-change="Add"
-          >
+          <el-upload action="goods/upload" list-type="picture-card">
             <i class="el-icon-plus"></i>
           </el-upload>
         </el-form-item>
@@ -67,6 +66,8 @@
 
 <script>
 import axios from "axios";
+import { createNamespacedHelpers } from "vuex";
+const { mapActions } = createNamespacedHelpers("goods");
 export default {
   data() {
     return {
@@ -93,6 +94,7 @@ export default {
     };
   },
   methods: {
+    ...mapActions(["getshow"]),
     handleClose(done) {
       this.$confirm("确认关闭？")
         .then(_ => {
@@ -100,20 +102,20 @@ export default {
         })
         .catch(_ => {});
     },
-    Add(file, fileList) {
-      let arr = [];
-      for (let i = 0; i < fileList.length; i++) {
-        arr.push(fileList[i].goodsName);
-      }
-      console.log(arr, "上传的所有的图片");
-      this.images = arr;
-    },
-    addimg(a) {
-      console.log(a.file, "a.file");
-    },
+    // Add(file, fileList) {
+    //   let arr = [];
+    //   for (let i = 0; i < fileList.length; i++) {
+    //     arr.push(fileList[i].goodsName);
+    //   }
+    //   console.log(arr, "上传的所有的图片");
+    //   this.images = arr;
+    // },
+    // addimg(a) {
+    //   console.log(a.file, "a.file");
+    // },
     add() {
-      console.log(this.images, 4566);
-      console.log(this.dialogImageUrl, "111");
+      // console.log(this.images, 4566);
+      // console.log(this.dialogImageUrl, "111");
       let adddata = this.form;
       axios({
         method: "post",
@@ -121,6 +123,7 @@ export default {
         data: adddata
       }).then(res => {
         console.log("添加成功");
+        this.getshow();
       });
     }
   }

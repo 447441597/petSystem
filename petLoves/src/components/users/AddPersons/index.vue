@@ -1,10 +1,10 @@
 <template>
     <div>
-        <el-row>
-              <el-button type="primary" @click="centerDialogVisible = true">增加</el-button>
-        </el-row>
+        <el-tooltip content="(注:该增加只能增加平台管理员账号)" placement="top">
+         <el-button type="primary" @click="centerDialogVisible = true">增加</el-button>
+       </el-tooltip>
         <el-dialog
-        title="增加(注:该增加只能增加平台管理员)"
+        title="增加"
         :visible.sync="centerDialogVisible"
         width="30%"
         center>

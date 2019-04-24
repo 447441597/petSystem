@@ -2,13 +2,13 @@
   <div>
     <el-tabs type="border-card">
       <el-tab-pane label="服务管理">
+        <Date></Date>
         <UpdateServer></UpdateServer>
         <Times></Times>
         <el-row>
           <el-col :span="3">
             <AddServer></AddServer>
           </el-col>
-
           <el-col :span="8">
             <SearchServer></SearchServer>
           </el-col>
@@ -36,7 +36,14 @@
         <Page></Page>
       </el-tab-pane>
       <el-tab-pane label="服务品类管理">
-        <AddType></AddType>
+        <el-row>
+          <el-col :span="3">
+            <AddType></AddType>
+          </el-col>
+          <el-col :span="8">
+            <SearchType></SearchType>
+          </el-col>
+        </el-row>
         <ServeTypeList></ServeTypeList>
         <UpdateType></UpdateType>
       </el-tab-pane>
@@ -53,9 +60,11 @@ import UpdateServer from "./UpdateServer.vue";
 import Times from "./Times.vue";
 import SearchServer from "./SearchServer.vue";
 import Page from "./Page.vue";
-import ServeTypeList from './ServeTypeList';
-import AddType from './AddType';
-import UpdateType from './UpdateType';
+import ServeTypeList from "./ServeTypeList";
+import AddType from "./AddType";
+import UpdateType from "./UpdateType";
+import SearchType from "./SearchType";
+import Date from './Date'
 const { mapState, mapActions } = createNamespacedHelpers("services");
 
 export default {
@@ -63,7 +72,7 @@ export default {
     this.getServices();
   },
   computed: {
-    ...mapState(["services", "pagination", "times"])
+    ...mapState(["services", "pagination", "times", "shopsId"])
   },
   methods: {
     ...mapActions([
@@ -71,7 +80,8 @@ export default {
       "setVisible",
       "setService",
       "setTimeVisible",
-      "getService"
+      "getService",
+      "setShopsID"
     ]),
     handleEdit(index, row) {
       console.log("修改");
@@ -109,7 +119,9 @@ export default {
     Page,
     ServeTypeList,
     AddType,
-    UpdateType
+    UpdateType,
+    SearchType,
+    Date
   }
 };
 </script>

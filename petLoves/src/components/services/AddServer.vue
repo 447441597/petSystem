@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="margin: 15px 0;">
     <el-button type="primary" @click="click">添加服务</el-button>
 
     <el-dialog title="添加服务" :visible.sync="dialogFormVisible">

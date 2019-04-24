@@ -1,5 +1,5 @@
 <template>
-  <el-dialog title="添加服务" :visible.sync="dialogFormVisible">
+  <el-dialog title="修改服务" :visible.sync="dialogFormVisible">
     <el-form :model="service" ref="service">
       <el-form-item label="服务名" :label-width="formLabelWidth" prop="serviceName">
         <el-input v-model="service.serviceName" autocomplete="off"></el-input>

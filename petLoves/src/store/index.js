@@ -7,11 +7,12 @@ import ordrers from './ordrers'
 import petowns from './petowns'
 import services from './services'
 import users from './users'
+import serverType from './serverType'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   modules: {
-    petowns, services,ordrers,users,lwj,goods,yj
+    petowns, services,ordrers,users,lwj,goods,yj,serverType
   },
   state: {
 

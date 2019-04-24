@@ -12,8 +12,8 @@
             <el-option
               v-for="item in serverTypes"
               :key="item._id"
-              :label="item.name"
-              :value="item.name"
+              :label="item.typeName"
+              :value="item.typeName"
             ></el-option>
           </el-select>
         </el-form-item>
@@ -43,7 +43,7 @@
             <el-option
               v-for="item in levels"
               :key="item.assistantphone"
-              :label="item.assistantname"
+              :label="item.assistantname+item.assistantlevel"
               :value="item.assistantlevel"
             ></el-option>
           </el-select>
@@ -89,7 +89,9 @@ export default {
       formLabelWidth: "120px"
     };
   },
-  created() {},
+  created() {
+    // console.log(this.services,"添加")
+  },
   computed: {
     ...mapState(["serverTypes", "services",,"levels"])
   },

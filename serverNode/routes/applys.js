@@ -1,15 +1,28 @@
 var express = require('express');
 var router = express.Router();
 const client = require('ykt-http-client');
+const multiparty = require("multiparty");
+const path = require("path")
 client.url('localhost:8080');
 /* GET home page. */
 
+router.get('/', async function (req, res) {
+  //   console.log("来了")
+  let page = req.query.page; //接收到的页码数
+  let rows = req.query.rows; //接收到的行数
+  let type = req.query.type;
+  let value = req.query.value;
+  let data = await client.get('/shops');
+  res.send(data);
+  console.log(data, "123")
+});
+
+
 //增加
 router.post('/',async function(req,res){
-  let temp = 0;
-  let {storeName,businessNum,legalPerson,tel,address,feature,vipLeval,rate,assistant} = req.body;
+  let {storeName,businessNum,legalPerson,tel,address,feature,vipLeval,rate,assistant,active,temp,businessImage,headImage} = req.body;
   console.log(req.body);
-  let data = await client.post('/shops',{storeName,businessNum,legalPerson,tel,address,feature,vipLeval,rate,assistant,temp});
+  let data = await client.post('/shops',{storeName,businessNum,legalPerson,tel,address,feature,vipLeval,rate,assistant,temp,active,businessImage,headImage});
   res.send(data);
   console.log(data)
 })
@@ -28,6 +41,20 @@ router.post("/upload",function(req,res){
       res.send(path.basename(files[key][0].path))
     }
   })
+})
+
+router.get('/temp',async function(req,res){
+  console.log(req.query,'query')
+  let data = await client.get('/shops',{submitType:"findJoin",ref:"users"});
+  console.log(data,'88888888888888888888888888')
+  let info = await client.get('/users/'+data.users._id);
+  console.log(info,'999999999999999999')
+  // if(data.temp == 0){
+  //   //审核中
+  //   res.send({status:1})
+  // } else if(data.temp == 1){
+
+  // }
 })
 
 module.exports = router;

@@ -15,144 +15,13 @@
 </el-row>
  <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
     <el-tab-pane label="门店管理" name="first"> 
-       <template >
-    <el-table :data="shops" style="width: 100%">
-    <el-table-column label="门店名称" prop="storeName" width="120">
-    </el-table-column>
-    <el-table-column label="营业执照号码" prop="businessNum" width="120">
-    </el-table-column>
-      <el-table-column label="营业执照" prop="businessImage" width="120">
-    </el-table-column>
-     <el-table-column label="地址" prop="address" width="120">
-    </el-table-column>
-     <el-table-column
-      label="法人"
-      prop="legalPerson"
-      width="120">
-    </el-table-column>
-     <el-table-column
-      label="电话"
-      prop="tel"
-      width="120">
-    </el-table-column>
-     <el-table-column
-      label="头图"
-      prop="headImage"
-      width="120">
-    </el-table-column>
-     <el-table-column
-      label="特色"
-      prop="feature"
-      width="120">
-    </el-table-column>
-    <el-table-column
-      label="VIP等级"
-      prop="vipLeval"
-      width="120">
-    </el-table-column>
-    <el-table-column
-      label="佣金比例"
-      prop="rate"
-      width="120">
-    </el-table-column>
-
-    <el-table-column
-      label="职员信息"
-      prop="assistant"
-      width="120">
-      <template slot-scope="scope" >
-      <el-button type="text"  @click="look(scope.$index, scope.row)">查看</el-button>
-      </template>
-    </el-table-column>
-   
-    <el-table-column label="操作">
-      <template slot-scope="scope" class="scope">
-        <el-button
-          size="mini"
-          @click="handleDelete(scope.$index, scope.row)" type="danger" icon="el-icon-delete" circle></el-button>
-          <el-button
-          size="mini"
-          @click="handleEdit(scope.$index, scope.row)" icon="el-icon-edit" type="primary" circle></el-button>
-      </template>
-    </el-table-column>
-     </el-table>
-  </template>
+      <tabstocks></tabstocks>
     </el-tab-pane>
     <el-tab-pane label="门店审核" name="second" >
-       <template >
-           <el-table
-    :data="shops"
-    style="width: 100%">
-    <el-table-column
-<<<<<<< HEAD
-      label="门店名称"
-      prop="storeName"
-=======
-      label="姓名"
-      prop="shopsName"
->>>>>>> main
-      width="120">
-    </el-table-column>
-    <el-table-column
-      label="营业执照号码"
-      prop="businessNum"
-      width="120">
-    </el-table-column>
-      <el-table-column
-      label="营业执照"
-      prop="businessImage"
-      width="120">
-    </el-table-column>
-     <el-table-column
-      label="地址"
-      prop="address"
-      width="120">
-    </el-table-column>
-     <el-table-column
-      label="法人"
-      prop="legalPerson"
-      width="120">
-    </el-table-column>
-     <el-table-column
-      label="电话"
-      prop="tel"
-      width="120">
-    </el-table-column>
-     <el-table-column
-      label="头图"
-      prop="headImage"
-      width="120">
-    </el-table-column>
-     <el-table-column
-      label="特色"
-      prop="feature"
-      width="120">
-    </el-table-column>
-    <el-table-column
-      label="VIP等级"
-      prop="vipLeval"
-      width="120">
-    </el-table-column>
-    <el-table-column
-      label="佣金比例"
-      prop="rate"
-      width="120">
-    </el-table-column>
-    <el-table-column label="操作">
-      <template slot-scope="scope" class="scope">
-        <el-button
-          size="mini"
-          @click="handleExamine(scope.$index, scope.row)" type="danger" circle>审核</el-button>
-      </template>
-    </el-table-column>
-     </el-table>
-       </template>
+      <tabexam></tabexam>
     </el-tab-pane>
   </el-tabs>
        <update></update>
-       <examine :info='info'></examine>
-       <page></page>
-       <assistant :zhiyuan='zhiyuan'></assistant>
     </div>
 </template>
 
@@ -162,7 +31,8 @@ import axios from "axios";
 import Update from "./update.vue";
 import Page from "./page.vue";
 import Examine from "./examine.vue";
-import Assistant from './assistant.vue'
+import Tabstocks from './tabstocks.vue';
+import Tabexam from './tabexam.vue'
 const { mapActions, mapState, mapMutations } = createNamespacedHelpers("lwj");
 export default {
   data() {
@@ -218,54 +88,6 @@ export default {
         this.getok()
       }
     },
-    look(index,row){
-      this.setdialogVisible(true)
-      // let id = row._id;
-      console.log(row.assistant,"数据")
-      this.zhiyuan = [];
-      this.zhiyuan.push(row.assistant)
-    },
-    handleEdit(index, row) {
-      let id = row._id;
-      console.log(row)
-      this.setShop(id);
-    },
-    handleExamine(index, row) {
-      // let id = row._id;
-      // console.log(row,'row')
-      this.info = [];
-      this.info.push(row);
-      this.setVisible(true);
-      console.log(this.info, "info");
-      
-    },
-    handleDelete(index, row) {
-      let id = row._id;
-<<<<<<< HEAD
-      console.log(id, "id");
-      this.$confirm(`门店名称:${row.storeName}`, "删除提示", {
-=======
-      this.$confirm(`门店名称:${row.shopsName}`, "删除提示", {
->>>>>>> main
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        showClose: false,
-        type: "warning"
-      })
-        .then(() => {
-          axios({
-            method: "delete",
-            url: "/shops/" + id
-          }).then(res => {
-            console.log(res);
-            this.setshops();
-            this.$message("删除成功");
-          });
-        })
-        .catch(() => {
-          this.$message("取消删除");
-        });
-    },
     searchBtn() {
       console.log(123123);
       this.getok({
@@ -274,7 +96,7 @@ export default {
       });
     }
   },
-  components: { Update, Page, Examine ,Assistant}
+  components: { Update, Page, Examine ,Tabstocks,Tabexam}
 };
 </script>
 

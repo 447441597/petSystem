@@ -6,12 +6,16 @@
             <el-card class="box-card" >
                <div slot="header" class="clearfix">
                  <div style="text-align:center"> <h2>申请门店</h2></div>
-                  <el-steps :space="400" :active="active" align-center>
+                  </div>
+        <template v-if="status">
+          <el-steps :space="400" :active="active" align-center>
           <el-step title="基本信息填写"></el-step>
           <el-step title="正在审核中"></el-step>
-           <el-step title="已审核"></el-step>
+          <el-step title="已审核"></el-step>
+          <el-step title="未通过"></el-step>
         </el-steps>
-                 </div>
+        </template>
+        <template v-else>
          <el-form :model="form" :rules="rules"  ref="form" >
            <el-form-item label="门店名称" :label-width="formLabelWidth" prop="storeName">
               <el-input v-model="form.storeName" autocomplete="off"></el-input>
@@ -19,18 +23,15 @@
            <el-form-item label="营业执照号码" :label-width="formLabelWidth" prop="businessNum">
               <el-input v-model="form.businessNum" autocomplete="off"></el-input>
            </el-form-item>
-           <el-form-item label="营业执照" :label-width="formLabelWidth">
-             <el-upload
-                     class="upload-demo"
-                     action="/upload"
-                     :on-preview="handlePreview"
-                     :on-remove="handleRemove"
-                     :before-remove="beforeRemove"
-                     multiple
-                     :limit="3"
-                     :on-exceed="handleExceed"
-                     :file-list="fileList">
-                <el-button size="small" type="primary">点击上传</el-button>
+           <el-form-item label="营业执照" :label-width="formLabelWidth" prop="businessImage">
+            <el-upload
+                class="avatar-uploader"
+                action="/applys/upload"
+                 v-model="form.businessImage"
+                :on-success="handleAvatarSuccess"
+                :before-upload="beforeAvatarUpload">
+                <img v-if="imageUrl" :src="imageUrl" class="avatar">
+                <i v-else class="el-icon-plus avatar-uploader-icon"></i>
               </el-upload>
            </el-form-item>
            <el-form-item label="地址" :label-width="formLabelWidth" prop="address">
@@ -42,19 +43,16 @@
             <el-form-item label="电话" :label-width="formLabelWidth" prop="tel">
               <el-input v-model="form.tel" autocomplete="off"></el-input>
            </el-form-item>
-            <el-form-item label="头图" :label-width="formLabelWidth">
-              <!-- <el-upload
-                     class="upload-demo"
-                     action="https://jsonplaceholder.typicode.com/posts/"
-                     :on-preview="handlePreview"
-                     :on-remove="handleRemove"
-                     :before-remove="beforeRemove"
-                     multiple
-                     :limit="3"
-                     :on-exceed="handleExceed"
-                     :file-list="fileList">
-                <el-button size="small" type="primary">点击上传</el-button>
-              </el-upload> -->
+            <el-form-item label="门店图片" :label-width="formLabelWidth" prop="headImage">
+             <el-upload
+              class="avatar-uploader"
+              action="applys/upload"
+               v-model="form.headImage"
+              :on-success="handSuccess"
+              :before-upload="beforeAvatarUpload">
+              <img v-if="imageurl" :src="imageurl" class="avatar">
+              <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+              </el-upload>
            </el-form-item>
             <el-form-item label="特色" :label-width="formLabelWidth" prop="feature">
               <el-input v-model="form.feature" autocomplete="off"></el-input>
@@ -65,6 +63,11 @@
            <el-form-item label="佣金比例" :label-width="formLabelWidth" prop="rate">
               <el-input v-model="form.rate" autocomplete="off"></el-input>
            </el-form-item>
+           <el-button type="primary" size="mini" @click="add" style="margin-left:50px;margin-bottom:50px">添加店员</el-button>
+           <el-dialog
+            title="添加店员"
+            :visible.sync="dialogVisible"
+            width="30%">
             <el-form-item label="店员姓名" :label-width="formLabelWidth" prop="assistantname">
               <el-input v-model="form.assistantname" autocomplete="off"></el-input>
            </el-form-item>
@@ -74,11 +77,17 @@
             <el-form-item label="店员电话" :label-width="formLabelWidth" prop="assistantphone">
               <el-input v-model="form.assistantphone" autocomplete="off"></el-input>
            </el-form-item>
+            <span slot="footer" class="dialog-footer">
+            <el-button @click="dialogVisible = false">取 消</el-button>
+            <el-button type="primary" @click="sure">确 定</el-button>
+            </span>
+            </el-dialog>
         </el-form>
            <div class="footer">
               <el-button type="primary" @click="resetForm('form')">重置</el-button>
               <el-button type="primary" @click="submitForm('form')" >提交</el-button>
            </div>
+           </template>
        </el-card>
         </template>
     </div>
@@ -88,11 +97,13 @@
 import axios from "axios";
 import { createNamespacedHelpers } from "vuex";
 const { mapActions, mapState, mapMutations } = createNamespacedHelpers("lwj");
+let assistant = [];
 export default {
   data() {
     return {
+      dialogVisible: false,
       select: true,
-      // active: 0,
+      temp: 0,
       form: {
         storeName: "",
         businessNum: "",
@@ -104,9 +115,13 @@ export default {
         rate: "",
         assistantname: "",
         assistantlevel: "",
-        assistantphone: ""
+        assistantphone: "",
+        headImage: "",
+        businessImage: ""
       },
       formLabelWidth: "120px",
+      imageUrl: "",
+      imageurl: "",
       rules: {
         storeName: [{ required: true, message: "请输入内容", trigger: "blur" }],
         businessNum: [
@@ -119,53 +134,87 @@ export default {
         tel: [{ required: true, message: "请输入内容", trigger: "blur" }],
         feature: [{ required: true, message: "请输入内容", trigger: "blur" }],
         vipLeval: [{ required: true, message: "请输入内容", trigger: "blur" }],
-        rate: [{ required: true, message: "请输入内容", trigger: "blur" }]
+        rate: [{ required: true, message: "请输入内容", trigger: "blur" }],
+        businessImage: [{ required: true, message: "请上传营业执照图片", trigger: "blur" }],
+         headImage: [{ required: true, message: "请上传门店图片", trigger: "blur" }]
+        // assistantname: [{ required: true, message: "请输入内容", trigger: "blur" }],
+        // assistantlevel: [{ required: true, message: "请输入内容", trigger: "blur" }],
+        // assistantphone: [{ required: true, message: "请输入内容", trigger: "blur" }],
       }
     };
   },
   computed: {
-    ...mapState(["active"])
+    ...mapState(["active","status"])
+  },
+  created(){
+    this.getTemp()
   },
   methods: {
     ...mapMutations(["setActive"]),
+    ...mapActions(["getTemp"]),
     selected(data) {
       this.select = data;
+    },
+    handleAvatarSuccess(response, file, fileList) {
+      console.log(response);
+      this.imageUrl = "/images/" + response;
+      this.form.businessImage = response;
+    },
+    handSuccess(response, file, fileList) {
+      this.imageurl = "/images/" + response;
+      this.form.headImage = response;
+    },
+    sure() {
+      console.log(this.form.assistantname, "this.form.assistantname");
+      assistant.push({
+        assistantname: this.form.assistantname,
+        assistantlevel: this.form.assistantlevel,
+        assistantphone: this.form.assistantphone
+      });
+      (this.form.assistantname = ""),
+        (this.form.assistantlevel = ""),
+        (this.form.assistantphone = "");
+      this.dialogVisible = false;
     },
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          let assistant = [];
-          assistant.push({
-            assistantname: this.form.assistantname,
-            assistantlevel: this.form.assistantlevel,
-            assistantphone: this.form.assistantphone
-          });
-          console.log(this.form.storeName);
-          axios({
-            method: "post",
-            url: "/applys",
-            data: {
-              storeName: this.form.storeName,
-              businessNum: this.form.businessNum,
-              tel: this.form.tel,
-              legalPerson: this.form.legalPerson,
-              feature: this.form.feature,
-              vipLeval: this.form.vipLeval,
-              rate: this.form.rate,
-              address: this.form.address,
-              assistant
-            }
-          }).then(res => {
-            console.log(res);
-            // if (this.active == 0) {
-            //   this.setActive(1);
-            //   console.log(this.active, "this.active");
-            // }
-          });
-          this.$message({
-            type: "success",
-            message: "提交成功!"
-          });
+          let active = this.active;
+          if (assistant.length > 0) {
+            axios({
+              method: "post",
+              url: "/applys",
+              data: {
+                storeName: this.form.storeName,
+                businessNum: this.form.businessNum,
+                tel: this.form.tel,
+                legalPerson: this.form.legalPerson,
+                feature: this.form.feature,
+                vipLeval: this.form.vipLeval,
+                rate: this.form.rate,
+                address: this.form.address,
+                assistant,
+                active,
+                temp: this.temp,
+                businessImage: this.form.businessImage,
+                headImage: this.form.headImage
+              }
+            }).then(res => {
+              // this.setActive();
+              if(this.active==1){
+                this.setActive()
+              }
+              console.log(res);
+            });
+            this.$message({
+              type: "success",
+              message: "提交成功!"
+            });
+          }else{
+            this.$message({
+              message:"请输入店员信息"
+            })
+          }
         } else {
           return false;
         }
@@ -173,6 +222,9 @@ export default {
     },
     resetForm(formName) {
       this.$refs[formName].resetFields();
+    },
+    add() {
+      this.dialogVisible = true;
     }
   }
 };
@@ -181,5 +233,28 @@ export default {
 <style>
 .footer {
   text-align: center;
+}
+.avatar-uploader .el-upload {
+  border: 1px dashed #d9d9d9;
+  border-radius: 6px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+.avatar-uploader .el-upload:hover {
+  border-color: #409eff;
+}
+.avatar-uploader-icon {
+  font-size: 28px;
+  color: #8c939d;
+  width: 178px;
+  height: 178px;
+  line-height: 178px;
+  text-align: center;
+}
+.avatar {
+  width: 178px;
+  height: 178px;
+  display: block;
 }
 </style>

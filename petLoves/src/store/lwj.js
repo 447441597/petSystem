@@ -8,7 +8,7 @@ export default {
     shops: [],
     shop: {},
     pagiNation: {},
-    active: 0,
+    active: 1,
     visible: false,
     visible2: false,
     dialogVisible: false,
@@ -16,7 +16,9 @@ export default {
       type: "",
       value: ""
     },
-    examine: []
+    examine: [],
+    zhiyuan: [],
+    status:''
   },
   mutations: {
     setshops(state, shops) {
@@ -27,10 +29,19 @@ export default {
       state.shops = shops;
     },
     setpagiNation(state, pagiNation) {
-      state.pagiNation = pagiNation;
+      console.log(pagiNation, "1111111111111111onpagiNationpagiNation");
+      // state.pagiNation = pagiNation;
+      state.pagiNation = {
+        total: pagiNation.total,
+        eachpage: pagiNation.eachpage,
+        curpage: pagiNation.curpage
+      };
+      // state.pagiNation.total = pagiNation.total,
+      // state.pagiNation.eachpage = pagiNation.eachpage
+      // state.pagiNation.curpage = pagiNation.curpage
     },
-    setActive(state, active) {
-      state.active = active;
+    setActive(state) {
+      state.active++;
     },
     setShop(state, shop) {
       state.shop = shop;
@@ -51,8 +62,13 @@ export default {
     setSearch(state, search) {
       state.search = search;
     },
-    setdialogVisible(state, dialogVisible) {
-      state.dialogVisible = dialogVisible;
+    setdialogVisible(state, zhiyuan) {
+      state.dialogVisible = !state.dialogVisible;
+      state.zhiyuan = zhiyuan;
+      // console.log(state.zhiyuan);
+    },
+    setTemp(state,data){
+      state.status = data
     }
   },
   actions: {
@@ -66,7 +82,6 @@ export default {
         url: "/shops",
         params: { page, rows, type, value }
       }).then(res => {
-        console.log(res,"全部");
         commit("setshops", res.data.rows);
         commit("setpagiNation", res.data);
         commit("setSearch", { type, value });
@@ -77,7 +92,6 @@ export default {
         method: "get",
         url: "/shops/" + id
       }).then(res => {
-        // console.log(res,"shuju")
         commit("setShop", res.data);
         commit("setVisible2", true);
       });
@@ -92,9 +106,9 @@ export default {
         url: "/shops/no",
         params: { page, rows, type, value }
       }).then(res => {
-        console.log(res, "罗文杰");
-        commit("getok", res.data);
-        // commit("setpagiNation", res.data);
+        console.log(res,'哈哈哈哈哈')
+        commit("getok", res.data.rows);
+        commit("setpagiNation", res.data);
         // commit("setSearch", { type, value });
       });
     },
@@ -108,11 +122,21 @@ export default {
         url: "/shops/ok",
         params: { page, rows, type, value }
       }).then(res => {
-        console.log(res, "罗文杰hh");
-        commit("getok", res.data);
+        console.log(res.data, "ok");
+        commit("getok", res.data.rows);
         commit("setpagiNation", res.data);
         commit("setSearch", { type, value });
       });
+    },
+    getTemp({commit}){
+      console.log('objeobjectobjectobjectobjectobjectobjectct')
+      axios({
+        method:'get',
+        url:'/applys/temp'
+      }).then((res)=>{
+        console.log(res,'轉臺');
+        commit("setTemp",res)
+      })
     }
   }
 };

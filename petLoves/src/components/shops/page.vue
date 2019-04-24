@@ -3,8 +3,6 @@
     layout="prev, pager, next"
     :page-size='pagiNation.eachpage'
     :total="pagiNation.total"
-    @prev-click='prev'
-    @next-click='next'
     @current-change="change"
     :current-page="pagiNation.curpage">
   </el-pagination>
@@ -20,13 +18,7 @@ export default {
   },
   methods: {
     ...mapActions(["setshops","getok"]),
-    prev() {
-      this.getok({ page: ~~this.pagiNation.curpage - 1 });
-    },
-    next() {
-      this.getok({ page: ~~this.pagiNation.curpage + 1 });
-      console.log(this.pagiNation.curpage )
-    },
+   
     change(i) {
       this.getok({ page: i });
     }

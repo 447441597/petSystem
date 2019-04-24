@@ -1,6 +1,6 @@
 <template>
     <div>
-        <el-dialog title="门店审核" :visible.sync="visible" :show-close="false">
+        <el-dialog title="门店审核" :visible.sync="visible" :before-close="handleClose">
              <el-table
       :data="info"
       style="width: 100%">
@@ -29,6 +29,7 @@
 import axios from "axios";
 import { createNamespacedHelpers } from "vuex";
 const { mapActions, mapState, mapMutations } = createNamespacedHelpers("lwj");
+let arr = []
 export default {
   props: ["info"],
   data() {
@@ -44,17 +45,39 @@ export default {
     ...mapState(["shop", "visible"])
   },
   methods: {
-    ...mapActions(["setShop", "setshops"]),
-    ...mapMutations(["setVisible"]),
+    ...mapActions(["setShop", "setshops","getno"]),
+    ...mapMutations(["setVisible","setActive"]),
     ok(){
       this.setVisible(false);
+      let id = this.info[0]._id
+      this.setActive();
+      // console.log(this.info[0],"id")
       axios({
-        
+        method:"put",
+        url:"/shops/change/"+id,
+      }).then((res)=>{
+        console.log(res,"回来的")
+        this.getno();
       })
+      // axios({
+      //   method:"put",
+      //   url:"/users/"+id,
+
+      // })
     },
     no(){
       this.setVisible(false);
-    }
+       let id = this.info[0]._id
+       axios({
+         method:"delete",
+         url:"/shops/"+id,
+       }).then((res)=>{
+         this.getno();
+       })
+    },
+    handleClose(done) {
+        this.setVisible(false);
+      }
   }
 };
 </script>

@@ -1,12 +1,12 @@
 <template>
     <div>
          <el-dialog
-      title="提示"
+      title="店员信息"
       :visible.sync="dialogVisible"
       width="30%"
      :show-close="false">
       <el-table
-      :data="zhiyuan[0]"
+      :data="zhiyuan"
       style="width: 100%">
       <el-table-column
       label="职员姓名"
@@ -37,19 +37,18 @@ import axios from "axios";
 import { createNamespacedHelpers } from "vuex";
 const { mapActions, mapState, mapMutations } = createNamespacedHelpers("lwj");
 export default {
-     props: ["zhiyuan"],
 computed: {
-    ...mapState(["shop", "dialogVisible"])
+    ...mapState(["shop", "dialogVisible","zhiyuan"])
   },
   methods: {
     ...mapActions(["setShop", "setshops"]),
     ...mapMutations(["setdialogVisible"]),
     ok(){
-        this.setdialogVisible(false)
-        console.log(this.zhiyuan[0])
+        this.setdialogVisible()
+        // console.log(this.zhiyuan)
     },
     close(){
-        this.setdialogVisible(false)
+        this.setdialogVisible()
     }
   }
 }

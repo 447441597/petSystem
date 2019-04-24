@@ -1,26 +1,12 @@
 <template>
     <div>
-        <el-dialog title="门店审核" :visible.sync="visible2" :show-close="false">
+        <el-dialog title="门店修改" :visible.sync="visible2" :show-close="false">
          <el-form>
            <el-form-item label="门店名称" :label-width="formLabelWidth">
               <el-input v-model="shop.storeName" autocomplete="off"></el-input>
            </el-form-item>
            <el-form-item label="营业执照号码" :label-width="formLabelWidth">
               <el-input v-model="shop.businessNum" autocomplete="off"></el-input>
-           </el-form-item>
-           <el-form-item label="营业执照" :label-width="formLabelWidth">
-             <!-- <el-upload
-                     class="upload-demo"
-                     action="https://jsonplaceholder.typicode.com/posts/"
-                     :on-preview="handlePreview"
-                     :on-remove="handleRemove"
-                     :before-remove="beforeRemove"
-                     multiple
-                     :limit="3"
-                     :on-exceed="handleExceed"
-                     :file-list="fileList">
-                <el-button size="small" type="primary">点击上传</el-button>
-              </el-upload> -->
            </el-form-item>
            <el-form-item label="地址" :label-width="formLabelWidth">
               <el-input v-model="shop.address" autocomplete="off"></el-input>
@@ -31,20 +17,6 @@
             <el-form-item label="电话" :label-width="formLabelWidth">
               <el-input v-model="shop.tel" autocomplete="off"></el-input>
            </el-form-item>
-            <el-form-item label="头图" :label-width="formLabelWidth">
-              <!-- <el-upload
-                     class="upload-demo"
-                     action="https://jsonplaceholder.typicode.com/posts/"
-                     :on-preview="handlePreview"
-                     :on-remove="handleRemove"
-                     :before-remove="beforeRemove"
-                     multiple
-                     :limit="3"
-                     :on-exceed="handleExceed"
-                     :file-list="fileList">
-                <el-button size="small" type="primary">点击上传</el-button>
-              </el-upload> -->
-           </el-form-item>
             <el-form-item label="特色" :label-width="formLabelWidth">
               <el-input v-model="shop.feature" autocomplete="off"></el-input>
            </el-form-item>
@@ -54,15 +26,28 @@
            <el-form-item label="佣金比例" :label-width="formLabelWidth">
               <el-input v-model="shop.rate" autocomplete="off"></el-input>
            </el-form-item>
+           <el-form-item label="店员信息" :label-width="formLabelWidth">
+               <el-button type="primary" size="mini" @click="updateAssis" >修改店员</el-button>
+           </el-form-item>
+           <el-dialog
+            title="修改店员"
+            :visible.sync="dialogVisible"
+            width="30%"
+           :show-close="false"  append-to-body>
             <el-form-item label="店员姓名" :label-width="formLabelWidth">
-              <el-input v-model="shop.assistantname" autocomplete="off"></el-input>
+            <el-input v-model="shop.assistant[0].assistantname" autocomplete="off"></el-input>
            </el-form-item>
             <el-form-item label="店员职级" :label-width="formLabelWidth">
-              <el-input v-model="shop.assistantlevel" autocomplete="off"></el-input>
+              <el-input v-model="shop.assistant[0].assistantlevel" autocomplete="off"></el-input>
            </el-form-item>
             <el-form-item label="店员电话" :label-width="formLabelWidth">
-              <el-input v-model="shop.assistantphone" autocomplete="off"></el-input>
+              <el-input v-model="shop.assistant[0].assistantphone" autocomplete="off"></el-input>
            </el-form-item>
+  <span slot="footer" class="dialog-footer">
+    <el-button @click="dialogVisible = false">取 消</el-button>
+    <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+  </span>
+</el-dialog>
         </el-form>
         <div slot="footer" class="dialog-footer">
         <el-button @click="setVisible2(false)">取 消</el-button>
@@ -81,6 +66,7 @@ const { mapActions, mapState, mapMutations } = createNamespacedHelpers(
 export default {
   data(){
     return{
+      dialogVisible:false,
       value:"",
        formLabelWidth: "120px"
     }
@@ -196,6 +182,9 @@ export default {
         type: "success",
         message: "修改成功!"
       });
+    },
+    updateAssis(){
+      this.dialogVisible = true
     }
   }
 };

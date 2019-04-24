@@ -49,7 +49,7 @@ export default {
             })
         },
        Updata({commit},id){
-            // console.log(id)
+            // console.log(id,'11')
             axios({
                 method:"get",
                 url:"/goods/"+id,

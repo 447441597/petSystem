@@ -77,7 +77,7 @@ export default {
       ...mapActions(["Updata"]),
      handleEdit(index,row){
          let id = row._id
-      console.log(id)
+    //   console.log(id)
       this.Updata(id)
   }
   },

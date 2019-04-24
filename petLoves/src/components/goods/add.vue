@@ -51,7 +51,9 @@
           <el-input v-model="form.number" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="图片：" :label-width="formLabelWidth">
-          <el-upload action="goods/upload" list-type="picture-card">
+          <el-upload action="goods/upload" list-type="picture-card"
+          :on-success='handleSuccess'
+          >
             <i class="el-icon-plus"></i>
           </el-upload>
         </el-form-item>
@@ -102,25 +104,21 @@ export default {
         })
         .catch(_ => {});
     },
-    // Add(file, fileList) {
-    //   let arr = [];
-    //   for (let i = 0; i < fileList.length; i++) {
-    //     arr.push(fileList[i].goodsName);
-    //   }
-    //   console.log(arr, "上传的所有的图片");
-    //   this.images = arr;
-    // },
-    // addimg(a) {
-    //   console.log(a.file, "a.file");
-    // },
+    handleSuccess(response,file,fileList){
+        console.log(response,'上传的图片')
+        this.images.push(response)
+        console.log(this.images,'上传的图片列表')
+    },
     add() {
-      // console.log(this.images, 4566);
-      // console.log(this.dialogImageUrl, "111");
       let adddata = this.form;
+      let img = this.images
       axios({
         method: "post",
         url: "goods/add",
-        data: adddata
+        data: {
+          adddata,
+          img
+        }
       }).then(res => {
         console.log("添加成功");
         this.getshow();

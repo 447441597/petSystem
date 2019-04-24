@@ -32,7 +32,7 @@ router.get('/data',async function(req, res) {
 //增加商品
 router.post('/add',async function(req,res){
   let {goodsName,type,material,applyGuige,exGuige,Packing,taste,specialFunc,addr,keepDate,productionDate,provider,features,price,images,number}=req.body
-  
+  console.log(req.body,'增加的')
   let data = await client.post('/goods',{goodsName,type,material,applyGuige,exGuige,Packing,taste,specialFunc,addr,keepDate,productionDate,provider,features,price,images,number});
   res.send(data);
 })

@@ -2,18 +2,7 @@
   <el-table :data="show" style="width: 100%">
     <el-table-column label="名称" prop="goodsName" width="180"></el-table-column>
     <el-table-column label="品类" prop="type" width="180"></el-table-column>
-    <el-table-column label="材质或制作方法" prop="material" width="180"></el-table-column>
-    <el-table-column label="适应规格" prop="applyGuige" width="180"></el-table-column>
-    <el-table-column label="专属规格" prop="exGuige" width="180"></el-table-column>
-    <el-table-column label="包装规格" prop="Packing" width="180"></el-table-column>
-    <el-table-column label="口味" prop="taste" width="180"></el-table-column>
-    <el-table-column label="特殊功用" prop="specialFunc" width="180"></el-table-column>
-    <el-table-column label="产地" prop="addr" width="180"></el-table-column>
-    <el-table-column label="出厂日期" prop="keepDate" width="180"></el-table-column>
-    <el-table-column label="保质期" prop="productionDate" width="180"></el-table-column>
-    <el-table-column label="供应商" prop="provider" width="180"></el-table-column>
-    <el-table-column label="特色说明" prop="features" width="180"></el-table-column>
-    <el-table-column label="价格" prop="price" width="180"></el-table-column>
+       <el-table-column label="价格" prop="price" width="180"></el-table-column>
     <el-table-column label="库存" prop="number" width="180"></el-table-column>
     <el-table-column label="图片" width="180">
         <template slot-scope="scope">
@@ -25,6 +14,17 @@
         <img :src="src+scope.row.miniimg[0]" width="80" height="80"/>
          </template>
     </el-table-column>
+    <el-table-column label="材质或制作方法" prop="material" width="180"></el-table-column>
+    <el-table-column label="适应规格" prop="applyGuige" width="180"></el-table-column>
+    <el-table-column label="专属规格" prop="exGuige" width="180"></el-table-column>
+    <el-table-column label="包装规格" prop="Packing" width="180"></el-table-column>
+    <el-table-column label="口味" prop="taste" width="180"></el-table-column>
+    <el-table-column label="特殊功用" prop="specialFunc" width="180"></el-table-column>
+    <el-table-column label="产地" prop="addr" width="180"></el-table-column>
+    <el-table-column label="出厂日期" prop="keepDate" width="180"></el-table-column>
+    <el-table-column label="保质期" prop="productionDate" width="180"></el-table-column>
+    <el-table-column label="供应商" prop="provider" width="180"></el-table-column>
+    <el-table-column label="特色说明" prop="features" width="180"></el-table-column>
     <el-table-column label="操作" width="180">
       <template slot-scope="scope">
         <el-button size="mini" @click="handleEdit(scope.$index,scope.row)">修改</el-button>

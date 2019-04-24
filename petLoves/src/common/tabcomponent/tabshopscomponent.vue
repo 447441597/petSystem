@@ -24,6 +24,7 @@
       label="订单信息">      
       <template slot-scope="scope">
         <el-button @click="handleClick(scope.row)" type="text" size="small">详细信息</el-button>
+        <el-button v-if="(scope.row.status) == '订单未完成'" @click="handleClickok(scope.row)"  type="success" size='small' icon="el-icon-check">完成</el-button>
       </template>
     </el-table-column>
   </el-table>
@@ -67,26 +68,57 @@
 </template>
 
 <script>
+import axios from "axios";
 import { createNamespacedHelpers } from "vuex";
 const { mapState, mapActions } = createNamespacedHelpers("ordrers");
 export default {
-  data(){
+  data() {
     return {
-      dialogVisible:false,
-      info:'',
-    }
+      dialogVisible: false,
+      dialogVisibleok: false,
+      info: ""
+    };
   },
   computed: {
-    ...mapState(["orders","pagination"])
+    ...mapState(["orders", "pagination"])
   },
   methods: {
-    pageChange(i){
-      console.log(i)
+    ...mapActions(["getOrders"]),
+    pageChange(i) {
+      console.log(i);
     },
-    handleClick(row){
-      console.log('详细信息',this.dialogVisible)
-      this.info = row
+    handleClick(row) {
+      // console.log("详细信息", this.dialogVisible);
+      this.info = row;
       this.dialogVisible = true;
+    },
+    handleClickok(row) {
+      // console.log('objecthandleClickokhandleClickok',row._id)
+      this.dialogVisibleok = true;
+      axios({
+        method: "get",
+        url: "/orders/users/" + row._id
+      }).then(res => {
+        // console.log(res.data.status);
+        if (res.data.status == 0) {
+          this.$alert("用户还没有确认！", "提示");
+        } else if (res.data.status == 1) {
+          this.$alert("已完成", "提示");
+          axios({
+            method: "put",
+            url: "/orders/" + row._id,
+            data: {
+              status: "订单已完成"
+            }
+          }).then(data => {
+            let playload = {
+              ordersType: 0
+            };
+            this.getOrders(playload);
+            console.log(data, "修改后的");
+          });
+        }
+      });
     }
   }
 };

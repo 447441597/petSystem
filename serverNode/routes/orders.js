@@ -20,12 +20,6 @@ router.get("/", async function(req, res) {
     ref: ["petOwns", "services", "shops", "goods"],
     ...option
   });
-  // console.log(data1.rows[0].services, "data1");
-  console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
-  
-  data1.rows.map((i)=>{
-    console.log(i,'data1')
-  })
   if (ordersType == 0) {
     //请求商品订单
     for (let i = 0; i < data1.rows.length; i++) {
@@ -120,15 +114,45 @@ router.delete("/:id", async function(req, res) {
 // 修改状态
 router.put("/:id", async function(req, res) {
   let id = req.params.id;
+  // console.log(id,'请求的id')  
   let status = req.body.status;
   let data = await client.get("/orders/" + id);
-  data.status = "已完成";
-  let data1 = await client.put("/orders/" + id, data);
-  console.log(data1, "data1修改状态");
-  res.send({
-    status: "ok"
-  });
+  if (status.indexOf("服务") > -1) {
+    data.status = "服务已完成";
+  } else if (status.indexOf("订单") > -1) {
+    data.status = "订单已完成";
+  }
+  delete data._id;
+  console.log(data,'修改')
+  let info = await client.put("/orders/" + id, data);
+  console.log(info, "data1修改状态");
+  res.send(info);
 });
+
+//用户修改订单状态
+router.put('/users/:id',async function(req,res){
+  let id = req.params.id;
+  let data = await client.get('/orders/'+id);
+  console.log(data,'修改状态')
+  // 用户确认完成修改users为ok
+  data.users = 'ok';
+  delete data._id;
+  let data1 = await client.put('/orders/'+id,data)
+  res.send(data);
+})
+
+// 商家修改订单状态，
+router.get('/users/:id',async function(req,res){
+  let id = req.params.id;
+  let data = await client.get('/orders/'+id);
+  console.log(data,'修改状态')
+  // 用户确认完成修改users为ok
+  if(!!data.users){
+    res.send({status:1})
+  } else{
+    res.send({status:0})
+  }
+})
 
 // 书写评论
 router.put("/:id", async function(req, res) {

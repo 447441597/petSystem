@@ -1,18 +1,22 @@
 <template>
   <div style="height:100%">
     <el-container style="height:100%">
-      <el-header style="background:#0099cc;height:100px;line-height:100px;margin:0">
+      <el-header id="header" style="background:#0099cc;height:100px;line-height:100px;margin:0">
         <el-row>
-          <el-col :span="8">
+          <el-col :span="4">
             <h1 style="color:white;margin:0">平台管理</h1>
+             
           </el-col>
-           <el-col :span="12">
+           <el-col :span="15">
             <div style="height:10px">
             </div>
           </el-col>
-          <el-col :span="2">
+          <el-col :span="5">
             <div>
-              <span style="color:white">{{user}}</span>
+               <div id="top">
+              <span style="margin-right:5px">欢迎用户:{{content}}</span>
+              <el-button type="danger" @click="del">注销</el-button>
+              </div>
             </div>
           </el-col>
           <!-- <el-col :span="2">
@@ -71,48 +75,44 @@
 <script>
 import axios from "axios";
 export default {
-  created() {
-    // axios({
-    //   method: "get",
-    //   url: "/getSession"
-    // }).then(res => {
-    //   console.log(res);
-    //   if (res.data) {
-    //     this.user = res.data;
-    //   } else {
-    //     this.$router.push({ path: "/login" });
-    //   }
-    // });
-    this.defaultIndex = this.$router.history.current.path;
-  },
   data() {
     return {
       user: "",
-      defaultIndex: ""
+      defaultIndex: "",
+      content: "",
+
     };
   },
+   created() {
+    this.getsession();
+  },
   methods: {
-    logout() {
-      axios({
-        method: "get",
-        url: "/removeSession"
-      }).then(res => {
-        this.$router.push({ path: "/login" });
-      });
-    },
-
-    select() {
+     getsession() {
       axios({
         method: "get",
         url: "/getSession"
       }).then(res => {
-        console.log(res);
-        if (res.data) {
+        console.log(res.data.phone);
+        if (res.data.phone) {
+          this.content = res.data.phone;
         } else {
           this.$router.push({ path: "/login" });
         }
       });
-    }
+    },
+    removesession() {
+      axios({
+        type: "get",
+        url: "/removeSession"
+      }).then(res => {
+        console.log(res.data.phone);
+        this.content = "";
+        this.$router.push({ path: "/login" });
+      });
+    },
+    del() {
+      this.removesession();
+    },
   }
 };
 </script>
@@ -123,7 +123,7 @@ a {
   color: white;
   width: 100%;
   height: 100%;
-  display:inline-block
+  display: inline-block;
 }
 
 </style>

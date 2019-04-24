@@ -117,7 +117,7 @@ export default {
           }).then(res => {
             this.$router.push({ path: "/login" });
           });
-         }else{
+         }else if(this.ruleForm2.type==1){
               axios({
             method: "post",
             url: "/users/SpoilRegister",
@@ -128,6 +128,8 @@ export default {
           }).then(res => {
             this.$router.push({ path: "/login" });
           });
+         }else{
+           alert("注册失败！请输入正确的注册类型0或1")
          }
         } else {
           alert("格式验证未通过!!");

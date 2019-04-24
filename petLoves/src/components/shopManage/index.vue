@@ -62,21 +62,21 @@
                     <span>统计</span>
                   </template>
                   <el-menu-item-group>
-                    <template slot="title">销售金额统计</template>
+                    <template slot="title">销售量统计</template>
                     <el-menu-item index="1-1">
-                      <router-link to="/shopManage/GoodsSaleNum">商品销售统计</router-link>
+                      <router-link to="/shopManage/GoodsSaleNum">门店商品销售量统计</router-link>
                     </el-menu-item>
                     <el-menu-item index="1-2">
-                      <router-link to="/shopManage/ServiceSaleNum">服务销售统计</router-link>
+                      <router-link to="/shopManage/ServiceSaleNum">门店服务销售统计</router-link>
                     </el-menu-item>
                   </el-menu-item-group>
                   <el-menu-item-group>
-                    <template slot="title">销售金额占比统计</template>
+                    <template slot="title">销售额统计</template>
                     <el-menu-item index="1-1">
-                       <router-link to="/shopManage/GoodsMoney">商品销售占比统计</router-link>
+                       <router-link to="/shopManage/GoodsMoney">商品销售额统计</router-link>
                     </el-menu-item>
                     <el-menu-item index="1-2">
-                       <router-link to="/shopManage/ServiceMoney">服务销售占比统计</router-link>
+                       <router-link to="/shopManage/ServiceMoney">服务销售额统计</router-link>
                     </el-menu-item>
                   </el-menu-item-group>
                 </el-submenu>

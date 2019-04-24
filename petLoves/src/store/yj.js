@@ -65,7 +65,7 @@ export default{
                 url:"/providers/"+id,
              }).then((res)=>{
                  console.log(res.data,'查询当前列')
-                 console.log(res.data,'查询当前列')
+                 console.log(res.data,'查询当前列') 
                 commit("provider",res.data)
                 commit("setVisible",true)
                 // commit("setUpVisible",false)

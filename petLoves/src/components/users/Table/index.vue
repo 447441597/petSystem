@@ -1,5 +1,6 @@
 
 <template>
+<el-card class="box-card">
       <el-table
        :data="persons"
        row-key="_id"
@@ -27,6 +28,7 @@
          </template>
         </el-table-column>
        </el-table>
+       </el-card>
 </template>
 
 <script>

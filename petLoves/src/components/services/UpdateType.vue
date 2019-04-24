@@ -1,8 +1,8 @@
 <template>
   <div>
-    <el-button type="primary" @click="click">添加服务</el-button>
+    <!-- <el-button type="primary" @click="click">添加服务品类</el-button> -->
 
-    <el-dialog title="添加服务品类" :visible.sync="dialogFormVisible">
+    <el-dialog title="修改服务品类" :visible.sync="dialogFormVisible">
       <el-form :model="serverType">
         <el-form-item label="品类" :label-width="formLabelWidth">
           <el-input v-model="serverType.typeName" autocomplete="off"></el-input>

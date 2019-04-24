@@ -8,13 +8,18 @@ import Users from './components/users'
 import Shops from './components/shops'
 import Providers from './components/providers'
 import PetOwns from './components/petOwns'
-import AddUp from './components/addUp'
+// import AddUp from './components/addUp'
 import ShopManage from './components/shopManage'
 import Apply from './components/apply'
 import Goods from './components/goods'
 import Services from './components/services'
 import Orders from './components/orders'
 import ShopAddup from './components/shopAddup'
+import GoodsRatio from './components/addUp/salesMoney/GoodsRatio'
+import ServicesRatio from './components/addUp/salesMoney/ServicesRatio'
+import GoodsMoneyRatio from './components/addUp/salesMoneyRatio/GoodsMoneyRatio'
+import ServicesMoneyRatio from './components/addUp/salesMoneyRatio/ServicesMoneyRatio'
+// import SalesMoneyRatio from './components/addUp/salesMoneyRatio'
 
 Vue.use(Router)
 
@@ -57,8 +62,20 @@ export default new Router({
           component:Providers
         },
         {
-          path:"/manage/addUp",
-          component:AddUp
+          path:"/manage/GoodsRatio",
+          component:GoodsRatio
+        },
+        {
+          path:"/manage/ServicesRatio",
+          component:ServicesRatio
+        },
+        {
+          path:"/manage/GoodsMoneyRatio",
+          component:GoodsMoneyRatio
+        },
+        {
+          path:"/manage/ServicesMoneyRatio",
+          component:ServicesMoneyRatio
         }
       ]
     },

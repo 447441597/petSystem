@@ -8,7 +8,7 @@
              <div class="text item">
                 <el-form :model="ruleForm2" status-icon :rules="rules2" ref="ruleForm2" label-width="100px" class="demo-ruleForm">
                 <el-form-item label="账号类别" prop="type">
-                <el-input v-model="ruleForm2.type"  placeholder="输入注册类型  0为宠主注册  1为门店管理员注册 "></el-input>
+                <el-input v-model="ruleForm2.type"  placeholder="输入注册类型  1为宠主注册  0为门店管理员注册 "></el-input>
                 </el-form-item>
                 <el-form-item label="手机号" prop="phone">
                 <el-input v-model="ruleForm2.phone"></el-input>
@@ -117,7 +117,7 @@ export default {
           }).then(res => {
             this.$router.push({ path: "/login" });
           });
-         }else{
+         }else if(this.ruleForm2.type==1){
               axios({
             method: "post",
             url: "/users/SpoilRegister",
@@ -128,6 +128,8 @@ export default {
           }).then(res => {
             this.$router.push({ path: "/login" });
           });
+         }else{
+           alert("注册失败！请输入正确的注册类型0或1")
          }
         } else {
           alert("格式验证未通过!!");

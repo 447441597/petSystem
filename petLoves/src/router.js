@@ -76,7 +76,7 @@ export default new Router({
         },
         {
           path:"/shopManage/services",
-          component:Services
+          component:Services,
         },
         {
           path:"/shopManage/orders",

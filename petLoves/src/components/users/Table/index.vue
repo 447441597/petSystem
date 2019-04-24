@@ -2,6 +2,7 @@
 <template>
       <el-table
        :data="persons"
+       row-key="_id"
        style="width: 80%">
       <el-table-column
         prop="phone"
@@ -41,7 +42,7 @@ export default {
   },
 
   methods: {
-    ...mapActions(["setPersons"]),
+    ...mapActions(["setPersons", "updatePersons"]),
 
     del(index, row) {
       console.log(row._id);
@@ -68,6 +69,20 @@ export default {
             message: "已取消删除"
           });
         });
+    },
+
+    update(index, row) {
+      axios({
+        method: "get",
+        url: "/users/" + row._id
+      }).then(res => {
+        console.log(res.data, "22");
+        if (res.data.privilege == 2) {
+          this.updatePersons(row._id);
+        } else {
+          alert("抱歉！您只能修改平台管理员账号，账号类型为2");
+        }
+      });
     }
   }
 };

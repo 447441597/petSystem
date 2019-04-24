@@ -16,9 +16,6 @@
               <el-button type="danger" @click="del">注销</el-button>
               </div>
           </el-col>
-          <!-- <el-col :span="2">
-            <el-button type="info" icon="el-icon-back" circle size="mini" @click="logout"></el-button>
-          </el-col> -->
         </el-row>
       </el-header>
       <el-container style="height:100%">

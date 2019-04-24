@@ -1,19 +1,19 @@
 <template>
   <div>
-    <el-button type="primary" @click="click">打开嵌套表单的 Dialog</el-button>
+    <el-button type="primary" @click="click">添加服务</el-button>
 
     <el-dialog title="添加服务" :visible.sync="dialogFormVisible">
       <el-form :model="service">
         <el-form-item label="服务名" :label-width="formLabelWidth">
-          <el-input v-model="service.name" autocomplete="off"></el-input>
+          <el-input v-model="service.serviceName" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="服务类型" :label-width="formLabelWidth">
-          <el-select v-model="serverType" placeholder="请选择服务类型">
+          <el-select v-model="service.serverType" placeholder="请选择服务类型">
             <el-option
               v-for="item in serverTypes"
               :key="item._id"
-              :label="item.name"
-              :value="item._id"
+              :label="item.typeName"
+              :value="item.typeName"
             ></el-option>
           </el-select>
         </el-form-item>
@@ -39,14 +39,14 @@
           <el-input v-model="service.useTime" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="等级" :label-width="formLabelWidth">
-          <!-- <el-select v-model="chooseLevel" placeholder="请选择服务类型">
+          <el-select v-model="service.level" placeholder="请选择服务类型">
             <el-option
-              v-for="item in services[0].level"
-              :key="item.name"
-              :label="item.name"
-              :value="item.name"
+              v-for="item in levels"
+              :key="item.assistantphone"
+              :label="item.assistantname+item.assistantlevel"
+              :value="item.assistantlevel"
             ></el-option>
-          </el-select> -->
+          </el-select>
         </el-form-item>
         <el-form-item label="价格" :label-width="formLabelWidth">
           <el-input v-model="service.price" autocomplete="off"></el-input>
@@ -54,7 +54,7 @@
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">取 消</el-button>
-        <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
+        <el-button type="primary" @click="addService">确 定</el-button>
       </div>
     </el-dialog>
   </div>
@@ -71,34 +71,37 @@ export default {
     return {
       dialogFormVisible: false,
       service: {
-        name: "",
-        serverTypes: "",
+        serviceName: "",
+        serverType: "",
         applyGuige: "",
         serverGuige: "",
         useTime: "",
         shops: "5cbc22270ca8acf604b3eaa6",
         level: "",
         price: "",
-        chooseLevel: "",
+        
         time: [
           {
             timeSlot: ""
           }
         ]
       },
-      serverType: "",
       formLabelWidth: "120px"
     };
   },
-  created() {},
+  created() {
+    // console.log(this.services,"添加")
+  },
   computed: {
-    ...mapState(["serverTypes", "services"])
+    ...mapState(["serverTypes", "services",,"levels"])
   },
   methods: {
-    ...mapActions(["getTypes", "getServices"]),
+    ...mapActions(["getTypes", "getServices","getLevel"]),
     click() {
+      let shopId = "5cbc22270ca8acf604b3eaa6";
       (this.dialogFormVisible = true), this.getTypes();
-      console.log(this.services.level, "services1");
+      this.getLevel(shopId);
+      console.log(this.services,"11","levels");
     },
     removeTime(item) {
       var index = this.service.time.indexOf(item);
@@ -113,23 +116,28 @@ export default {
       });
     },
     addService() {
-      // console.log(this.service.name)
-      // axios({
-      //   method: "post",
-      //   url: "/services",
-      //   data: {
-      //     // name: this.service.name,
-      //     typesId: this.serverType,
-      //     // time: this.service.time,
-      //     applyGuige: applyGuige,
-      //     serverGuige: serverGuige,
-      //     useTime: useTime,
-      //     shopsId: shops,
-      //     // chooseLevel: chooseLevel
-      //   }
-      // }).then(res => {
-      //   console.log(res);
-      // });
+      console.log(this.service,"插入的数据");
+        (this.dialogFormVisible = false);
+      axios({
+        method: "post",
+        url: "/services",
+        data: {
+          price:this.service.price,
+          serviceName: this.service.serviceName,
+          serverType:this.service.serverType,
+          typesId: this.serverType,
+          time: this.service.time,
+          applyGuige: this.service.applyGuige,
+          serverGuige: this.service.serverGuige,
+          useTime: this.service.useTime,
+          shopsId: this.service.shops,
+          level: this.service.level,
+          seviceType:this.service.serverType
+        }
+      }).then(res => {
+        console.log(res);
+        this.getServices();
+      });
     }
   }
 };

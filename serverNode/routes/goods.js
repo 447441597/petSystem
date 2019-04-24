@@ -2,6 +2,8 @@ var express = require('express');
 var router = express.Router();
 const client = require('ykt-http-client');
 client.url('localhost:8080');
+const multiparty = require('multiparty');
+const path = require('path');
 /* GET home page. */
 router.get('/',async function(req, res, next) {
   res.render('index', { title: 'Express' });
@@ -29,9 +31,9 @@ router.get('/data',async function(req, res) {
 
 //增加商品
 router.post('/add',async function(req,res){
-  let {name,type,material,applyGuige,exGuige,Packing,taste,specialFunc,addr,keepDate,productionDate,provider,features,price,images}=req.body
+  let {goodsName,type,material,applyGuige,exGuige,Packing,taste,specialFunc,addr,keepDate,productionDate,provider,features,price,images,number}=req.body
   
-  let data = await client.post('/goods',{name,type,material,applyGuige,exGuige,Packing,taste,specialFunc,addr,keepDate,productionDate,provider,features,price,images});
+  let data = await client.post('/goods',{goodsName,type,material,applyGuige,exGuige,Packing,taste,specialFunc,addr,keepDate,productionDate,provider,features,price,images,number});
   res.send(data);
 })
 
@@ -40,5 +42,37 @@ router.delete('/:id', async (req, res) => {
   let id = req.params.id;
   let data = await client.delete("/goods/" + id);
   res.send(data)
+})
+//根据ID查询
+router.get('/:id', async function (req, res) {
+  let id = req.params.id;
+  let data = await client.get('/goods/' + id);
+  res.send(data)
+});
+
+//修改商品
+router.put('/:id',async function(req,res){
+  let id = req.params.id;
+  let {goodsName,type,material,applyGuige,exGuige,Packing,taste,specialFunc,addr,keepDate,productionDate,provider,features,price,images,number}=req.body
+  
+  let data = await client.put('/goods/'+id,{goodsName,type,material,applyGuige,exGuige,Packing,taste,specialFunc,addr,keepDate,productionDate,provider,features,price,images,number});
+  res.send(data);
+})
+
+//上传图片
+router.post('/upload',function(req,res){
+  let form = new multiparty.Form({
+    uploadDir:'public/images'  //保存的路径
+  });
+  form.parse(req,function(err,fields,files){
+    let key = Object.keys(files)[0]; //获取上传信息中的key
+    console.log(key)
+    if(err){
+      res.send(err);
+    }else{
+      res.send(path.basename(files[key][0].path)) //根据key获取上传的文件名并返回
+      console.log()
+    }
+  })
 })
 module.exports = router

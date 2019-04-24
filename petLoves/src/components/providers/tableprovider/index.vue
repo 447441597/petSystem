@@ -8,7 +8,7 @@
       </div>
       <div class="text item">
         <el-table :data="providers" stripe style="width: 100%">
-          <el-table-column prop="name" label="供应商名称" width="180"></el-table-column>
+          <el-table-column prop="providerName" label="供应商名称" width="180"></el-table-column>
           <el-table-column prop="person" label="法人代表" width="180"></el-table-column>
           <el-table-column prop="number" label="营业执照号" width="180"></el-table-column>
           <el-table-column prop="phone" label="供应商号码" width="180"></el-table-column>
@@ -54,7 +54,7 @@ export default {
     handleDelete(index, row) {
       let id = row._id;
      
-      this.$confirm(`此操作将删除${row.name}供应商, 是否继续?`, "提示", {
+      this.$confirm(`此操作将删除${row.providerName}供应商, 是否继续?`, "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning"

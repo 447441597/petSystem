@@ -1,5 +1,5 @@
 <template>
-  <el-table :data="data" style="width: 100%">
+  <el-table :data="show" style="width: 100%">
     <el-table-column label="名称" prop="goodsName" width="180"></el-table-column>
     <el-table-column label="品类" prop="type" width="180"></el-table-column>
     <el-table-column label="材质或制作方法" prop="material" width="180"></el-table-column>
@@ -14,10 +14,11 @@
     <el-table-column label="供应商" prop="provider" width="180"></el-table-column>
     <el-table-column label="特色说明" prop="features" width="180"></el-table-column>
     <el-table-column label="价格" prop="price" width="180"></el-table-column>
+     <el-table-column label="库存" prop="number" width="180"></el-table-column>
     <el-table-column label="图片" prop="images" width="180"></el-table-column>
     <el-table-column label="操作" width="180">
       <template slot-scope="scope">
-        <el-button size="mini" @click="handleEdit(scope)">编辑</el-button>
+        <el-button size="mini" @click="handleEdit(scope.$index,scope.row)">修改</el-button>
         <el-button size="mini" type="danger" @click="del(scope.$index,scope.row)">删除</el-button>
       </template>
     </el-table-column>
@@ -25,29 +26,31 @@
 </template>
 
 <script>
-import axios from "axios";
+import axios from 'axios'
+import { createNamespacedHelpers} from 'vuex'
+const { mapActions, mapState, mapMutations} = createNamespacedHelpers("goods");
 export default {
   data() {
     return {
-      data: [],
-      visible2: false
+    // data:[],
+    visible2:false
     };
   },
+  computed: {
+      ...mapState(["show"])
+  },
   methods: {
-    del(index, row) {
-      console.log(row, index);
-      const h = this.$createElement;
-      this.$confirm("此操作将永久删除该商品, 是否继续?", "提示", {
-        message: h("p", null, [
-          h(
-            "p",
-            { style: "color: red;font-size:20px" },
-            "此操作将永久删除该商品, 是否继续?"
-          ),
-          h("p", { style: "color: red" }, `商品名字:${row.goodsName} `),
-          h("p", { style: "color: red" }, `商品类型:${row.type} `),
-          h("p", { style: "color: red" }, `商品产地:${row.addr} `)
-        ]),
+      ...mapActions(["getshow"]),
+     del(index,row){
+         console.log(row,index)
+          const h = this.$createElement;
+          this.$confirm("此操作将永久删除该商品, 是否继续?", "提示", {
+        //   message: h('p', null, [
+        //     h('p', { style: 'color: red;font-size:20px' }, '此操作将永久删除该商品, 是否继续?'),
+        //     h('p', { style: 'color: red' }, `商品名字:${row.name} `),
+        //     h('p', { style: 'color: red' }, `商品类型:${row.type} `),
+        //      h('p', { style: 'color: red' }, `商品产地:${row.addr} `)
+        //   ]),
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning"
@@ -57,7 +60,7 @@ export default {
             method: "delete",
             url: "/goods/" + row._id
           }).then(res => {
-            this.setStudents();
+            this.getshow();
           });
           this.$message({
             type: "success",
@@ -70,16 +73,23 @@ export default {
             message: "已取消删除"
           });
         });
-    }
+    },
+      ...mapActions(["Updata"]),
+     handleEdit(index,row){
+         let id = row._id
+      console.log(id)
+      this.Updata(id)
+  }
   },
-  created() {
-    axios({
-      method: "get",
-      url: "goods/data"
-    }).then(res => {
-      console.log(res.data);
-      this.data = res.data;
-    });
+  created(){
+      this.getshow();
+    //  axios({
+    //     method: "get",
+    //     url: "goods/data"
+    //   }).then(res => {
+    //    console.log(res.data)
+    //    this.data=res.data
+    //   });
   }
 };
 </script>

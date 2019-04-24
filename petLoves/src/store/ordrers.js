@@ -20,32 +20,37 @@ export default {
     setPagination(state, data) {
       state.pagination.total = data.total,
       state.pagination.eachpage = data.eachpage
-      console.log(state.pagination,'pagination')
+      // console.log(state.pagination,'pagination')
     }
   },
   actions: {
-    getOrders({ commit }, ordersType) {
+    getOrders({ commit },playload) {
+      console.log('object',playload)
       let page = 1;
       let rows = 5;
-      ordersType = ordersType || 0;
+      let ordersType = playload.ordersType || 0;
+      let type = playload.type || '';
+      let value = playload.value || '';
       axios({
         method: "get",
         url: "/orders",
         params: {
           page,
           rows,
-          ordersType
+          ordersType,
+          type,
+          value
         }
       }).then(res => {
+        console.log(res, "请求会的数据");
         commit("setPagination", res.data);
-        console.log(res.data, "请求会的数据");
         commit("setShopsOrders", res.data.rows);
       });
     },
-    getOrdersStatus({ commit }, status) {
+    getOrdersStatus({ commit }, playload) {
       let page = 1;
       let rows = 5;
-      status = status || 0;
+      let status = playload.ordersType || 0;
       axios({
         method: "get",
         url: "/orders/status",
@@ -55,7 +60,7 @@ export default {
           status
         }
       }).then(res => {
-        // console.log(res.data.rows, "请求来的状态数据");
+        // console.log(res.data, "请求来的状态数据");
         commit("setPagination", res.data);
         commit("setShopsOrders", res.data.rows);
       });

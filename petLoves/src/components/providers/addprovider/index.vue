@@ -7,8 +7,8 @@
 <el-row>
    <el-button  type="primary" @click="dialogFormVisible = true">增加供应商</el-button>
  <div class="sousuo">
-  <el-input placeholder="请输入内容" v-model="search.value" class="input-with-select">
-    <el-select v-model="search.type" slot="prepend" placeholder="请选择">
+  <el-input placeholder="请输入内容" v-model="proSearch.value" class="input-with-select">
+    <el-select v-model="proSearch.type" slot="prepend" placeholder="请选择">
        <el-option label="供应商名称" value="name" ></el-option>
       <el-option label="供应商电话"  value="phone" ></el-option>
       <el-option label="供应商地址" value="address"  ></el-option>
@@ -57,7 +57,7 @@ data() {
       dialogFormVisible: false,
       form: {
         address: "",
-        name: "",
+        providersName: "",
         number: "",
         person: "",
         phone: "",
@@ -72,25 +72,25 @@ data() {
     };
   },
   computed: {
-    ...mapState(["search"]),
+    ...mapState(["proSearch"]),
     value: {
       get() {
-        return this.search.value;
+        return this.proSearch.value;
       },
       set(value) {
         this.setSearch({
-          ...this.search,
+          ...this.proSearch,
           value
         });
       }
     },
     type: {
       get() {
-        return this.search.type;
+        return this.proSearch.type;
       },
       set(type) {
         this.setSearch({
-          ...this.search,
+          ...this.proSearch,
           type
         });
       }
@@ -108,14 +108,14 @@ data() {
         method: "post",
         url: "/providers",
         data: {
-          name: this.form.name,
+          providersName: this.form.providersName,
           phone: this.form.phone,
           person: this.form.person,
           address: this.form.address,
           number: this.form.number,
         }
       }).then(() => {
-        this.form.name="";
+        this.form.providersName="";
         this.form.phone="";
         this.form.person="";
         this.form.address="";
@@ -129,8 +129,8 @@ data() {
     searchBtn() {
       console.log(123123);
       this.setProviders({
-        type: this.search.type,
-        value: this.search.value
+        type: this.proSearch.type,
+        value: this.proSearch.value
       });
     }
     

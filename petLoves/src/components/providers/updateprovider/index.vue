@@ -3,7 +3,7 @@
     <el-dialog title="修改学生" :visible.sync="visible">
       <el-form >
           <el-form-item label="供应商名称" :label-width="formLabelWidth">
-          <el-input   v-model="provider.name" autocomplete="off"></el-input>
+          <el-input   v-model="provider.providersName" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="营业执照号" :label-width="formLabelWidth">
           <el-input v-model="provider.number" autocomplete="off"></el-input>
@@ -37,7 +37,7 @@ export default {
       dialogFormVisible: false,
       form: {
         number: "",
-        name: "",
+        providersName: "",
         address: "",
         person: "",
         phone: "",
@@ -70,7 +70,7 @@ export default {
                         method: "put",
                         url: "/providers/" + id,
                         data: {
-                            name: this.provider.name,
+                            providersName: this.provider.providersName,
                             phone: this.provider.phone,
                             person: this.provider.person,
                             address: this.provider.address,

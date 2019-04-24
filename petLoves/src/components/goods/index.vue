@@ -2,9 +2,10 @@
   <div>
      <el-row>
          <el-col :span="2"> <Add></Add></el-col>
-          <el-col :span="2">  <Updata></Updata></el-col>
+            <el-col :span="2"> <Search></Search></el-col>
         </el-row>
     <Datalist></Datalist>
+    <Page></Page>
   </div>
 </template>
 
@@ -12,11 +13,15 @@
 import Add from './add'
 import Updata from './updata'
 import Datalist from './datalist'
+import Search from './search'
+import Page from './page'
 export default {
   components: {
     Add,
     Datalist,
-    Updata
+    Updata,
+    Search,
+    Page
   },
   data() {
     return {

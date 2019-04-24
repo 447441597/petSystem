@@ -7,6 +7,7 @@ export default {
         persons: [],
         person:{},
         dialogVisible:false,
+        pagination:{},
     },
     mutations: {
         setPerson(state, person) {
@@ -15,6 +16,9 @@ export default {
         },
         person(state,person){
             state.person = person
+        },
+        setPagination(state, pagination) {
+            state.pagination = pagination
         },
         setVisible(state,Visible){
             state.dialogVisible = Visible  
@@ -26,7 +30,7 @@ export default {
     actions: {
         setPersons({commit}, payload = {}, ) {
             let page = payload.page || 1;
-            let rows = payload.rows || 10;
+            let rows = payload.rows || 5;
             let type = payload.type || "";
             let value = payload.value || "";
             console.log(type,value)
@@ -42,7 +46,7 @@ export default {
             }).then((res) => {
                 console.log(res.data.rows)
                 commit("setPerson", res.data.rows)
-                // commit("setPagination",res.data)
+                commit("setPagination",res.data)
             })
         },
 

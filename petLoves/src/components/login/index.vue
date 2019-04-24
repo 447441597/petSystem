@@ -11,7 +11,7 @@
                </el-form-item>
                <el-form-item label="密码" prop="pwd">
               <el-input type="password" v-model="ruleForm2.pwd" autocomplete="off" ></el-input>
-              </el-form-item>
+               </el-form-item>
               <el-form-item>
              <el-button type="primary" @click="submitForm('ruleForm2')">提交</el-button>
             <el-button type="success" @click="register">注册</el-button>
@@ -70,8 +70,11 @@ export default {
             console.log(res.data);
             if (res.data.privilege=="2") {
               this.$router.push({ path: "/manage" });
-            }else if(res.data.privilege=="0"){
+            }else if(res.data.privilege=="0"&&res.data.shopsId!=""){
               this.$router.push({ path: "/shopManage" });
+            }else if(res.data.shopsId==""){
+                  // location.href="/components/apply/"
+                  this.$router.push({ path: "/apply" });
             } else {
               alert("手机号密码错误");
             }

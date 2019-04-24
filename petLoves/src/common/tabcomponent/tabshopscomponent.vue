@@ -1,6 +1,10 @@
 <template>
     <div>
   <template>
+    <el-button style="float: left; padding: 3px" type="success" round @click="unfinished">未完成订单</el-button>
+    <el-button style="float: left; padding: 3px" type="success" round @click="finish">已完成订单</el-button>
+    <el-button style="float: left; padding: 3px" type="success" round @click="allOrders">全部订单</el-button>
+    
   <el-table
     :data="orders"
     height="250"
@@ -29,9 +33,13 @@
     </el-table-column>
   </el-table>
   <div class="block">
+
   <el-pagination
     layout="prev, pager, next"
-    :total="~~(pagination.total)" @current-change="pageChange">
+    :total="~~(ordersLength)"
+     :page-size=3
+     :current-page="~~(pagination.curpage)" 
+     @current-change="pageChange">
   </el-pagination>
 
 
@@ -76,23 +84,57 @@ export default {
     return {
       dialogVisible: false,
       dialogVisibleok: false,
-      info: ""
+      info: "",
+      orders: []
     };
   },
   computed: {
-    ...mapState(["orders", "pagination"])
+    ...mapState(["pagination", "ordersData", "ordersLength", "tab"])
   },
+  // beforeMount(){
+  //   console.log(this.ordersData,'updataupdataupdataupdataupdataupdata')
+  //   this.orders = this.ordersData[0]
+  // },
   methods: {
-    ...mapActions(["getOrders"]),
+    ...mapActions(["getOrders", "getOrdersStatus"]),
+    unfinished() {
+      // 未完成订单
+      if (this.tab == "商品订单") {
+        let playload = {
+          ordersType: 1,
+          sta: 0
+        };
+        this.getOrdersStatus(playload);
+      }
+    },
+    finish() {
+      // 完成订单
+      if (this.tab == "商品订单") {
+        let playload = {
+          ordersType: 2,
+          sta: 0
+        };
+        this.getOrdersStatus(playload);
+      }
+    },
+    allOrders() {
+      // 全部订单
+      if (this.tab == "商品订单") {
+        let playload = {
+          ordersType: 0,
+          sta: 0
+        };
+        this.getOrdersStatus(playload);
+      }
+    },
     pageChange(i) {
       console.log(i, "i");
       // console.log(this.pagination)
-      let playload = {
-        page: i,
-        ordersType: 0
-      };
-      console.log(playload, "playload");
-      this.getOrders(playload);
+
+      // console.log(playload, "playload");
+      // this.getOrders(playload);
+      this.orders = this.ordersData[i - 1];
+      console.log(this.orders, "}}}}}}}}}}}}}}");
     },
     handleClick(row) {
       // console.log("详细信息", this.dialogVisible);

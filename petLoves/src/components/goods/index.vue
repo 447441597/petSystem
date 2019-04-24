@@ -5,6 +5,7 @@
             <el-col :span="2"> <Search></Search></el-col>
         </el-row>
     <Datalist></Datalist>
+    <Updata></Updata>
     <Page></Page>
   </div>
 </template>

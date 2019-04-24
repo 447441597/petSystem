@@ -25,13 +25,30 @@
       label="订单信息">
       <template slot-scope="scope">
         <el-button @click="handleClick(scope.row)" type="text" size="small">详细信息</el-button>
+        <el-button v-if="(scope.row.status) == '服务未完成'" @click="handleClickok(scope.row)"  type="success" size='small' icon="el-icon-check">完成</el-button>
+        
       </template>
     </el-table-column>
   </el-table>
   <div class="block">
+    <!-- 分页 
+    <el-pagination
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
+      :current-page.sync="currentPage1"
+      :page-size="100"
+      layout="total, prev, pager, next"
+      :total="1000">
+    </el-pagination
+-->
   <el-pagination
     layout="prev, pager, next"
-    :total="~~(pagination.total)" @current-change="pageChange">
+    :total="~~(pagination.total)"
+     :page-size=5
+     @prev-click="prev"
+     @next-click="next"
+     :current-page="~~(pagination.curpage)" 
+     @current-change="pageChange">
   </el-pagination>
 
   <el-dialog
@@ -64,28 +81,82 @@
 
 <script>
 import { createNamespacedHelpers } from "vuex";
+import axios from "axios";
 const { mapState, mapActions } = createNamespacedHelpers("ordrers");
 export default {
-  data(){
+  data() {
     return {
-      dialogVisible:false,
-      info:'',
-    }
+      dialogVisible: false,
+      dialogVisibleok: false,
+      info: ""
+    };
   },
   computed: {
-    ...mapState(["orders",'pagination'])
+    ...mapState(["orders", "pagination"])
   },
   methods: {
-    // ...mapActions(["getOrders"]),
-    pageChange(i){
-      console.log(i,'i')
-      console.log(this.pagination)
+    ...mapActions(["getOrders"]),
+    pageChange(i) {
+      console.log(i, "i");
+      // console.log(this.pagination)
+      let playload = {
+        page: i,
+        rows: this.pagination.eachpage,
+        ordersType: 0
+      };
+      console.log(playload, "playload");
+      this.getOrders(playload);
     },
-    handleClick(row){
+    prev() {
+      let playload = {
+        page: this.pagination.curpage-1,
+        rows: this.pagination.eachpage,
+        ordersType: 0
+      };
+      console.log(playload, "playload");
+      this.getOrders(playload);
+    },
+    next() {
+      let playload = {
+        page: ~~(this.pagination.curpage)+1,
+        rows: this.pagination.eachpage,
+        ordersType: 0
+      };
+      console.log(playload, "playload");
+      this.getOrders(playload);
+    },
+    handleClick(row) {
       // console.log(row,'详细信息');
       this.info = row;
-      console.log(this.info)
+      // console.log(this.info)
       this.dialogVisible = true;
+    },
+    handleClickok(row) {
+      // console.log('objecthandleClickokhandleClickok',row._id)
+      this.dialogVisibleok = true;
+      axios({
+        method: "get",
+        url: "/orders/users/" + row._id
+      }).then(res => {
+        // console.log(res.data.status);
+        if (res.data.status == 0) {
+          this.$alert("用户还没有确认！", "提示");
+        } else if (res.data.status == 1) {
+          axios({
+            method: "put",
+            url: "/orders/" + row._id,
+            data: {
+              status: "服务已完成"
+            }
+          }).then(data => {
+            let playload = {
+              ordersType: 1
+            };
+            this.getOrders(playload);
+            console.log(data, "修改后的");
+          });
+        }
+      });
     }
   }
 };

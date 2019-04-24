@@ -134,7 +134,7 @@ export default {
       let img = this.images
       axios({
         method: "post",
-        url: "goods/add",
+        url: "/goods/add",
         data: this.form
       }).then(res => {
         console.log("添加成功");

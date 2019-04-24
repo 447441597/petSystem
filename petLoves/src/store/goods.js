@@ -37,7 +37,7 @@ export default {
             let value =payload.value ||"";
             axios({
                 method: "get",
-                url: "goods/data",
+                url: "/goods/data",
                 params:{
                     page,
                     rows,

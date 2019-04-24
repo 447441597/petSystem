@@ -14,6 +14,7 @@
           </el-col>
         </el-row>
         <el-table :data="services" style="width: 100%" row-key="_id">
+           <el-table-column label="日期" prop="serverDate" style="width:20px"></el-table-column>
           <el-table-column label="服务名" prop="serviceName" style="width:20px"></el-table-column>
           <el-table-column label="服务类别" prop="serverType" style="width:20px"></el-table-column>
           <el-table-column label="服务时间段" prop="times" style="width:20px">

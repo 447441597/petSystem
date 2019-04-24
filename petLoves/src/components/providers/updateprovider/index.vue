@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-dialog title="修改学生" :visible.sync="visible">
-      <el-form >
+      <!-- <el-form >
           <el-form-item label="供应商名称" :label-width="formLabelWidth">
           <el-input   v-model="provider.name" autocomplete="off"></el-input>
         </el-form-item>
@@ -21,7 +21,7 @@
       <div slot="footer" class="dialog-footer">
         <el-button @click="setVisible(false)">取 消</el-button>
         <el-button type="primary" @click="updateBtn" >修改</el-button>
-      </div>
+      </div> -->
     </el-dialog>
   </div>
 </template>
@@ -33,57 +33,57 @@ import { createNamespacedHelpers } from "vuex";
 const { mapActions, mapState ,mapMutations} = createNamespacedHelpers("yj");
 export default {
   data() {
-    return {
-      dialogFormVisible: false,
-      form: {
-        number: "",
-        name: "",
-        address: "",
-        person: "",
-        phone: "",
-        date1: "",
-        date2: "",
-        delivery: false,
-        type: [],
-        resource: "",
-        desc: ""
-      },
-      formLabelWidth: "120px"
-    };
-  },
-  computed:{
-      ...mapState(["visible"]),
-      ...mapState(["provider"]),
-      ...mapState(['upVisble']),
+//     return {
+//       dialogFormVisible: false,
+//       form: {
+//         number: "",
+//         name: "",
+//         address: "",
+//         person: "",
+//         phone: "",
+//         date1: "",
+//         date2: "",
+//         delivery: false,
+//         type: [],
+//         resource: "",
+//         desc: ""
+//       },
+//       formLabelWidth: "120px"
+//     };
+//   },
+//   computed:{
+//       ...mapState(["visible"]),
+//       ...mapState(["provider"]),
+//       ...mapState(['upVisble']),
       
       
-  },
-  methods: {
-    ...mapActions(["setProviders"]),
-    ...mapMutations(['setVisible']),
-    updateBtn() {
-        console.log(this.provider,'sdasdasd')
- let id = this.provider._id
- console.log(id,"修改按钮ID")
+//   },
+//   methods: {
+//     ...mapActions(["setProviders"]),
+//     ...mapMutations(['setVisible']),
+//     updateBtn() {
+//         console.log(this.provider,'sdasdasd')
+//  let id = this.provider._id
+//  console.log(id,"修改按钮ID")
 
-                    axios({
-                        method: "put",
-                        url: "/providers/" + id,
-                        data: {
-                            name: this.provider.name,
-                            phone: this.provider.phone,
-                            person: this.provider.person,
-                            address: this.provider.address,
-                            number: this.provider.number
+//                     axios({
+//                         method: "put",
+//                         url: "/providers/" + id,
+//                         data: {
+//                             name: this.provider.name,
+//                             phone: this.provider.phone,
+//                             person: this.provider.person,
+//                             address: this.provider.address,
+//                             number: this.provider.number
                             
-                        }
+//                         }
 
-                    }).then(() => {
-                     this.setVisible(false)
-                          this.setProviders();
+//                     }).then(() => {
+//                      this.setVisible(false)
+//                           this.setProviders();
                         
-                    })
-                }
+//                     })
+//                 }
     
   }
 };

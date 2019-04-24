@@ -9,13 +9,12 @@
                   </div>
         <template v-if="status">
           <el-steps :space="400" :active="active" align-center>
-          <el-step title="基本信息填写"></el-step>
           <el-step title="正在审核中"></el-step>
           <el-step title="已审核"></el-step>
-          <el-step title="未通过"></el-step>
+          <!-- <el-step title="未通过"></el-step> -->
         </el-steps>
         </template>
-        <template v-else>
+        <template v-else >
          <el-form :model="form" :rules="rules"  ref="form" >
            <el-form-item label="门店名称" :label-width="formLabelWidth" prop="storeName">
               <el-input v-model="form.storeName" autocomplete="off"></el-input>
@@ -79,7 +78,7 @@
            </el-form-item>
             <span slot="footer" class="dialog-footer">
             <el-button @click="dialogVisible = false">取 消</el-button>
-            <el-button type="primary" @click="sure">确 定</el-button>
+            <el-button type="primary" @click="sure" >确 定</el-button>
             </span>
             </el-dialog>
         </el-form>
@@ -102,9 +101,11 @@ export default {
   data() {
     return {
       ID:'',
+      shopid:"",
       dialogVisible: false,
-      select: true,
+      select: false,
       temp: 0,
+      active:1,
       form: {
         storeName: "",
         businessNum: "",
@@ -139,9 +140,6 @@ export default {
         rate: [{ required: true, message: "请输入内容", trigger: "blur" }],
         businessImage: [{ required: true, message: "请上传营业执照图片", trigger: "blur" }],
          headImage: [{ required: true, message: "请上传门店图片", trigger: "blur" }]
-        // assistantname: [{ required: true, message: "请输入内容", trigger: "blur" }],
-        // assistantlevel: [{ required: true, message: "请输入内容", trigger: "blur" }],
-        // assistantphone: [{ required: true, message: "请输入内容", trigger: "blur" }],
       }
     };
   },
@@ -149,16 +147,39 @@ export default {
     ...mapState(["active","status","userId"])
   },
   created(){
-    this.getTemp()
+    this.getTemp(),
+    axios({
+      method:"get",
+      url:"/users/"+this.userId
+    }).then((res)=>{
+      for(let i = 0;i<res.data.length;i++){
+        this.shopid = res.data[i].shopsId
+      }
+      let id = this.shopid
+      console.log(id,"12345671234567")
+      axios({
+        method:"get",
+        url:"/shops/"+id
+      }).then((data)=>{
+        console.log(data.data,"data")
+         if(data.data.active==3){
+           this.active +=1
+         }
+        //  else{
+        //    this.active +=2
+        //  }
+        //  this.active = 1
+        //  console.log(this.active,"5555555555555555555555")
+      })
+    })
   },
   methods: {
     ...mapMutations(["setActive"]),
     ...mapActions(["getTemp"]),
-    selected(data) {
-      this.select = data;
-    },
+    // selected(data) {
+    //   this.select = data;
+    // },
     handleAvatarSuccess(response, file, fileList) {
-      console.log(response);
       this.imageUrl = "/images/" + response;
       this.form.businessImage = response;
     },
@@ -167,7 +188,6 @@ export default {
       this.form.headImage = response;
     },
     sure() {
-      console.log(this.form.assistantname, "this.form.assistantname");
       assistant.push({
         assistantname: this.form.assistantname,
         assistantlevel: this.form.assistantlevel,
@@ -181,8 +201,13 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          let active = this.active;
+          this.status = 1
           if (assistant.length > 0) {
+            //  if(this.active==1){
+            //     // this.setActive()
+            //      this.active+=1
+            //      console.log(this.active,"qeqwreqwreewqewqwq")
+            //   }
             axios({
               method: "post",
               url: "/applys",
@@ -196,33 +221,28 @@ export default {
                 rate: this.form.rate,
                 address: this.form.address,
                 assistant,
-                active,
+                active:this.active,
                 temp: this.temp,
                 businessImage: this.form.businessImage,
                 headImage: this.form.headImage
               }
             }).then(res => {
               // this.setActive();
-              console.log(res,'9999999999ewwwwwwwwww9999999')
               this.ID = res.data._id
               axios({
                 method:'get',
-                url:'/users/'+userId
+                url:'/users/'+this.userId
               }).then((info)=>{
-                console.log('obj99999999999999999999ect',this.ID)
-                info.shopsId = this.ID;
+                let qq = info.data._id
+                info.data.shopsId = this.ID;
+                info = info.data;
+                delete info._id;
                 axios({
                   method:'put',
-                  url:'/users/'+info._id,
+                  url:'/users/'+qq,
                   data:info
-                }).then((o)=>{
-                  console.log(o,'522255546486155')
                 })
               })
-              if(this.active==1){
-                this.setActive()
-              }
-              console.log(res);
             });
             this.$message({
               type: "success",

@@ -46,9 +46,9 @@ router.post("/upload",function(req,res){
 router.get('/temp',async function(req,res){
   console.log(req.query,'query')
   let data = await client.get('/shops',{submitType:"findJoin",ref:"users"});
-  console.log(data,'88888888888888888888888888')
+  // console.log(data,'88888888888888888888888888')
   let info = await client.get('/users/'+data.users._id);
-  console.log(info,'999999999999999999')
+  // console.log(info,'999999999999999999')
   // if(data.temp == 0){
   //   //审核中
   //   res.send({status:1})

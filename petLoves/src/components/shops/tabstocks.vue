@@ -59,10 +59,10 @@
       <template slot-scope="scope" class="scope">
         <el-button
           size="mini"
-          @click="handleDelete(scope.$index, scope.row)" type="danger" icon="el-icon-delete" circle></el-button>
+          @click="handleDelete(scope.$index, scope.row)" type="danger" circle>删除</el-button>
           <el-button
           size="mini"
-          @click="handleEdit(scope.$index, scope.row)" icon="el-icon-edit" type="primary" circle></el-button>
+          @click="handleEdit(scope.$index, scope.row)"  type="primary" circle>修改</el-button>
       </template>
     </el-table-column>
      </el-table>

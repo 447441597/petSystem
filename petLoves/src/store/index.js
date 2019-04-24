@@ -14,7 +14,16 @@ export default new Vuex.Store({
   modules: {
     petowns, services,ordrers,users,lwj,goods,yj,serverType
   },
+<<<<<<< HEAD
  
+=======
+  state: {
+
+  },
+  actions: {
+    
+  }
+>>>>>>> yujie
 
 })
 

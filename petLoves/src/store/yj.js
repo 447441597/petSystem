@@ -68,7 +68,7 @@ export default{
                  console.log(res.data,'查询当前列')
                 commit("provider",res.data)
                 commit("setVisible",true)
-                commit("setUpVisible",false)
+                // commit("setUpVisible",false)
                 
                
                

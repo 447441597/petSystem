@@ -11,15 +11,9 @@
           </el-col>
           <el-col :span="5">
             <div>
-<<<<<<< HEAD
-               <div id="top">
-              <span style="margin-right:5px;color:white">欢迎用户:{{content}}</span>
-              <el-button type="danger" @click="del">注销</el-button>
-=======
               <div id="top">
                 <span style="margin-right:5px">欢迎用户:{{content}}</span>
                 <el-button type="danger" @click="del">注销</el-button>
->>>>>>> main
               </div>
             </div>
           </el-col>

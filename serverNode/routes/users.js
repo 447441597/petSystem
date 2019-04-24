@@ -135,13 +135,13 @@ router.put("/:id", async function (req, res) {
     phone,
     pwd,
     privilege,
-    shopid
+    shopsId
   } = req.body;
   let data = await client.put("/users/" + id, {
     phone,
     pwd,
     privilege,
-    shopid
+    shopsId
   });
   res.send(data);
 });

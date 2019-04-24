@@ -18,7 +18,8 @@ export default {
     },
     examine: [],
     zhiyuan: [],
-    status:''
+    status: "",
+    userId:''
   },
   mutations: {
     setshops(state, shops) {
@@ -67,8 +68,12 @@ export default {
       state.zhiyuan = zhiyuan;
       // console.log(state.zhiyuan);
     },
-    setTemp(state,data){
-      state.status = data
+    setTemp(state, data) {
+      // console.log(data,'修改22222222222222')
+      state.status = data;
+    },
+    setUserId(state,data){
+      state.userId = data
     }
   },
   actions: {
@@ -106,7 +111,7 @@ export default {
         url: "/shops/no",
         params: { page, rows, type, value }
       }).then(res => {
-        console.log(res,'哈哈哈哈哈')
+        // console.log(res, "哈哈哈哈哈");
         commit("getok", res.data.rows);
         commit("setpagiNation", res.data);
         // commit("setSearch", { type, value });
@@ -128,15 +133,27 @@ export default {
         commit("setSearch", { type, value });
       });
     },
-    getTemp({commit}){
-      console.log('objeobjectobjectobjectobjectobjectobjectct')
+    getTemp({ commit }) {
       axios({
-        method:'get',
-        url:'/applys/temp'
-      }).then((res)=>{
-        console.log(res,'轉臺');
-        commit("setTemp",res)
-      })
+        method: "get",
+        url: "/getSession"
+      }).then(res => {
+        console.log(res.data,'轉臺');
+        let id = res.data._id;
+        commit("setUserId",id);
+        axios({
+          method: "get",
+          url: "/users/" + id
+        }).then(data => {
+          // console.log(data, "55555555553333333");
+          if (data.data.shopsId == "") {
+            commit("setTemp", 0);
+          } else {
+            commit("setTemp", 1);
+          }
+        });
+        // commit("setTemp",res)
+      });
     }
   }
 };

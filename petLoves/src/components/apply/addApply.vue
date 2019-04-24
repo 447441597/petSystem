@@ -101,6 +101,7 @@ let assistant = [];
 export default {
   data() {
     return {
+      ID:'',
       dialogVisible: false,
       select: true,
       temp: 0,
@@ -118,6 +119,7 @@ export default {
         assistantphone: "",
         headImage: "",
         businessImage: ""
+        
       },
       formLabelWidth: "120px",
       imageUrl: "",
@@ -144,7 +146,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(["active","status"])
+    ...mapState(["active","status","userId"])
   },
   created(){
     this.getTemp()
@@ -201,6 +203,22 @@ export default {
               }
             }).then(res => {
               // this.setActive();
+              console.log(res,'9999999999ewwwwwwwwww9999999')
+              this.ID = res.data._id
+              axios({
+                method:'get',
+                url:'/users/'+userId
+              }).then((info)=>{
+                console.log('obj99999999999999999999ect',this.ID)
+                info.shopsId = this.ID;
+                axios({
+                  method:'put',
+                  url:'/users/'+info._id,
+                  data:info
+                }).then((o)=>{
+                  console.log(o,'522255546486155')
+                })
+              })
               if(this.active==1){
                 this.setActive()
               }

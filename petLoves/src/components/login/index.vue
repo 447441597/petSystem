@@ -14,6 +14,7 @@
               </el-form-item>
               <el-form-item>
              <el-button type="primary" @click="submitForm('ruleForm2')">提交</el-button>
+            <el-button type="success" @click="register">注册</el-button>
              <el-button @click="resetForm('ruleForm2')">重置</el-button>
             </el-form-item>
              </el-form>
@@ -52,6 +53,9 @@ export default {
     };
   },
   methods: {
+    register(){
+      this.$router.push({ path: "/register" });
+    },
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {

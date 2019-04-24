@@ -14,10 +14,11 @@
     <el-table-column label="供应商" prop="provider" width="180"></el-table-column>
     <el-table-column label="特色说明" prop="features" width="180"></el-table-column>
     <el-table-column label="价格" prop="price" width="180"></el-table-column>
+     <el-table-column label="库存" prop="number" width="180"></el-table-column>
     <el-table-column label="图片" prop="images" width="180"></el-table-column>
     <el-table-column label="操作" width="180">
       <template slot-scope="scope">
-        <el-button size="mini" @click="handleEdit(scope)">编辑</el-button>
+        <el-button size="mini" @click="handleEdit(scope.$index,scope.row)">修改</el-button>
         <el-button size="mini" type="danger" @click="del(scope.$index,scope.row)">删除</el-button>
       </template>
     </el-table-column>
@@ -40,8 +41,6 @@ export default {
   },
   methods: {
       ...mapActions(["getshow"]),
-    //   ...mapMutations([])
-      ...mapMutations(['setshow']),
      del(index,row){
          console.log(row,index)
           const h = this.$createElement;
@@ -61,7 +60,7 @@ export default {
             method: "delete",
             url: "/goods/" + row._id
           }).then(res => {
-            this.setStudents();
+            this.getshow();
           });
           this.$message({
             type: "success",
@@ -74,7 +73,13 @@ export default {
             message: "已取消删除"
           });
         });
-    }
+    },
+      ...mapActions(["Updata"]),
+     handleEdit(index,row){
+         let id = row._id
+      console.log(id)
+      this.Updata(id)
+  }
   },
   created(){
       this.getshow();

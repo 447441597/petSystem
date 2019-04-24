@@ -21,6 +21,11 @@ router.get("/", async function(req, res) {
     ...option
   });
   // console.log(data1.rows[0].services, "data1");
+  console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+  
+  data1.rows.map((i)=>{
+    console.log(i,'data1')
+  })
   if (ordersType == 0) {
     //请求商品订单
     for (let i = 0; i < data1.rows.length; i++) {

@@ -8,7 +8,9 @@
              <div class="text item">
                 <el-form :model="ruleForm2" status-icon :rules="rules2" ref="ruleForm2" label-width="100px" class="demo-ruleForm">
                 <el-form-item label="账号类别" prop="type">
-                <el-input v-model="ruleForm2.type"  placeholder="输入注册类型  0为宠主注册  1为门店管理员注册 "></el-input>
+                <!-- <el-input v-model="ruleForm2.type"  placeholder="输入注册类型  1为宠主注册  0为门店管理员注册 "></el-input> -->
+                 <el-radio v-model="ruleForm2.type" label="1">宠主注册</el-radio>
+                 <el-radio v-model="ruleForm2.type" label="0">门店管理员注册</el-radio>
                 </el-form-item>
                 <el-form-item label="手机号" prop="phone">
                 <el-input v-model="ruleForm2.phone"></el-input>
@@ -72,7 +74,7 @@ export default {
     };
     var checktype = (rule, value, callback) => {
       if (value === "") {
-        callback(new Error("请输入账号类别0或1"));
+        callback(new Error("请选择账号类别"));
       } else {
         callback();
       }
@@ -91,13 +93,13 @@ export default {
         pass: "",
         checkPass: "",
         phone: "",
-        type:"",
+        type: ""
       },
       rules2: {
         pass: [{ validator: validatePass, trigger: "blur" }],
         checkPass: [{ validator: validatePass2, trigger: "blur" }],
         phone: [{ validator: checkAge, trigger: "blur" }],
-        type: [{ validator: checktype, trigger: "blur" }],
+        type: [{ validator: checktype, trigger: "blur" }]
       }
     };
   },
@@ -105,30 +107,30 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-            console.log(this.ruleForm2.type)
-         if(this.ruleForm2.type==0){
-              axios({
-            method: "post",
-            url: "/users/shopRegister",
-            data: {
-              phone: this.ruleForm2.phone,
-              pwd: this.ruleForm2.checkPass
-            }
-          }).then(res => {
-            this.$router.push({ path: "/login" });
-          });
-         }else{
-              axios({
-            method: "post",
-            url: "/users/SpoilRegister",
-            data: {
-              phone: this.ruleForm2.phone,
-              pwd: this.ruleForm2.checkPass
-            }
-          }).then(res => {
-            this.$router.push({ path: "/login" });
-          });
-         }
+          console.log("aaaaaaaaaaa", this.ruleForm2.type);
+          if (this.ruleForm2.type == 0) {
+            axios({
+              method: "post",
+              url: "/users/shopRegister",
+              data: {
+                phone: this.ruleForm2.phone,
+                pwd: this.ruleForm2.checkPass
+              }
+            }).then(res => {
+              this.$router.push({ path: "/login" });
+            });
+          } else if (this.ruleForm2.type == 1) {
+            axios({
+              method: "post",
+              url: "/users/SpoilRegister",
+              data: {
+                phone: this.ruleForm2.phone,
+                pwd: this.ruleForm2.checkPass
+              }
+            }).then(res => {
+              this.$router.push({ path: "/login" });
+            });
+          }
         } else {
           alert("格式验证未通过!!");
           return false;

@@ -69,12 +69,14 @@ router.post("/shopRegister", async function (req, res) {
   //获取请求数据
   let {
     phone,
-    pwd
+    pwd,
+    shopsId,
   } = req.body;
   let data = await client.post("/users", {
     phone,
     pwd,
-    privilege
+    privilege,
+    shopsId,
   });
   res.send(data);
 });

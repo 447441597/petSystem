@@ -20,9 +20,10 @@ router.get('/', async function (req, res) {
 
 //增加
 router.post('/',async function(req,res){
-  let {storeName,businessNum,legalPerson,tel,address,feature,vipLeval,rate,assistant,active,temp,businessImage,headImage} = req.body;
+  let status = 0
+  let {storeName,businessNum,legalPerson,tel,address,feature,vipLeval,rate,assistant,active,businessImage,headImage} = req.body;
   console.log(req.body);
-  let data = await client.post('/shops',{storeName,businessNum,legalPerson,tel,address,feature,vipLeval,rate,assistant,temp,active,businessImage,headImage});
+  let data = await client.post('/shops',{storeName,businessNum,legalPerson,tel,address,feature,vipLeval,rate,assistant,status,active,businessImage,headImage});
   res.send(data);
   console.log(data)
 })

@@ -115,7 +115,8 @@ export default {
               data: {
                 phone: this.ruleForm2.phone,
                 pwd: this.ruleForm2.checkPass,
-                shopsId:""
+                shopsId:"",
+                status:"0"
               }
             }).then(res => {
               this.$router.push({ path: "/login" });

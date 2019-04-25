@@ -55,10 +55,12 @@
                 </el-menu-item>
 
                 <el-submenu index="/manage/addUp">
+
                   <template slot="title">
                     <i class="el-icon-location"></i>
                     <span>统计</span>
                   </template>
+
                   <el-menu-item-group>
                     <template slot="title">销售金额统计</template>
                     <el-menu-item index="1-1">
@@ -77,6 +79,15 @@
                        <router-link to="/manage/ServicesMoneyRatio">服务销售占比统计</router-link>
                     </el-menu-item>
                   </el-menu-item-group>
+
+                  <el-menu-item-group>
+                    <template slot="title">开店地图</template>
+                    <el-menu-item index="1-1">
+                      <router-link to="/manage/MapRatio">门店地图</router-link>
+                    </el-menu-item>
+                  </el-menu-item-group>
+
+
                 </el-submenu>
               </el-menu>
             </el-col>

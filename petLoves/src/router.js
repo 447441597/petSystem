@@ -21,6 +21,7 @@ import ServiceSaleNum from './components/shopAddup/salesNum/ServiceSaleNum'
 import GoodsMoney from './components/shopAddup/shopSalesMoney/GoodsMoney'
 import ServiceMoney from './components/shopAddup/shopSalesMoney/ServiceMoney'
 import Apply from './components/apply/index.vue'
+import MapRatio from './components/addUp/map/index.vue'
 // import SalesMoneyRatio from './components/addUp/salesMoneyRatio'
 
 Vue.use(Router)
@@ -67,7 +68,11 @@ export default new Router({
         {
           path:"/manage/ServicesMoneyRatio",
           component:ServicesMoneyRatio
-        }
+        },
+        {
+          path:"/manage/MapRatio",
+          component:MapRatio
+        },
       ]
     },
     {

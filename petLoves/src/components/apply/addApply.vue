@@ -11,7 +11,8 @@
           <el-steps :space="400" :active="active" align-center>
           <el-step title="正在审核中"></el-step>
           <el-step title="已审核"></el-step>
-          <!-- <el-step title="未通过"></el-step> -->
+          <el-step title="未通过"></el-step>
+
         </el-steps>
         </template>
         <template v-else >
@@ -104,8 +105,9 @@ export default {
       shopid:"",
       dialogVisible: false,
       select: false,
-      temp: 0,
+      // temp: 0,
       active:1,
+      shopsinfo:{},
       form: {
         storeName: "",
         businessNum: "",
@@ -162,6 +164,8 @@ export default {
         url:"/shops/"+id
       }).then((data)=>{
         console.log(data.data,"data")
+        this.shopsinfo = data
+        console.log(this.shopsinfo,"qwertyqwertwqeqweqwe")
          if(data.data.active==3){
            this.active +=1
          }
@@ -222,7 +226,7 @@ export default {
                 address: this.form.address,
                 assistant,
                 active:this.active,
-                temp: this.temp,
+                // temp: this.temp,
                 businessImage: this.form.businessImage,
                 headImage: this.form.headImage
               }
@@ -233,6 +237,7 @@ export default {
                 method:'get',
                 url:'/users/'+this.userId
               }).then((info)=>{
+                console.log(info,"12312312312313123123123123")
                 let qq = info.data._id
                 info.data.shopsId = this.ID;
                 info = info.data;

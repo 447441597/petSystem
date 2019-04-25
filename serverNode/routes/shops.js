@@ -42,7 +42,7 @@ router.get("/no", async function (req, res) {
   console.log(data, '哈哈哈')
   for (let i = 0; i < data.rows.length; i++) {
     console.log(data.rows[i],'122222222')
-    if (data.rows[i].temp == 0) {
+    if (data.rows[i].status == 0) {
       info.push(data.rows[i]);
     }
   }
@@ -72,7 +72,7 @@ router.get('/ok', async function (req, res) {
   let data = await client.get('/shops',{page,rows,...which});
   for (let i = 0; i < data.rows.length; i++) {
     // console.log(123)
-    if (data.rows[i].temp == 1) {
+    if (data.rows[i].status == 1) {
       info.push(data.rows[i]);
     }
   }
@@ -137,7 +137,7 @@ router.put('/change/:id', async function (req, res) {
     vipLeval:req.body.vipLeval,
     rate:req.body.rate,
     assistant:req.body.assistant,
-    temp:1,
+    status:1,
     active:3
   };
   console.log(req.body)

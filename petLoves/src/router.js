@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from './views/Home.vue'
 import Manage from './components/manage'
 import Register from './components/register'
 import Login from './components/login'
@@ -9,11 +8,10 @@ import Shops from './components/shops'
 import Providers from './components/providers'
 import PetOwns from './components/petOwns'
 import ShopManage from './components/shopManage'
-import Apply from './components/apply'
 import Goods from './components/goods'
 import Services from './components/services'
 import Orders from './components/orders'
-import ShopAddup from './components/shopAddup'
+// import ShopAddup from './components/shopAddup'
 import GoodsRatio from './components/addUp/salesMoney/GoodsRatio'
 import ServicesRatio from './components/addUp/salesMoney/ServicesRatio'
 import GoodsMoneyRatio from './components/addUp/salesMoneyRatio/GoodsMoneyRatio'
@@ -22,6 +20,7 @@ import GoodsSaleNum from './components/shopAddup/salesNum/GoodsSaleNum'
 import ServiceSaleNum from './components/shopAddup/salesNum/ServiceSaleNum'
 import GoodsMoney from './components/shopAddup/shopSalesMoney/GoodsMoney'
 import ServiceMoney from './components/shopAddup/shopSalesMoney/ServiceMoney'
+import Apply from './components/apply/index.vue'
 // import SalesMoneyRatio from './components/addUp/salesMoneyRatio'
 
 Vue.use(Router)
@@ -32,6 +31,7 @@ export default new Router({
     { path: "/", component: Login },
     { path: "/register", component: Register },
     { path: "/login", component: Login },
+    { path: "/apply", component: Apply },
     {
       path: "/manage",
       component: Manage,
@@ -74,10 +74,6 @@ export default new Router({
       path: "/shopManage",
       component: ShopManage,
       children:[
-        {
-          path:"/shopManage/apply",
-          component:Apply
-        },
         {
           path:"/shopManage/goods",
           component:Goods

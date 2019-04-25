@@ -32,10 +32,7 @@
                
               >
                 <el-menu-item index="/shopManage/apply">
-                  <template slot="title">
-                    <i class="el-icon-location"></i>
-                    <router-link to="/shopManage/apply">申请</router-link>
-                  </template>
+                  
                 </el-menu-item>
                 <el-menu-item index="/shopManage/goods">
                   <i class="el-icon-menu"></i>

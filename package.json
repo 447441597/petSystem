@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/447441597/petSystem#readme",
   "dependencies": {
-    "cache-loader": "^3.0.0"
+    "cache-loader": "^3.0.0",
+    "echarts": "^4.2.1"
   }
 }

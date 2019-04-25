@@ -2,16 +2,10 @@
     <div>
       <el-tabs type="border-card" @tab-click='clg'>
     <el-tab-pane label="服务订单">
-    <el-button style="float: left; padding: 3px" type="success" round @click="unfinished">未完成订单</el-button>
-    <el-button style="float: left; padding: 3px" type="success" round @click="finish">已完成订单</el-button>
-    <el-button style="float: left; padding: 3px" type="success" round @click="allOrders">全部订单</el-button>
     <tabcomponent/>
     </el-tab-pane>
     <el-tab-pane label="商品订单">
-                <el-button style="float: left; padding: 3px" type="success" round @click="unfinished">未完成订单</el-button>
-                <el-button style="float: left; padding: 3px" type="success" round @click="finish">已完成订单</el-button>
-                <el-button style="float: left; padding: 3px" type="success" round @click="allOrders">全部订单</el-button> 
-            <tabshopscomponent />
+    <tabshopscomponent />
     </el-tab-pane>
   </el-tabs>
     </div>
@@ -22,7 +16,7 @@ import tabcomponent from "../../common/tabcomponent/tabcomponent.vue";
 import tabshopscomponent from "../../common/tabcomponent/tabshopscomponent.vue";
 import axios from "axios";
 import { createNamespacedHelpers } from "vuex";
-const { mapState, mapActions } = createNamespacedHelpers("ordrers");
+const { mapState, mapActions, mapMutations} = createNamespacedHelpers("ordrers");
 export default {
   components: {
     tabcomponent,
@@ -33,6 +27,7 @@ export default {
       ordersType: 1
     };
     this.getOrders(playload);
+    this.setOrsers(1)
   },
   data() {
     return {
@@ -41,41 +36,25 @@ export default {
   },
   methods: {
     ...mapActions(["getOrders", "getOrdersStatus", "getServicesOrders"]),
+    ...mapMutations(["setTab","setOrsers"]),
     clg(value) {
       if (value.label == "商品订单") {
+        console.log('object')
         let playload = {
           ordersType: 0
         };
+        this.setTab('商品订单')
+        this.setOrsers(1)
         this.getOrders(playload);
       } else if (value.label == "服务订单") {
-        // this.getServicesOrders();
         let playload = {
           ordersType: 1
         };
+        this.setTab('服务订单')
         this.getOrders(playload);
       }
     },
-    unfinished() {
-      // 未完成订单
-      let playload = {
-          ordersType: 1
-        };
-      this.getOrdersStatus(playload);
-    },
-    finish() {
-      // 完成订单
-      let playload = {
-          ordersType: 2
-        };
-      this.getOrdersStatus(playload);
-    },
-    allOrders() {
-      // 全部订单
-      let playload = {
-          ordersType: 0
-        };
-      this.getOrdersStatus(playload);
-    }
+   
   }
 };
 </script>

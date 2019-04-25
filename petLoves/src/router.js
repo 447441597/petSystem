@@ -72,7 +72,7 @@ export default new Router({
         {
           path:"/manage/MapRatio",
           component:MapRatio
-        },
+        }
       ]
     },
     {

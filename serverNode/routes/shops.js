@@ -58,7 +58,7 @@ router.get('/ok', async function (req, res) {
   let rows = req.query.rows; //接收到的行数
   let type = req.query.type;
   let value = req.query.value;
-  console.log(page,rows,"lai l ")
+  // console.log(page,rows,"lai l ")
   if (type && value) {
     console.log('模糊查询');
     which = {

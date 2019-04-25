@@ -19,7 +19,6 @@ export default {
   methods: {
     ...mapActions(["setshops","getno"]),
     change1(i) {
-        console.log(i,'d')
       this.getno({ page: i });
     }
   }

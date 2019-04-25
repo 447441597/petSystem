@@ -35,14 +35,14 @@ export default {
   data() {
     return {
       value: "",
-      formLabelWidth: "120px"
+      formLabelWidth: "120px",
+      shopId : ""
     };
   },
   created(){
-    console.log(this.info,'拿到')
   },
   computed: {
-    ...mapState(["shop", "visible"])
+    ...mapState(["shop", "visible","userId"])
   },
   methods: {
     ...mapActions(["setShop", "setshops","getno"]),
@@ -51,19 +51,28 @@ export default {
       this.setVisible(false);
       let id = this.info[0]._id
       this.setActive();
-      // console.log(this.info[0],"id")
       axios({
         method:"put",
         url:"/shops/change/"+id,
       }).then((res)=>{
-        console.log(res,"回来的")
         this.getno();
+        axios({
+        method:"get",
+        url:"/users/"+this.userId,
+        
+        }).then((data)=>{
+          for(let i =0;i<data.data.length;i++){
+            this.shopId = data.data[i]._id
+          }
+          axios({
+            method:"put",
+            url:"/users/"+this.shopId,
+            data:{
+              status:1
+            }
+          })
+        })
       })
-      // axios({
-      //   method:"put",
-      //   url:"/users/"+id,
-
-      // })
     },
     no(){
       this.setVisible(false);
@@ -73,6 +82,22 @@ export default {
          url:"/shops/"+id,
        }).then((res)=>{
          this.getno();
+        axios({
+        method:"get",
+        url:"/users/"+this.userId,
+        
+        }).then((data)=>{
+          for(let i =0;i<data.data.length;i++){
+            this.shopId = data.data[i]._id
+          }
+          axios({
+            method:"put",
+            url:"/users/"+this.shopId,
+            data:{
+              shopsId:""
+            }
+          })
+        })
        })
     },
     handleClose(done) {

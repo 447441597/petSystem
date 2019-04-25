@@ -19,7 +19,8 @@ export default {
     examine: [],
     zhiyuan: [],
     status: "",
-    userId:''
+    userId:'',
+    hah:''
   },
   mutations: {
     setshops(state, shops) {
@@ -62,11 +63,13 @@ export default {
       state.dialogVisible = !state.dialogVisible;
       state.zhiyuan = zhiyuan;
     },
+
     setTemp(state, data) {
       state.status = data;
     },
     setUserId(state,data){
-      state.userId = data      
+      state.userId = data
+      console.log(state.userId,'用户Id')
     }
   },
   actions: {
@@ -141,6 +144,7 @@ export default {
           }
         });
       });
-    }
-  }
-};
+    },
+    
+}
+}

@@ -35,6 +35,14 @@ export default {
       activeName: 'first'
     };
   },
+  created(){
+    axios({
+      method:"get",
+      url:"/orders/all",
+    }).then((res) => {
+      console.log(res.data);
+    })
+  },
   mounted() {
     this.$nextTick(() => {
       this.showChart();

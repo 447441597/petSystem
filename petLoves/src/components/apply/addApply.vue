@@ -164,7 +164,7 @@ export default {
         url:"/shops/"+id
       }).then((data)=>{
         console.log(data.data,"data")
-        this.shopsinfo = data
+        this.shopsinfo = data.data
         console.log(this.shopsinfo,"qwertyqwertwqeqweqwe")
          if(data.data.active==3){
            this.active +=1

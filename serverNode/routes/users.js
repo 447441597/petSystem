@@ -103,7 +103,7 @@ router.post("/login", async function (req, res) {
   } else {
     res.send({
       //没有找到该用户返回0
-      status: 0
+      statues: 0
     })
   };
 
@@ -139,13 +139,15 @@ router.put("/:id", async function (req, res) {
     phone,
     pwd,
     privilege,
-    shopsId
+    shopsId,
+    status,
   } = req.body;
   let data = await client.put("/users/" + id, {
     phone,
     pwd,
     privilege,
-    shopsId
+    shopsId,
+    status
   });
   res.send(data);
 });

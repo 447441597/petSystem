@@ -71,12 +71,14 @@ router.post("/shopRegister", async function (req, res) {
     phone,
     pwd,
     shopsId,
+    status,
   } = req.body;
   let data = await client.post("/users", {
     phone,
     pwd,
     privilege,
     shopsId,
+    status,
   });
   res.send(data);
 });

@@ -129,65 +129,11 @@ export default {
     selected(data) {
       this.select = data;
     },
-    // handleClick(value) {
-    //   console.log(value.label);
-    //   if(value.label == '门店审核'){
-    //   this.getno();
-    //   }else{
-    //     this.getok()
-    //   }
-    // },
-    // look(index,row){
-    //   this.setdialogVisible(true)
-    //   // let id = row._id;
-    //   console.log(row.assistant,"数据")
-    //   this.zhiyuan = [];
-    //   this.zhiyuan.push(row.assistant)
-    // },
-    // handleEdit(index, row) {
-    //   let id = row._id;
-    //   console.log(row)
-    //   this.setShop(id);
-    // },
     handleExamine(index, row) {
-      // let id = row._id;
-      console.log(row,'row')
       this.info = [];
       this.info.push(row);
       this.setVisible(true);
-      console.log(this.info, "info");
-      
-    },
-    // handleDelete(index, row) {
-    //   let id = row._id;
-    //   console.log(id, "id");
-    //   this.$confirm(`门店名称:${row.storeName}`, "删除提示", {
-    //     confirmButtonText: "确定",
-    //     cancelButtonText: "取消",
-    //     showClose: false,
-    //     type: "warning"
-    //   })
-    //     .then(() => {
-    //       axios({
-    //         method: "delete",
-    //         url: "/shops/" + id
-    //       }).then(res => {
-    //         console.log(res);
-    //         this.getok();
-    //         this.$message("删除成功");
-    //       });
-    //     })
-    //     .catch(() => {
-    //       this.$message("取消删除");
-    //     });
-    // },
-    // searchBtn() {
-    //   console.log(123123);
-    //   this.getok({
-    //     type: this.search.type,
-    //     value: this.search.value
-    //   });
-    // }
+    },   
   },
   components: { Update, Pagenation, Examine ,Assistant,Tabstocks}
 };

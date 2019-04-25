@@ -62,6 +62,8 @@ export default {
       state.dialogVisible = !state.dialogVisible;
       state.zhiyuan = zhiyuan;
     },
+
+    ///////////////////goods.js
     setTemp(state, data) {
       state.status = data;
     },

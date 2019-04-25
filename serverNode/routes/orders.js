@@ -6,7 +6,7 @@ client.url("127.0.0.1:8080");
 let info = [];
 
 router.get("/all", async function(req, res) {
-  let { page, rows, type, value, ordersType } = req.query;
+  let { page, rows, type, value } = req.query;
   // console.log(ordersType, "请求所有订单信息");
   let option = {};
   let data = [];

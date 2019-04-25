@@ -5,6 +5,24 @@ client.url("127.0.0.1:8080");
 
 let info = [];
 
+router.get("/all", async function(req, res) {
+  let { page, rows, type, value, ordersType } = req.query;
+  // console.log(ordersType, "请求所有订单信息");
+  let option = {};
+  let data = [];
+  if (type && value) {
+    option = { [type]: value };
+  }
+  let data1 = await client.get("/orders", {
+    page,
+    rows,
+    submitType: "findJoin",
+    ref: ["petOwns", "services", "shops", "goods"],
+    ...option
+  });
+  res.send(data1);
+});
+
 router.get("/", async function(req, res) {
   let { page, rows, type, value, ordersType } = req.query;
   // console.log(ordersType, "请求所有订单信息");
@@ -229,4 +247,46 @@ router.put("/:id", async function(req, res) {
   res.send(data1);
 });
 
+// 统计开店地图
+router.get("/map", async function(req, res) {
+  // console.log('请求地图')
+  // let info = [];
+  // let resData = [];
+  // let data = await client.get("/shops");
+  // data.map(i => {
+  //   info.push(i.location.longitude);
+  //   info.push(i.location.latitude);
+  //   info.push(i.address);
+  //   resData.push(info);
+  //   info = [];
+  // });
+  // console.log(resData, "经纬度--------------------");
+  const shops = [
+    [120.33, 36.07, 10, "青岛"],
+    [91.11, 29.97, 6, "拉萨"],
+    [121.48, 31.22, 9, "上海"],
+    [114.87, 40.82, 10, "张家口"],
+    [121.56, 29.86, 2, "宁波"],
+    [102.73, 25.04, 15, "昆明"],
+    [123.38, 41.8, 7, "沈阳"],
+    [104.06, 30.67, 3, "成都"],
+    [116.46, 39.92, 11, "北京"]
+  ];
+  res.send(shops);
+});
+
+router.get("/city", async function(req, res) {
+  let info = [];
+  let resData = [];
+  let data = await client.get("/shops");
+  data.map(i => {
+    info.push(i.location.longitude);
+    info.push(i.location.latitude);
+    info.push(i.name);
+    info.push(i.address);
+    resData.push(info);
+    info = [];
+  });
+  res.send(resData);
+});
 module.exports = router;

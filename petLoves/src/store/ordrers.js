@@ -50,7 +50,7 @@ export default {
       }
       state.ordersData = obj;
       // this.$store.commit("setOrsers", 1)
-      // console.log(state.ordersData, "0-----------------------------");
+      console.log(state.ordersData, "0-----------------------------");
     }
   },
   actions: {
@@ -74,9 +74,6 @@ export default {
         }
       }).then(res => {
         console.log(res.data, "请求会的数据");
-        // dispatch("pages",res.data).then(()=>{
-        //   commit("setOrsers",)
-        // })
         commit("pages", res.data);
         commit("setOrsers");
         commit("setordersLength",res.data.rows.length)

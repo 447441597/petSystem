@@ -51,19 +51,21 @@ export default {
       this.setVisible(false);
       let id = this.info[0]._id
       this.setActive();
-      // console.log(this.info[0],"id")
+      console.log(this.info[0],"id")
       axios({
         method:"put",
         url:"/shops/change/"+id,
       }).then((res)=>{
-        console.log(res,"回来的")
+        // console.log(res,"回来的")
         this.getno();
+        axios({
+        method:"put",
+        url:"/users/"+id,
+        
+        }).then((data)=>{
+          console.log(data)
+        })
       })
-      // axios({
-      //   method:"put",
-      //   url:"/users/"+id,
-
-      // })
     },
     no(){
       this.setVisible(false);

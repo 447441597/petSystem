@@ -9,15 +9,17 @@ client.url('localhost:8080');
 // 门店商品销售量统计路由
 
 let info = []
-router.get('/shopaTotal',async function(req,res){
-  let data = await client.get("/orders",{  submitType: "findJoin",
-  ref: [ "shops", "goods"]});
-  for(let i = 0;i<data.length;i++){
-    if(data[i].status == "订单已完成"){
-       info.push(data[i])
-    }
-  }
-  res.send(info)
+router.get('/shopaTotal:id',async function(req,res){
+  let id = req.query;
+  console.log(req.query)
+  // let data = await client.get("/orders",{  submitType: "findJoin",
+  // ref: [ "shops", "goods"]});
+  // for(let i = 0;i<data.length;i++){
+  //   if(data[i].status == "订单已完成"){
+  //      info.push(data[i])
+  //   }
+  // }
+  // res.send()
 });
 
 

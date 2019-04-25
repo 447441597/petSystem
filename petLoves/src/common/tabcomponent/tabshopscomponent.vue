@@ -77,19 +77,18 @@
 
 <script>
 import axios from "axios";
-import { createNamespacedHelpers } from "vuex";
-const { mapState, mapActions } = createNamespacedHelpers("ordrers");
+import { createNamespacedHelpers  } from "vuex";
+const { mapState, mapActions, mapMutations} = createNamespacedHelpers("ordrers");
 export default {
   data() {
     return {
       dialogVisible: false,
       dialogVisibleok: false,
       info: "",
-      orders: []
     };
   },
   computed: {
-    ...mapState(["pagination", "ordersData", "ordersLength", "tab"])
+    ...mapState(["pagination", "ordersLength", "tab","orders"])
   },
   // beforeMount(){
   //   console.log(this.ordersData,'updataupdataupdataupdataupdataupdata')
@@ -97,6 +96,7 @@ export default {
   // },
   methods: {
     ...mapActions(["getOrders", "getOrdersStatus"]),
+    ...mapMutations(['setOrsers']),
     unfinished() {
       // 未完成订单
       if (this.tab == "商品订单") {
@@ -133,7 +133,8 @@ export default {
 
       // console.log(playload, "playload");
       // this.getOrders(playload);
-      this.orders = this.ordersData[i - 1];
+      // this.orders = this.ordersData[i - 1];
+      this.setOrsers(i);
       console.log(this.orders, "}}}}}}}}}}}}}}");
     },
     handleClick(row) {

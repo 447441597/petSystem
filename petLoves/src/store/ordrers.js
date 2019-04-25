@@ -13,20 +13,27 @@ export default {
       eachpage: ""
     },
     ordersData:[],
-    tab:'服务订单'
+    tab:'服务订单',
+    orders:[]
   },
   mutations: {
-    setShopsOrders(state, data) {
+    setordersLength(state, data) {
       // console.log(data,"++++++++++++++++++++++++++")
       state.ordersLength = data;
+      console.log(data,"++++++++++++++++++++++++++")
     },
     setTab(state,data){
-      console.log(data,'dingdan')
+      // console.log(data,'dingdan')
       state.tab = data
     },
     // 
+    setOrsers(state,data){
+      console.log(state,'................')
+      data = data || 1;
+      state.orders = state.ordersData[data-1];
+    },
     pages(state, objec) {
-      // console.log(objec, "================================");
+      console.log(objec, "================================");
       let page = objec.curpage || 1;
       let rows = 3;
       // let count = 0;
@@ -42,11 +49,12 @@ export default {
         }
       }
       state.ordersData = obj;
+      // this.$store.commit("setOrsers", 1)
       // console.log(state.ordersData, "0-----------------------------");
     }
   },
   actions: {
-    getOrders({ commit }, playload) {
+    getOrders({dispatch, commit }, playload) {
       //请求订单（商品和服务）
       // console.log('object',playload)
       let page = playload.page || 1;
@@ -66,8 +74,12 @@ export default {
         }
       }).then(res => {
         console.log(res.data, "请求会的数据");
+        // dispatch("pages",res.data).then(()=>{
+        //   commit("setOrsers",)
+        // })
         commit("pages", res.data);
-        commit("setShopsOrders",res.data.rows.length)
+        commit("setOrsers");
+        commit("setordersLength",res.data.rows.length)
       });
     },
 
@@ -91,7 +103,8 @@ export default {
       }).then(res => {
         console.log(res.data, "请求来的状态数据");
         commit("pages",res.data)
-        commit("setShopsOrders", res.data.length);
+        commit("setOrsers");
+        commit("setordersLength", res.data.rows.length);
       });
     }
   }

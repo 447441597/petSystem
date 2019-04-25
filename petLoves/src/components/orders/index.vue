@@ -27,6 +27,7 @@ export default {
       ordersType: 1
     };
     this.getOrders(playload);
+    this.setOrsers(1)
   },
   data() {
     return {
@@ -35,13 +36,15 @@ export default {
   },
   methods: {
     ...mapActions(["getOrders", "getOrdersStatus", "getServicesOrders"]),
-    ...mapMutations(["setTab"]),
+    ...mapMutations(["setTab","setOrsers"]),
     clg(value) {
       if (value.label == "商品订单") {
+        console.log('object')
         let playload = {
           ordersType: 0
         };
         this.setTab('商品订单')
+        this.setOrsers(1)
         this.getOrders(playload);
       } else if (value.label == "服务订单") {
         let playload = {

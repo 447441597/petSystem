@@ -26,7 +26,7 @@
 <script>
 import axios from "axios";
 export default {
- data() {
+  data() {
     var checkAge = (rule, value, callback) => {
       if (!value) {
         return callback(new Error("密码不能为空"));
@@ -53,7 +53,7 @@ export default {
     };
   },
   methods: {
-    register(){
+    register() {
       this.$router.push({ path: "/register" });
     },
     submitForm(formName) {
@@ -68,28 +68,33 @@ export default {
             }
           }).then(res => {
             console.log(res.data);
-            if (res.data.privilege=="2") {
-              this.$router.push({ path: "/manage" });
-            }else if(res.data.privilege=="0"&&res.data.shopsId!=""){
-              this.$router.push({ path: "/shopManage" });
-            }else if(res.data.shopsId==""){
-                  // location.href="/components/apply/"
-                  this.$router.push({ path: "/apply" });
-            } else {
+            if ((res.data.statues == 0)) {
               alert("手机号密码错误");
+            } else if (res.data.privilege == "2") {
+              this.$router.push({ path: "/manage" });
+            } else if (
+              res.data.privilege == "0" &&
+              res.data.status == "1" &&
+              res.data.shopsId != ""
+            ) {
+              this.$router.push({ path: "/shopManage" });
+            } else if (res.data.shopsId == "") {
+              this.$router.push({ path: "/apply" });
+            } else if ( res.data.status == "0") {
+              alert("抱歉！您的账号正在审核中");
             }
           });
-        }else {
-           alert('格式验证未通过!!');
-            return false;
-          }
+        } else {
+          alert("格式验证未通过!!");
+          return false;
+        }
       });
     },
     resetForm(formName) {
       this.$refs[formName].resetFields();
     }
   }
-}
+};
 </script>
 
 <style>

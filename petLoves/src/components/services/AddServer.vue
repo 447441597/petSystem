@@ -76,7 +76,6 @@ export default {
         applyGuige: "",
         serverGuige: "",
         useTime: "",
-        shops: "5cbc22270ca8acf604b3eaa6",
         level: "",
         price: "",
         
@@ -93,7 +92,7 @@ export default {
     // console.log(this.services,"添加")
   },
   computed: {
-    ...mapState(["serverTypes", "services",,"levels","serverDate"])
+    ...mapState(["serverTypes", "services","levels","serverDate","shopsId"])
   },
   methods: {
     ...mapActions(["getTypes", "getServices","getLevel"]),
@@ -143,7 +142,7 @@ export default {
               applyGuige: this.service.applyGuige,
               serverGuige: this.service.serverGuige,
               useTime: this.service.useTime,
-              shopsId: this.service.shops,
+              shopsId: this.shopsId,
               level: this.service.level,
               seviceType:this.service.serverType
             }

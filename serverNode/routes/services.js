@@ -61,5 +61,6 @@ router.get('/serverTypes',async function(req,res){
     let data = await client.get('/serverTypes');
     console.log(data);
     res.send(data);
-})
+});
+
 module.exports = router;

@@ -20,7 +20,8 @@ export default {
     serverTypes: [],
     levels: [],
     dialogFormVisible: false,
-    timeVisible: false
+    timeVisible: false,
+    shopsId:""
   },
   mutations: {
     getServices(state, services) {
@@ -63,6 +64,9 @@ export default {
     },
     setServerDate(state,serverDate){
       state.serverDate = serverDate;
+    },
+    setShopsID(state,shopsId){
+      state.shopsId = shopsId;
     }
   },
   actions: {
@@ -147,6 +151,9 @@ export default {
     setServerDate({commit},date){
       console.log(date,"date");
       commit("setServerDate",date);
+    },
+    setShopsID({commit},shopsId){
+      commit("setShopsID",shopsId);
     }
   }
 };

@@ -71,6 +71,13 @@ const { mapState, mapActions } = createNamespacedHelpers("services");
 export default {
   created() {
     this.getServices();
+    axios({
+      method:"get",
+      url:"/getSession"
+    }).then((res) => {
+      console.log(res.data.shopsId,"session");
+      this.setShopsID(res.data.shopsId);
+    })
   },
   computed: {
     ...mapState(["services", "pagination", "times", "shopsId"])

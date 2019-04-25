@@ -6,6 +6,21 @@ const path = require("path")
 client.url('localhost:8080');
 /* GET home page. */
 
+// 门店商品销售量统计路由
+
+let info = []
+router.get('/shopaTotal',async function(req,res){
+  let data = await client.get("/orders",{  submitType: "findJoin",
+  ref: [ "shops", "goods"]});
+  for(let i = 0;i<data.length;i++){
+    if(data[i].status == "订单已完成"){
+       info.push(data[i])
+    }
+  }
+  res.send(info)
+});
+
+
 router.get('/', async function (req, res) {
   //   console.log("来了")
   let page = req.query.page; //接收到的页码数
@@ -21,9 +36,9 @@ router.get('/', async function (req, res) {
 //增加
 router.post('/',async function(req,res){
   let status = 0
-  let {storeName,businessNum,legalPerson,tel,address,feature,vipLeval,rate,assistant,active,businessImage,headImage} = req.body;
+  let {storeName,businessNum,legalPerson,tel,address,feature,vipLeval,rate,assistant,active,businessImage,headImage,location} = req.body;
   console.log(req.body);
-  let data = await client.post('/shops',{storeName,businessNum,legalPerson,tel,address,feature,vipLeval,rate,assistant,status,active,businessImage,headImage});
+  let data = await client.post('/shops',{storeName,businessNum,legalPerson,tel,address,feature,vipLeval,rate,assistant,status,active,businessImage,headImage,location});
   res.send(data);
   console.log(data)
 })
@@ -43,7 +58,7 @@ router.post("/upload",function(req,res){
     }
   })
 })
-
+//关联用户
 router.get('/temp',async function(req,res){
   console.log(req.query,'query')
   let data = await client.get('/shops',{submitType:"findJoin",ref:"users"});
@@ -57,5 +72,8 @@ router.get('/temp',async function(req,res){
 
   // }
 })
+
+//
+
 
 module.exports = router;

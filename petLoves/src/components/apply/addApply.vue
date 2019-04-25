@@ -8,12 +8,14 @@
                  <div style="text-align:center"> <h2>申请门店</h2></div>
                   </div>
         <template v-if="status">
-          <el-steps :space="400" :active="active" align-center>
+          <el-steps :space="600" :active="active" align-center>
           <el-step title="正在审核中"></el-step>
           <el-step title="已审核"></el-step>
-          <el-step title="未通过"></el-step>
+          <!-- <el-step title="未通过"></el-step> -->
 
         </el-steps>
+         <!-- <div>提交成功，正在审核你的店铺，请耐心等待</div> -->
+         
         </template>
         <template v-else >
          <el-form :model="form" :rules="rules"  ref="form" >
@@ -36,6 +38,12 @@
            </el-form-item>
            <el-form-item label="地址" :label-width="formLabelWidth" prop="address">
               <el-input v-model="form.address" autocomplete="off"></el-input>
+           </el-form-item>
+            <el-form-item label="经度" :label-width="formLabelWidth" prop="longitude">
+              <el-input v-model="form.longitude" autocomplete="off"></el-input>
+           </el-form-item>
+            <el-form-item label="维度" :label-width="formLabelWidth" prop="latitude">
+              <el-input v-model="form.latitude" autocomplete="off"></el-input>
            </el-form-item>
            <el-form-item label="法人" :label-width="formLabelWidth" prop="legalPerson">
               <el-input v-model="form.legalPerson" autocomplete="off"></el-input>
@@ -101,13 +109,14 @@ let assistant = [];
 export default {
   data() {
     return {
-      ID:'',
-      shopid:"",
+      ID: "",
+      location : {},
+      shopid: "",
       dialogVisible: false,
       select: false,
       // temp: 0,
-      active:1,
-      shopsinfo:{},
+      active: 1,
+      shopsinfo: {},
       form: {
         storeName: "",
         businessNum: "",
@@ -121,8 +130,9 @@ export default {
         assistantlevel: "",
         assistantphone: "",
         headImage: "",
-        businessImage: ""
-        
+        businessImage: "",
+        longitude:"",
+        latitude:""
       },
       formLabelWidth: "120px",
       imageUrl: "",
@@ -140,49 +150,45 @@ export default {
         feature: [{ required: true, message: "请输入内容", trigger: "blur" }],
         vipLeval: [{ required: true, message: "请输入内容", trigger: "blur" }],
         rate: [{ required: true, message: "请输入内容", trigger: "blur" }],
-        businessImage: [{ required: true, message: "请上传营业执照图片", trigger: "blur" }],
-         headImage: [{ required: true, message: "请上传门店图片", trigger: "blur" }]
+        //  longitude: [{ required: true, message: "请输入内容", trigger: "blur" }],
+        //   latitude: [{ required: true, message: "请输入内容", trigger: "blur" }],
+        businessImage: [
+          { required: true, message: "请上传营业执照图片", trigger: "blur" }
+        ],
+        headImage: [
+          { required: true, message: "请上传门店图片", trigger: "blur" }
+        ]
       }
     };
   },
   computed: {
-    ...mapState(["active","status","userId"])
+    ...mapState(["active", "status", "userId"])
   },
-  created(){
+  created() {
     this.getTemp(),
-    axios({
-      method:"get",
-      url:"/users/"+this.userId
-    }).then((res)=>{
-      for(let i = 0;i<res.data.length;i++){
-        this.shopid = res.data[i].shopsId
-      }
-      let id = this.shopid
-      console.log(id,"12345671234567")
       axios({
-        method:"get",
-        url:"/shops/"+id
-      }).then((data)=>{
-        console.log(data.data,"data")
-        this.shopsinfo = data.data
-        console.log(this.shopsinfo,"qwertyqwertwqeqweqwe")
-         if(data.data.active==3){
-           this.active +=1
-         }
-        //  else{
-        //    this.active +=2
-        //  }
-        //  this.active = 1
-        //  console.log(this.active,"5555555555555555555555")
-      })
-    })
+        method: "get",
+        url: "/users/" + this.userId
+      }).then(res => {
+        for (let i = 0; i < res.data.length; i++) {
+          this.shopid = res.data[i].shopsId;
+        }
+        let id = this.shopid;
+        axios({
+          method: "get",
+          url: "/shops/" + id
+        }).then(data => {
+          this.shopsinfo = data.data;
+          if (data.data.active == 3) {
+            this.active += 1;
+          }
+         
+        });
+      });
   },
   methods: {
-    ...mapMutations(["setActive"]),
+    ...mapMutations(["setActive", "setTemp"]),
     ...mapActions(["getTemp"]),
-    // selected(data) {
-    //   this.select = data;
-    // },
     handleAvatarSuccess(response, file, fileList) {
       this.imageUrl = "/images/" + response;
       this.form.businessImage = response;
@@ -205,13 +211,11 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          this.status = 1
           if (assistant.length > 0) {
-            //  if(this.active==1){
-            //     // this.setActive()
-            //      this.active+=1
-            //      console.log(this.active,"qeqwreqwreewqewqwq")
-            //   }
+           this.location={
+              longitude:this.form.longitude,
+              latitude:this.form.latitude
+            }
             axios({
               method: "post",
               url: "/applys",
@@ -225,38 +229,37 @@ export default {
                 rate: this.form.rate,
                 address: this.form.address,
                 assistant,
-                active:this.active,
-                // temp: this.temp,
+                active: this.active,
                 businessImage: this.form.businessImage,
-                headImage: this.form.headImage
+                headImage: this.form.headImage,
+                location:this.location
               }
             }).then(res => {
-              // this.setActive();
-              this.ID = res.data._id
+              this.ID = res.data._id;
               axios({
-                method:'get',
-                url:'/users/'+this.userId
-              }).then((info)=>{
-                console.log(info,"12312312312313123123123123")
-                let qq = info.data._id
+                method: "get",
+                url: "/users/" + this.userId
+              }).then(info => {
+                this.setTemp(1);
+                let qq = info.data._id;
                 info.data.shopsId = this.ID;
                 info = info.data;
                 delete info._id;
                 axios({
-                  method:'put',
-                  url:'/users/'+qq,
-                  data:info
-                })
-              })
+                  method: "put",
+                  url: "/users/" + qq,
+                  data: info
+                });
+              });
             });
             this.$message({
               type: "success",
               message: "提交成功!"
             });
-          }else{
+          } else {
             this.$message({
-              message:"请输入店员信息"
-            })
+              message: "请输入店员信息"
+            });
           }
         } else {
           return false;

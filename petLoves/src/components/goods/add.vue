@@ -51,14 +51,14 @@
           <el-input v-model="form.number" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="图片：" :label-width="formLabelWidth">
-          <el-upload action="goods/upload" list-type="picture-card"
+          <el-upload action="/goods/upload" list-type="picture-card"
           :on-success='handleSuccess'
           >
             <i class="el-icon-plus"></i>
           </el-upload>
         </el-form-item>
                 <el-form-item label="小图：" :label-width="formLabelWidth">
-          <el-upload action="goods/upload" list-type="picture-card"
+          <el-upload action="/goods/upload" list-type="picture-card"
           :on-success='handleSuccess1'
           >
             <i class="el-icon-plus"></i>
@@ -116,7 +116,6 @@ export default {
         .catch(_ => {});
     },
     handleSuccess(response,file,fileList){
-        // console.log(response,'上传的图片')
         this.img.push(response)
         this.form.images=this.img
         // console.log(this.img,'上传的图片列表')

@@ -1,5 +1,5 @@
 <template>
-    <div>商品销售金额</div>
+    <div>商品销售量</div>
 </template>
 
 <script>

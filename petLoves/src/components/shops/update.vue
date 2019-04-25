@@ -2,38 +2,6 @@
     <div>
         <el-dialog title="门店修改" :visible.sync="visible2" :show-close="false">
          <el-form>
-           <el-form-item label="门店名称" :label-width="formLabelWidth">
-              <el-input v-model="shop.storeName" autocomplete="off"></el-input>
-           </el-form-item>
-           <el-form-item label="营业执照号码" :label-width="formLabelWidth">
-              <el-input v-model="shop.businessNum" autocomplete="off"></el-input>
-           </el-form-item>
-             <el-form-item label="营业执照" :label-width="formLabelWidth">
-              <el-upload v-model="shop.businessImage" action="/applys/upload" list-type="picture-card"
-                    :on-success='handleSuccess'
-                    :disabled='true'>
-           <img width="147" height="147" :src="src+shop.businessImage" alt="">
-          </el-upload>
-           </el-form-item>
-           <el-form-item label="地址" :label-width="formLabelWidth">
-              <el-input v-model="shop.address" autocomplete="off"></el-input>
-           </el-form-item>
-           <el-form-item label="法人" :label-width="formLabelWidth">
-              <el-input v-model="shop.legalPerson" autocomplete="off"></el-input>
-           </el-form-item>
-            <el-form-item label="电话" :label-width="formLabelWidth">
-              <el-input v-model="shop.tel" autocomplete="off"></el-input>
-           </el-form-item>
-            <el-form-item label="门店图片" :label-width="formLabelWidth" prop="headImage">
-              <el-upload v-model="shop.headImage" action="/applys/upload" list-type="picture-card"
-                    :on-success='handleSuccess'
-                    :disabled='true'>
-           <img width="147" height="147" :src="src+shop.headImage" alt="">
-          </el-upload>
-           </el-form-item>
-            <el-form-item label="特色" :label-width="formLabelWidth">
-              <el-input v-model="shop.feature" autocomplete="off"></el-input>
-           </el-form-item>
             <el-form-item label="VIP等级" :label-width="formLabelWidth">
               <el-input v-model="shop.vipLeval" autocomplete="off"></el-input>
            </el-form-item>
@@ -86,72 +54,6 @@ export default {
   },
   computed: {
     ...mapState(["shop", "visible2"]),
-    storeName: {
-      set(storeName) {
-        this.setShop({
-          ...this.shop,
-          storeName
-        });
-      },
-      get() {
-        return this.shop.storeName;
-      }
-    },
-    businessNum: {
-      set(businessNum) {
-        this.setShop({
-          ...this.shop,
-          businessNum
-        });
-      },
-      get() {
-        return this.shop.businessNum;
-      }
-    },
-    address: {
-      set(address) {
-        this.setShop({
-          ...this.shop,
-          address
-        });
-      },
-      get() {
-        return this.shop.address;
-      }
-    },
-    legalPerson: {
-      set(legalPerson) {
-        this.setShop({
-          ...this.shop,
-          legalPerson
-        });
-      },
-      get() {
-        return this.shop.address;
-      }
-    },
-    tel: {
-      set(tel) {
-        this.setShop({
-          ...this.shop,
-          tel
-        });
-      },
-      get() {
-        return this.shop.tel;
-      }
-    },
-    feature: {
-      set(feature) {
-        this.setShop({
-          ...this.shop,
-          feature
-        });
-      },
-      get() {
-        return this.shop.feature;
-      }
-    },
     vipLeval: {
       set(vipLeval) {
         this.setShop({
@@ -180,14 +82,11 @@ export default {
     ...mapMutations(["setVisible2"]),
     update() {
       let id = this.shop._id;
-      console.log(id, "123123");
-      // console.log(this.form.name, this.form.age, this.form.gender);
       axios({
         method: "put",
         url: "/shops/" + id,
         data: this.shop
       }).then(res => {
-        console.log(res);
         this.setVisible2(false);
         this.getok();
       });

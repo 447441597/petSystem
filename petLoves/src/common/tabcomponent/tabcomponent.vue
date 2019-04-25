@@ -1,6 +1,11 @@
 <template>
     <div>
+      
   <template>
+    <el-button style="float: left; padding: 3px" type="success" round @click="unfinished">未完成订单</el-button>
+                <el-button style="float: left; padding: 3px" type="success" round @click="finish">已完成订单</el-button>
+                <el-button style="float: left; padding: 3px" type="success" round @click="allOrders">全部订单</el-button> 
+            
   <el-table
     :data="orders"
     height="250"
@@ -31,22 +36,11 @@
     </el-table-column>
   </el-table>
   <div class="block">
-    <!-- 分页 
-    <el-pagination
-      @size-change="handleSizeChange"
-      @current-change="handleCurrentChange"
-      :current-page.sync="currentPage1"
-      :page-size="100"
-      layout="total, prev, pager, next"
-      :total="1000">
-    </el-pagination
--->
+    <!-- 分页 -->
   <el-pagination
     layout="prev, pager, next"
-    :total="~~(pagination.total)"
-     :page-size=5
-     @prev-click="prev"
-     @next-click="next"
+    :total="~~(ordersLength)"
+     :page-size=3
      :current-page="~~(pagination.curpage)" 
      @current-change="pageChange">
   </el-pagination>
@@ -82,47 +76,71 @@
 <script>
 import { createNamespacedHelpers } from "vuex";
 import axios from "axios";
-const { mapState, mapActions } = createNamespacedHelpers("ordrers");
+const { mapState, mapActions, mapMutations} = createNamespacedHelpers("ordrers");
 export default {
   data() {
     return {
       dialogVisible: false,
       dialogVisibleok: false,
-      info: ""
+      info: "",
+      // orders: []
     };
   },
+  created(){
+    console.log(this.orders,'///////////////')
+  },
+  // updated(){
+  //   console.log(this.ordersData,'updataupdataupdataupdataupdataupdata')
+  //   this.orders = this.ordersData[0]
+  // },
   computed: {
-    ...mapState(["orders", "pagination"])
+    ...mapState(["pagination", "ordersData", "ordersLength", "tab","orders"])
   },
   methods: {
-    ...mapActions(["getOrders"]),
+    ...mapActions(["getOrders", "getOrdersStatus"]),
+    ...mapMutations(["setOrsers"]),
+    unfinished() {
+      // 未完成订单
+      if (this.tab == "服务订单") {
+        let playload = {
+          ordersType: 1,
+          sta: 1
+        };
+        this.getOrdersStatus(playload); 
+      }
+    },
+    finish() {
+      // 完成订单
+      if (this.tab == "服务订单") {
+      // console.log("完成订单")
+        let playload = {
+          ordersType: 2,
+          sta: 1
+        };
+        this.getOrdersStatus(playload);
+        // this.orders = ordersData[]
+        console.log(this.ordersData,this.ordersLength,"ordersDataordersData")
+      }
+    },
+    allOrders() {
+      // 全部订单
+      if (this.tab == "服务订单") {
+        let playload = {
+          ordersType: 0,
+          sta: 1
+        };
+        this.getOrdersStatus(playload);
+      }
+    },
     pageChange(i) {
       console.log(i, "i");
       // console.log(this.pagination)
-      let playload = {
-        page: i,
-        ordersType: 0
-      };
-      console.log(playload, "playload");
-      this.getOrders(playload);
-    },
-    prev() {
-      let playload = {
-        page: this.pagination.curpage-1,
-        rows: this.pagination.eachpage,
-        ordersType: 0
-      };
-      console.log(playload, "playload");
-      this.getOrders(playload);
-    },
-    next() {
-      let playload = {
-        page: ~~(this.pagination.curpage)+1,
-        rows: this.pagination.eachpage,
-        ordersType: 0
-      };
-      console.log(playload, "playload");
-      this.getOrders(playload);
+
+      // console.log(playload, "playload");
+      // this.getOrders(playload);
+      // this.orders = this.ordersData[i - 1];
+      this.setOrsers(i);
+      console.log(this.orders, "}}}}}}}}}}}}}}");
     },
     handleClick(row) {
       // console.log(row,'详细信息');

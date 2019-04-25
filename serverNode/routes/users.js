@@ -10,11 +10,9 @@ client.url("localhost:8080");
 router.get("/repeat", async function (req, res) {
   // //获取请求数据
   let phone = req.query.phone;
-  console.log(phone)
   let data = await client.get("/users", {
     phone
   });
-  console.log(data);
   if (data.length > 0) {
     res.send({
       status: 0
@@ -94,7 +92,6 @@ router.post("/login", async function (req, res) {
     phone,
     pwd
   });
-  console.log(data)
   if (data.phone) {
      req.session.user = data;
 
@@ -123,9 +120,7 @@ router.get("/:id", async function (req, res) {
 router.delete("/:id", async function (req, res) {
   //获取URL后面的参数id
   let id = req.params.id;
-  console.log(id)
   let data = await client.delete("/users/" + id);
-  console.log(data)
   res.send(data);
 });
 
@@ -161,7 +156,6 @@ router.get("/", async function (req, res) {
     type,
     value
   } = req.query;
-  console.log("type, value", type, value)
   let option = {};
   if (type && value) {
     option = {
@@ -173,7 +167,6 @@ router.get("/", async function (req, res) {
     rows,
     ...option
   });
-  console.log(data)
   res.send(data);
 });
 

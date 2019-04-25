@@ -65,7 +65,7 @@ export default {
     setServerDate(state,serverDate){
       state.serverDate = serverDate;
     },
-    setShopsID(state,shopsId){
+    setShopsId(state,shopsId){
       state.shopsId = shopsId;
     }
   },
@@ -152,8 +152,15 @@ export default {
       console.log(date,"date");
       commit("setServerDate",date);
     },
-    setShopsID({commit},shopsId){
-      commit("setShopsID",shopsId);
+    getShopsId({commit},shopsId){
+      axios({
+        method:"get",
+        url:"/getSession"
+      }).then((res) => {
+        console.log(res.data.shopsId,"session");
+        commit("setShopsId",res.data.shopsId);
+      })
+      
     }
   }
 };

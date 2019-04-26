@@ -88,7 +88,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(["shops", "pagiNation", "search"])
+    ...mapState(["shops", "pagiNation", "search","userId"])
   },
   methods: {
     ...mapActions(["setshops", "setShop", "getno", "getok"]),
@@ -123,6 +123,9 @@ export default {
           }).then(res => {
             this.getok();
             this.$message("删除成功");
+            axios({
+
+            })
           });
         })
         .catch(() => {

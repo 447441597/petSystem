@@ -12,10 +12,12 @@
           <el-step title="正在审核中"></el-step>
           <el-step title="已审核"></el-step>
           <!-- <el-step title="未通过"></el-step> -->
-
         </el-steps>
-         <!-- <div>提交成功，正在审核你的店铺，请耐心等待</div> -->
-         
+        <div style="width:100%;text-align:center">
+           <div style="margin-bottom:40px;margin-top:30px ">提交成功，正在审核你的店铺，请耐心等待</div>
+          <el-button type="primary"    @click="back"  style="margin-bottom:20px">返回登录</el-button>
+        </div>
+        
         </template>
         <template v-else >
          <el-form :model="form" :rules="rules"  ref="form" >
@@ -196,6 +198,9 @@ export default {
     handSuccess(response, file, fileList) {
       this.imageurl = "/images/" + response;
       this.form.headImage = response;
+    },
+    back(){
+location = "../login"
     },
     sure() {
       assistant.push({

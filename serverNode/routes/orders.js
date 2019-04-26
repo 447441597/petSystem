@@ -20,7 +20,7 @@ router.get("/all", async function(req, res) {
     ref: ["petOwns", "services", "shops", "goods"],
     ...option
   });
-  res.send(data1);
+  res.send(data1); 
 });
 
 router.get("/", async function(req, res) {

@@ -195,6 +195,9 @@ export default {
       this.imageUrl = "/images/" + response;
       this.form.businessImage = response;
     },
+    back(){
+         location="../login/index.vue"
+    },
     handSuccess(response, file, fileList) {
       this.imageurl = "/images/" + response;
       this.form.headImage = response;

@@ -125,132 +125,11 @@ router.get("/servicesNum", async function(req, res) {
     resultData:resultData,
     serviceNames:serviceNames
    });
-  // for (let k = 0; k < finishOrder.length; k++) {
-  //   let tempArr = finishOrder[j].time.split("-");
-  //   let date = ~~tempArr[1];
-  //   console.log(finishOrder[j].time)
-  //   console.log(i,"i",date,"date",)
-  //   console.log(serviceNames[j],finishOrder[k].services.serviceName,"name")
-  //   if (
-  //     serviceNames[j] == finishOrder[k].services.serviceName &&
-  //     date == i
-  //   ) {
-  //     console.log("这是第"+i+"个月###########################################")
-  //     if (i == 1) {
-  //       count1++;
-  //     }
-  //     if (i == 2) {
-  // count2++;
-  // }
-  // if (i == 3) {
-  //   count3++;
-  //   console.log(count3);
-  // }
-  // if (i == 4) {
-  //   count4++;
-  // }
-  // if (i == 5) {
-  //   count5++;
-  // }
-  // if (i == 6) {
-  //   count6++;
-  // }
-  // if (i == 7) {
-  //   count7++;
-  // }
-  // if (i == 8) {
-  //   count8++;
-  // }
-  // if (i == 9) {
-  //   count9++;
-  // }
-  // if (i == 10) {
-  //   count10++;
-  // }
-  // if (i == 11) {
-  //   count11++;
-  // }
-  // if (i == 12) {
-  //   count12++;
-  // }
-  // }
-  // if(serviceNames[j].serviceName == finishOrder[k].services.serviceName && tempArr[1] == 2){
-  //   count2++;
-  // }
-  // if(serviceNames[j].serviceName == finishOrder[k].services.serviceName && tempArr[1] == 3){
-  //   count3++;
-  // }
-  // if(serviceNames[j].serviceName == finishOrder[k].services.serviceName && tempArr[1] == 4){
-  //   count4++;
-  // }
-  // if(serviceNames[j].serviceName == finishOrder[k].services.serviceName && tempArr[1] == 5){
-  //   count5++;
-  // }
-  // if(serviceNames[j].serviceName == finishOrder[k].services.serviceName && tempArr[1] == 6){
-  //   count6++;
-  // }
-  // if(serviceNames[j].serviceName == finishOrder[k].services.serviceName && tempArr[1] == 7){
-  //   count7++;
-  // }
-  // if(serviceNames[j].serviceName == finishOrder[k].services.serviceName && tempArr[1] == 8){
-  //   count8++;
-  // }
-  // if(serviceNames[j].serviceName == finishOrder[k].services.serviceName && tempArr[1] == 9){
-  //   count9++;
-  // }
-  // if(serviceNames[j].serviceName == finishOrder[k].services.serviceName && tempArr[1] == 10){
-  //   count10++;
-  // }
-  // if(serviceNames[j].serviceName == finishOrder[k].services.serviceName && tempArr[1] == 11){
-  //   count11++;
-  // }
-  // if(serviceNames[j].serviceName == finishOrder[k].services.serviceName && tempArr[1] == 12){
-  //   count12++;
-  // }
-  // }
-  // if (i == 1) {
-  //   arr.push(count1);
-  // }
-  // if (i == 2) {
-  //   arr.push(count2);
-  // }
-  // if (i == 3) {
-  //   arr.push(count3);
-  // }
-  // if (i == 4) {
-  //   arr.push(count4);
-  // }
-  // if (i == 5) {
-  //   arr.push(count5);
-  // }
-  // if (i == 6) {
-  //   arr.push(count6);
-  // }
-  // if (i == 7) {
-  //   arr.push(count7);
-  // }
-  // if (i == 8) {
-  //   arr.push(count8);
-  // }
-  // if (i == 9) {
-  //   arr.push(count9);
-  // }
-  // if (i == 10) {
-  //   arr.push(count10);
-  // }
-  // if (i == 11) {
-  //   arr.push(count11);
-  // }
-  // if (i == 12) {
-  //   arr.push(count12);
-  // }
-  // console.log(arr,"每一个服务")
-
-  // }
-  // monthNum.push(arr);
-
   console.log(monthNum, "monthNum");
 });
+
+
+
 router.get("/", async function(req, res) {
   let page = req.query.page; //接收到的页码数
   let rows = req.query.rows; //接收到的行数
@@ -268,9 +147,10 @@ router.get("/", async function(req, res) {
     page,
     rows,
     submitType: "findJoin",
-    ref: ["shops"],
+    ref: ["shops","serverTypes"],
     ...which
   });
+  console.log(data,"查询所有的数据111111111111111111111111111111111111111111111");
   res.send(data);
 });
 
@@ -295,7 +175,7 @@ router.post("/", async function(req, res) {
     shopsId,
     price,
     level,
-    serverType
+    serverTypeId
   } = req.body;
   console.log(serverType);
   let data = await client.post("/services", {
@@ -308,7 +188,7 @@ router.post("/", async function(req, res) {
     useTime,
     price,
     shops: { $ref: "shops", $id: shopsId },
-    serverType,
+    serverType:{$ref:"serverTypes",$id:serverTypeId},
     level
   });
   res.send(data);

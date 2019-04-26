@@ -11,9 +11,9 @@
           <el-select v-model="service.serverType" placeholder="请选择服务类型">
             <el-option
               v-for="item in serverTypes"
-              :key="item._id"
+              :key="item.tyName"
               :label="item.typeName"
-              :value="item.typeName"
+              :value="item._id"
             ></el-option>
           </el-select>
         </el-form-item>
@@ -136,15 +136,15 @@ export default {
               serverDate:serverDate,
               price:this.service.price,
               serviceName: this.service.serviceName,
-              serverType:this.service.serverType,
-              typesId: this.serverType,
+              serverTypeId:this.service.serverType,
+              // typesId: this.serverType,
               time: this.service.time,
               applyGuige: this.service.applyGuige,
               serverGuige: this.service.serverGuige,
               useTime: this.service.useTime,
               shopsId: this.shopsId,
               level: this.service.level,
-              seviceType:this.service.serverType
+              // seviceType:this.service.serverType
             }
           }).then(res => {
             console.log(res);

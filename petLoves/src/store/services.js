@@ -26,7 +26,7 @@ export default {
   mutations: {
     getServices(state, services) {
       state.services = services;
-      console.log(state);
+      console.log(services,"关联类型后打印出来的");
     },
     getPagination(state, pagination) {
       state.pagination = pagination;

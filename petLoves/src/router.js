@@ -11,7 +11,7 @@ import ShopManage from './components/shopManage'
 import Goods from './components/goods'
 import Services from './components/services'
 import Orders from './components/orders'
-// import ShopAddup from './components/shopAddup'
+import ShopAddup from './components/shopAddup'
 import GoodsRatio from './components/addUp/salesMoney/GoodsRatio'
 import ServicesRatio from './components/addUp/salesMoney/ServicesRatio'
 import GoodsMoneyRatio from './components/addUp/salesMoneyRatio/GoodsMoneyRatio'
@@ -22,7 +22,7 @@ import GoodsMoney from './components/shopAddup/shopSalesMoney/GoodsMoney'
 import ServiceMoney from './components/shopAddup/shopSalesMoney/ServiceMoney'
 import Apply from './components/apply/index.vue'
 import MapRatio from './components/addUp/map/index.vue'
-// import SalesMoneyRatio from './components/addUp/salesMoneyRatio'
+import SalesMoneyRatio from './components/addUp/salesMoneyRatio'
 
 Vue.use(Router)
 

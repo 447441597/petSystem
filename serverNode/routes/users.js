@@ -122,6 +122,7 @@ router.delete("/:id", async function (req, res) {
   let id = req.params.id;
   let data = await client.delete("/users/" + id);
   res.send(data);
+  console.log(data)
 });
 
 //修改用户

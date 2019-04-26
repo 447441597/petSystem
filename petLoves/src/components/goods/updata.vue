@@ -113,7 +113,7 @@ export default {
       let id = this.updt._id;
       console.log(this.updt);
       axios({
-        method: "put",
+        method:"put",
         url: "/goods/" + id,
         data: this.updt
       }).then(res => {

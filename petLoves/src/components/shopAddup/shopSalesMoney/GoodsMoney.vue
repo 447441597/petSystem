@@ -113,9 +113,21 @@ methods: {
 }
 </script>
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 87f4f878e7057ce68909846dd1f7328746fd070e
 <style scoped>
 .total {
     width: 100%;
     height: 700px;
 }
 </style>
+<<<<<<< HEAD
+=======
+=======
+<style>
+
+</style>
+>>>>>>> main
+>>>>>>> 87f4f878e7057ce68909846dd1f7328746fd070e

@@ -36,6 +36,11 @@ import axios from "axios";
 import { createNamespacedHelpers } from "vuex";
 const { mapActions, mapState } = createNamespacedHelpers("users");
 export default {
+  data() {
+    return {
+      shopID: ""
+    };
+  },
   created() {
     this.setPersons();
   },
@@ -48,6 +53,14 @@ export default {
 
     del(index, row) {
       console.log(row._id);
+      axios({
+        method: "get",
+        url: "/users/" + row._id
+      }).then(res => {
+        this.shopID = res.data.shopsId;
+        console.log("hhhhhhhhhhhhh", res.data.shopsId);
+        console.log(this.shopID);
+      });
       this.$confirm("此操作将永久删除该用户, 是否继续?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
@@ -59,6 +72,15 @@ export default {
             url: "/users/" + row._id
           }).then(res => {
             this.setPersons();
+            //判断门店id不为空就将门店一并删除
+            if (this.shopID) {
+              axios({
+                method: "delete",
+                url: "/shops/" + this.shopID
+              }).then(res => {
+                console.log(res.data);
+              });
+            }
           });
           this.$message({
             type: "success",

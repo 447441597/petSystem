@@ -40,8 +40,8 @@
           <el-option
             v-for="item in levels"
             :key="item.assistantphone"
-            :label="item.assistantname"
-            :value="item.assistantlevel"
+            :label="item.assistantname+item.assistantlevel"
+            :value="item.assistantname+item.assistantlevel"
           ></el-option>
         </el-select>
       </el-form-item>
@@ -175,6 +175,7 @@ export default {
       this.setVisible(false);
     },
     update() {
+      console.log(this.levels,"修改中的levels!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
       // this.setVisible(false);
       console.log("这是要修改的服务", this.service);
       axios({

@@ -79,7 +79,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(["pet"])
+    ...mapState(["pet","i"])
   },
   methods: {
     ...mapMutations(["setIdent", "setPets", "setVip", "vips"]),
@@ -107,7 +107,8 @@ export default {
         url: "/petOwns/mod/" + row._id,
         data: row
       }).then(res => {
-        this.setPet();
+        console.log(this.i);
+        this.setPet({ page: this.i });
       });
     }
   }

@@ -11,9 +11,9 @@
           <el-select v-model="service.serverType" placeholder="请选择服务类型">
             <el-option
               v-for="item in serverTypes"
-              :key="item._id"
+              :key="item.tyName"
               :label="item.typeName"
-              :value="item.typeName"
+              :value="item._id"
             ></el-option>
           </el-select>
         </el-form-item>
@@ -44,7 +44,7 @@
               v-for="item in levels"
               :key="item.assistantphone"
               :label="item.assistantname+item.assistantlevel"
-              :value="item.assistantlevel"
+              :value="item.assistantname+item.assistantlevel"
             ></el-option>
           </el-select>
         </el-form-item>
@@ -78,7 +78,7 @@ export default {
         useTime: "",
         level: "",
         price: "",
-        
+
         time: [
           {
             timeSlot: ""
@@ -92,24 +92,35 @@ export default {
     // console.log(this.services,"添加")
   },
   computed: {
-    ...mapState(["serverTypes", "services","levels","serverDate","shopsId"])
+    ...mapState(["serverTypes", "services", "levels", "serverDate", "shopsId"])
   },
   methods: {
-    ...mapActions(["getTypes", "getServices","getLevel"]),
+    ...mapActions(["getTypes", "getServices", "getLevel"]),
     click() {
-      let shopId = "5cbc22270ca8acf604b3eaa6";
-      if(this.serverDate){
-         (this.dialogFormVisible = true), this.getTypes();
-      this.getLevel(shopId);
-      console.log(this.services,"11","levels");
+      let shopsId = this.shopsId;
+      console.log(shopsId);
+      console.log(this.shopsId, "hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh");
+      
+      if (this.serverDate) {
+        (this.dialogFormVisible = true), this.getTypes();
+        this.getLevel(shopsId);
+        console.log(
+          this.shopsId,
+          "这个是shopsIFFd0000000000000000000000000000000000000000000000000"
+        );
+       
+        console.log(
+          this.services,
+          "11",
+          "levels222222222222222222222222222222222222222222222"
+        );
       } else {
-          this.$message({
+        this.$message({
           showClose: true,
-          message: '请先选择日期',
-          type: 'error'
+          message: "请先选择日期",
+          type: "error"
         });
       }
-     
     },
     removeTime(item) {
       var index = this.service.time.indexOf(item);
@@ -124,33 +135,32 @@ export default {
       });
     },
     addService() {
-      console.log(this.service,"插入的数据");
-        (this.dialogFormVisible = false);
-        let serverDate = this.serverDate
-        console.log(serverDate,"11111111")
-        
-          axios({
-            method: "post",
-            url: "/services",
-            data: {
-              serverDate:serverDate,
-              price:this.service.price,
-              serviceName: this.service.serviceName,
-              serverType:this.service.serverType,
-              typesId: this.serverType,
-              time: this.service.time,
-              applyGuige: this.service.applyGuige,
-              serverGuige: this.service.serverGuige,
-              useTime: this.service.useTime,
-              shopsId: this.shopsId,
-              level: this.service.level,
-              seviceType:this.service.serverType
-            }
-          }).then(res => {
-            console.log(res);
-            this.getServices();
-          });
-       
+      console.log(this.service, "插入的数据");
+      this.dialogFormVisible = false;
+      let serverDate = this.serverDate;
+      console.log(serverDate, "11111111");
+
+      axios({
+        method: "post",
+        url: "/services",
+        data: {
+          serverDate: serverDate,
+          price: this.service.price,
+          serviceName: this.service.serviceName,
+          serverTypeId: this.service.serverType,
+          // typesId: this.serverType,
+          time: this.service.time,
+          applyGuige: this.service.applyGuige,
+          serverGuige: this.service.serverGuige,
+          useTime: this.service.useTime,
+          shopsId: this.shopsId,
+          level: this.service.level
+          // seviceType:this.service.serverType
+        }
+      }).then(res => {
+        console.log(res);
+        this.getServices();
+      });
     }
   }
 };

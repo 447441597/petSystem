@@ -1,12 +1,8 @@
 <template>
-<<<<<<< HEAD
     <div>
         <!-- <h1>商品销售金额</h1> -->
         <div class="total" id="myChart" ref="myChart"></div>
     </div>
-=======
-    <div>商品销售量</div>
->>>>>>> main
 </template>
 
 <script>

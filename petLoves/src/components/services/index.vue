@@ -71,6 +71,7 @@ const { mapState, mapActions } = createNamespacedHelpers("services");
 export default {
   created() {
     this.getServices();
+    this.getShopsId();
   },
   computed: {
     ...mapState(["services", "pagination", "times", "shopsId"])
@@ -82,7 +83,7 @@ export default {
       "setService",
       "setTimeVisible",
       "getService",
-      "setShopsID"
+      "getShopsId"
     ]),
     handleEdit(index, row) {
       console.log("修改");

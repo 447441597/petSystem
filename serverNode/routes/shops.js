@@ -17,7 +17,6 @@ router.get('/', async function (req, res) {
     which = {
       [type]: value //$regex:value主要作用是模糊查询，相当于正则表达式一样
     }
-    console.log(which);
   } else {
     // console.log('查询全部');
     which = {};
@@ -32,23 +31,19 @@ router.get('/', async function (req, res) {
 });
 // 未审核
 router.get("/no", async function (req, res) {
-  console.log("进来了")
   let info = [];
   let page = req.query.page; //接收到的页码数
   let rows = req.query.rows; //接收到的行数
   let type = req.query.type;
   let value = req.query.value;
   let data = await client.get('/shops',{page,rows});
-  console.log(data, '哈哈哈')
   for (let i = 0; i < data.rows.length; i++) {
-    console.log(data.rows[i],'122222222')
     if (data.rows[i].status == 0) {
       info.push(data.rows[i]);
     }
   }
   data.rows = info;
   res.send(data)
-  console.log(data,"data3213213213132")
 })
 //已审核
 router.get('/ok', async function (req, res) {
@@ -60,13 +55,10 @@ router.get('/ok', async function (req, res) {
   let value = req.query.value;
   // console.log(page,rows,"lai l ")
   if (type && value) {
-    console.log('模糊查询');
     which = {
       [type]: value //$regex:value主要作用是模糊查询，相当于正则表达式一样
     }
-    console.log(which);
   } else {
-    console.log('查询全部');
     which = {};
   }
   let data = await client.get('/shops',{page,rows,...which});

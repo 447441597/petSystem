@@ -20,7 +20,8 @@ export default {
     serverTypes: [],
     levels: [],
     dialogFormVisible: false,
-    timeVisible: false
+    timeVisible: false,
+    shopsId:""
   },
   mutations: {
     getServices(state, services) {
@@ -63,6 +64,9 @@ export default {
     },
     setServerDate(state,serverDate){
       state.serverDate = serverDate;
+    },
+    setShopsId(state,shopsId){
+      state.shopsId = shopsId;
     }
   },
   actions: {
@@ -147,6 +151,16 @@ export default {
     setServerDate({commit},date){
       console.log(date,"date");
       commit("setServerDate",date);
+    },
+    getShopsId({commit},shopsId){
+      axios({
+        method:"get",
+        url:"/getSession"
+      }).then((res) => {
+        console.log(res.data.shopsId,"session");
+        commit("setShopsId",res.data.shopsId);
+      })
+      
     }
   }
 };

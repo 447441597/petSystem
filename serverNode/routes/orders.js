@@ -74,7 +74,7 @@ router.get("/status", async function(req, res) {
   }
   let data1 = await client.get("/orders", {
     submitType: "findJoin",
-    ref: ["petOwns", "services", "shops", "goods"],
+    ref: ["services", "petOwns", "shops", "goods"],
     ...option
   });
 
@@ -129,6 +129,7 @@ router.get("/status", async function(req, res) {
         maxpage: data1.maxpage,
         maxpage: data1.maxpage
       };
+      console.log(resData.rows.services);
       res.send(resData);
     }
   } else if (sta == 0) {

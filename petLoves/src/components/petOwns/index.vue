@@ -21,7 +21,7 @@ import Identity from "./Identity";
 import VipCard from "./VipCard";
 import Search from "./Search";
 import { createNamespacedHelpers } from "vuex";
-const { mapState, mapActions } = createNamespacedHelpers("petowns");
+const { mapState, mapActions,mapMutations } = createNamespacedHelpers("petowns");
 export default {
   components: {
     PetList,
@@ -37,14 +37,18 @@ export default {
   },
   methods: {
     ...mapActions(["setPet"]),
+    ...mapMutations(["seti"]),
     prev() {
       this.setPet({ page: ~~this.pet.curpage - 1 });
+      this.seti( ~~this.pet.curpage - 1);
     },
     change(i) {
       this.setPet({ page: i });
+      this.seti(i);
     },
     next() {
       this.setPet({ page: ~~this.pet.curpage + 1 });
+      this.seti(~~this.pet.curpage + 1);
     }
   }
 };

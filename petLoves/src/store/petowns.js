@@ -12,7 +12,8 @@ export default {
         pets: [],
         vip:false,
         vipcard:[],
-        total:''
+        total:'',
+        i:""
     },
     mutations: {
         setState(state, pet) { 
@@ -29,6 +30,9 @@ export default {
         },
         vips(state,arr){
             state.vipcard = arr;
+        },
+        seti(state,i){
+            state.i = i;
         },
         settotal(state,total){
             state.total = total;

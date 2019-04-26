@@ -15,7 +15,7 @@
 
         </el-steps>
          <!-- <div>提交成功，正在审核你的店铺，请耐心等待</div> -->
-         
+           <el-button type="primary"    @click="back"  style="margin-bottom:20px">返回登录</el-button>
         </template>
         <template v-else >
          <el-form :model="form" :rules="rules"  ref="form" >
@@ -192,6 +192,9 @@ export default {
     handleAvatarSuccess(response, file, fileList) {
       this.imageUrl = "/images/" + response;
       this.form.businessImage = response;
+    },
+    back(){
+         location="../login/index.vue"
     },
     handSuccess(response, file, fileList) {
       this.imageurl = "/images/" + response;

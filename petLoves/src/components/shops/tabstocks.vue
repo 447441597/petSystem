@@ -123,9 +123,9 @@ export default {
           }).then(res => {
             this.getok();
             this.$message("删除成功");
-            axios({
+            // axios({
 
-            })
+            // })
           });
         })
         .catch(() => {

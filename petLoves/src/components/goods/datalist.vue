@@ -46,7 +46,8 @@ export default {
     };
   },
   computed: {
-    ...mapState(["show"])
+    ...mapState(["show"]),
+     ...mapState(["shopsId"]),
   },
   methods: {
     ...mapActions(["getshow"]),

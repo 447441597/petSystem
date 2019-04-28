@@ -59,7 +59,6 @@ export default {
         axios({
         method:"get",
         url:"/users/"+this.userId,
-        
         }).then((data)=>{
           for(let i =0;i<data.data.length;i++){
             this.shopId = data.data[i]._id
@@ -85,7 +84,6 @@ export default {
         axios({
         method:"get",
         url:"/users/"+this.userId,
-        
         }).then((data)=>{
           for(let i =0;i<data.data.length;i++){
             this.shopId = data.data[i]._id
@@ -96,6 +94,10 @@ export default {
             data:{
               shopsId:""
             }
+          }).then((info)=>{
+            //  axios({
+
+            //  })
           })
         })
        })

@@ -59,14 +59,14 @@ export default {
         console.log(res.data, "1312312313315112121");
         this.shopid = res.data.shopsId;
       });
-      // console.log(this.shopid, "sadfbnsadfnbsadgnmsadfghm");
+      console.log(this.shopid, "sadfbnsadfnbsadgnmsadfghm");
       let myChart = echarts.init(this.$refs.myChart);
       if (this.type == "月销售统计") {
         axios({
           url: "/orders/all",
           method: "get"
         }).then(res => {
-          // console.log(res, "res");
+          console.log(res, "res");
           for (let j = 1; j <= 12; j++) {
             let n = "0";
             if (j >= 10) {
@@ -84,7 +84,7 @@ export default {
             }
             this.shopsData.push(num);
           }
-          // console.log(this.shopsData, "11111111111111111111");
+          console.log(this.shopsData, "11111111111111111111");
           myChart.setOption(this.classesOptions, true);
         });
       } else if (this.type == "季度销售统计") {

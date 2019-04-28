@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div style="width:80%;margin:0 auto;">
        <!-- <el-button type="primary"  @click="selected(true)" style="margin-bottom:20px">申请门店</el-button>
        <el-button type="primary"    @click="selected(false)"  style="margin-bottom:20px">申请进度</el-button> -->
           <template>
@@ -7,17 +7,7 @@
                <div slot="header" class="clearfix">
                  <div style="text-align:center"> <h2>申请门店</h2></div>
                   </div>
-        <template v-if="status">
-          <el-steps :space="600" :active="active" align-center>
-          <el-step title="正在审核中"></el-step>
-          <el-step title="已审核"></el-step>
-          <!-- <el-step title="未通过"></el-step> -->
-
-        </el-steps>
-         <!-- <div>提交成功，正在审核你的店铺，请耐心等待</div> -->
-         
-        </template>
-        <template v-else >
+        <template>
          <el-form :model="form" :rules="rules"  ref="form" >
            <el-form-item label="门店名称" :label-width="formLabelWidth" prop="storeName">
               <el-input v-model="form.storeName" autocomplete="off"></el-input>
@@ -42,7 +32,7 @@
             <el-form-item label="经度" :label-width="formLabelWidth" prop="longitude">
               <el-input v-model="form.longitude" autocomplete="off"></el-input>
            </el-form-item>
-            <el-form-item label="维度" :label-width="formLabelWidth" prop="latitude">
+            <el-form-item label="纬度" :label-width="formLabelWidth" prop="latitude">
               <el-input v-model="form.latitude" autocomplete="off"></el-input>
            </el-form-item>
            <el-form-item label="法人" :label-width="formLabelWidth" prop="legalPerson">
@@ -97,12 +87,14 @@
            </div>
            </template>
        </el-card>
-        </template>
+      </template>
+      <!-- <message></message> -->
     </div>
 </template>
 
 <script>
 import axios from "axios";
+// import Message from './message.vue'
 import { createNamespacedHelpers } from "vuex";
 const { mapActions, mapState, mapMutations } = createNamespacedHelpers("lwj");
 let assistant = [];
@@ -110,7 +102,7 @@ export default {
   data() {
     return {
       ID: "",
-      location : {},
+      location: {},
       shopid: "",
       dialogVisible: false,
       select: false,
@@ -131,8 +123,8 @@ export default {
         assistantphone: "",
         headImage: "",
         businessImage: "",
-        longitude:"",
-        latitude:""
+        longitude: "",
+        latitude: ""
       },
       formLabelWidth: "120px",
       imageUrl: "",
@@ -182,7 +174,6 @@ export default {
           if (data.data.active == 3) {
             this.active += 1;
           }
-         
         });
       });
   },
@@ -212,10 +203,10 @@ export default {
       this.$refs[formName].validate(valid => {
         if (valid) {
           if (assistant.length > 0) {
-           this.location={
-              longitude:this.form.longitude,
-              latitude:this.form.latitude
-            }
+            this.location = {
+              longitude: this.form.longitude,
+              latitude: this.form.latitude
+            };
             axios({
               method: "post",
               url: "/applys",
@@ -232,7 +223,7 @@ export default {
                 active: this.active,
                 businessImage: this.form.businessImage,
                 headImage: this.form.headImage,
-                location:this.location
+                location: this.location
               }
             }).then(res => {
               this.ID = res.data._id;
@@ -240,7 +231,8 @@ export default {
                 method: "get",
                 url: "/users/" + this.userId
               }).then(info => {
-                this.setTemp(1);
+                // this.setTemp(1);
+                location="/message"
                 let qq = info.data._id;
                 info.data.shopsId = this.ID;
                 info = info.data;
@@ -272,7 +264,8 @@ export default {
     add() {
       this.dialogVisible = true;
     }
-  }
+  },
+  // components: { Message }
 };
 </script>
 

@@ -127,10 +127,14 @@ export default {
             this.getok();
             this.$message("删除成功");
             // axios({
+<<<<<<< HEAD
             //   method:"get",
             //   url:"/getSession"
             // }).then((info)=>{
             //   console.log(info,"000000000000000000000000000")
+=======
+
+>>>>>>> main
             // })
           });
         })

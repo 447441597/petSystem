@@ -56,7 +56,7 @@ export default {
         method: "get",
         url: "/getSession"
       }).then(res => {
-        console.log(res.data, "1312312313315112121");
+        // console.log(res.data, "1312312313315112121");
         this.shopid = res.data.shopsId;
       });
       console.log(this.shopid, "sadfbnsadfnbsadgnmsadfghm");
@@ -66,7 +66,11 @@ export default {
           url: "/orders/all",
           method: "get"
         }).then(res => {
+<<<<<<< HEAD
           console.log(res, "res");
+=======
+          console.log(res, "res.......................");
+>>>>>>> main
           for (let j = 1; j <= 12; j++) {
             let n = "0";
             if (j >= 10) {
@@ -106,9 +110,10 @@ export default {
             let str = 2019 + "-" + n + j;
             let num = 0;
             for (let i = 0; i < res.data.length; i++) {
-              console.log(res.data.length, "12313231");
+              console.log(res.data, "12313231");
               let time = res.data[i].time.substring(0, 7);
               if (res.data[i].status == "订单已完成") {
+                
                 if (res.data[i].shops._id == this.shopid && time == str) {
                   num++;
                 }
@@ -116,7 +121,7 @@ export default {
             }
             this.shopData.push(num);
           }
-          console.log(this.shopData, "11111111111111111111");
+          // console.log(this.shopData, "11111111111111111111");
           for (k; k < this.shopData.length; k++) {
             if (k >= 2 && k <= 4) {
               this.spring += this.shopData[k];
@@ -136,42 +141,19 @@ export default {
           url: "/orders/all",
           method: "get"
         }).then(res => {
-          console.log(res, "res");
-           console.log(res.data.length,"--------------------------------")
-           let time = ""
-          for (let j = 1; j <= res.data.length; j++) {
-           
-            // let n = "0";
-            // if (j >= 10) {
-            //   n = "";
-            // }
-             time += res.data[j].time.substring(0, 4)
-            this.year.push(time);
-            this.yearArr.push(res.data[j]);
-            console.log(this.year, "12312313123123saddsdsadasdas");
-            let num = 0;
-            console.log(this.yearArr,"scv55555555555555555555")
-            for (let i = 0; i <= this.year.length; i++) {
-              for (let k = 0; k <= this.yearArr.length; k++) {
-                if (this.yearArr[k].status == "订单已完成") {
-                  if (this.yearArr[k].shops._id == this.shopid && time == this.year[i].time) {
-                    num++;
-                  }
-                }
-              }
-              this.yearData.push(num)
-            }
-            console.log(this.yearData,"qwertwqerwqerwqer")
-            // for (let i = 0; i < res.data.length; i++) {
-            //   let time = res.data[i].time.substring(0, 7);
-            //   if (res.data[i].status == "订单已完成") {
-            //     if (res.data[i].shops._id == this.shopid && time == str) {
-            //       num++;
-            //     }
-            //   }
-            // }
-          }
-          // console.log(this.shopsData, "11111111111111111111");
+          console.log(res, "res++++++++----------------");
+          // let data = res.data;
+          // let time = '';
+          // let num = 0;
+          // data.map((i)=>{
+          //   time = i.time.substring(0,4);
+          //   this.year.push(time);
+          // })
+          // this.year.map((j)=>{
+          //   if(j == data[j].time.substring(0,4) && this.shopid == data._id){
+              
+          //   }
+          // })
           myChart.setOption(this.yearOptions, true);
         });
       }
@@ -214,7 +196,7 @@ export default {
     jiduOptions() {
       return {
         title: {
-          text: "年销售统计图",
+          text: "季度销售统计图",
           subtext: "",
           x: "center"
         },
@@ -253,7 +235,7 @@ export default {
     yearOptions() {
       return {
         title: {
-          text: "季度销售统计图",
+          text: "年销售统计图",
           subtext: "",
           x: "center"
         },

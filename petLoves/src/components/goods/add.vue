@@ -76,7 +76,7 @@
 <script>
 import axios from "axios";
 import { createNamespacedHelpers } from "vuex";
-const { mapActions } = createNamespacedHelpers("goods");
+const { mapActions,mapState } = createNamespacedHelpers("goods");
 export default {
   data() {
     return {
@@ -101,10 +101,13 @@ export default {
         price: "",
         number:'',
         images:'',
-        miniimg:''
+        miniimg:'',
       },
       formLabelWidth: "140px"
     };
+  },
+      computed: {
+    ...mapState(["shopsId"]),
   },
   methods: {
     ...mapActions(["getshow"]),
@@ -129,12 +132,32 @@ export default {
         //  console.log(this.form,'上传的图片')
     },
     add() {
+      console.log(this.shopsId,'增加里面获取的门店的ID')
       let adddata = this.form;
       let img = this.images
       axios({
         method: "post",
         url: "/goods/add",
-        data: this.form
+        data: {
+         goodsName: this.form.goodsName,
+        type: this.form.type,
+        material: this.form.material,
+        applyGuige: this.form.applyGuige,
+        exGuige: this.form.exGuige,
+        Packing: this.form.Packing,
+        taste: this.form.taste,
+        specialFunc: this.form.specialFunc,
+        addr: this.form.addr,
+        keepDate:this.form.keepDate,
+        productionDate:this.form.productionDate,
+        provider: this.form.provider,
+        features: this.form.features,
+        price: this.form.price,
+        number:this.form.number,
+        images:this.form.images,
+        miniimg:this.form.miniimg,
+        shopsId:this.shopsId
+        }
       }).then(res => {
         console.log("添加成功");
         this.getshow();

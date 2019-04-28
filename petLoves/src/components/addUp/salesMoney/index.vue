@@ -3,6 +3,7 @@
 </template>
 
 <script>
+import GoodsRatio from './GoodsRatio'
 export default {
 
 }

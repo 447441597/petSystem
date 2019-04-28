@@ -7,7 +7,26 @@
                <div slot="header" class="clearfix">
                  <div style="text-align:center"> <h2>申请门店</h2></div>
                   </div>
+<<<<<<< HEAD
         <template>
+=======
+        <template v-if="status">
+          <el-steps :space="600" :active="active" align-center>
+          <el-step title="正在审核中"></el-step>
+          <el-step title="已审核"></el-step>
+          <!-- <el-step title="未通过"></el-step> -->
+        </el-steps>
+        <template style="width:100%;text-align:center" v-if="active==1">
+           <div style="margin-bottom:40px;margin-top:30px ">提交成功，正在审核你的店铺，请耐心等待</div> 
+          <el-button type="primary"    @click="back"  style="margin-bottom:20px">返回登录</el-button>
+        </template>
+        <template v-if="active==2">
+          <div style="margin-bottom:40px;margin-top:30px ">恭喜你，门店申请成功</div> 
+          <el-button type="primary"    @click="back"  style="margin-bottom:20px">返回登录</el-button>
+        </template>
+        </template>
+        <template v-else >
+>>>>>>> main
          <el-form :model="form" :rules="rules"  ref="form" >
            <el-form-item label="门店名称" :label-width="formLabelWidth" prop="storeName">
               <el-input v-model="form.storeName" autocomplete="off"></el-input>
@@ -184,9 +203,15 @@ export default {
       this.imageUrl = "/images/" + response;
       this.form.businessImage = response;
     },
+    back(){
+         location="../login/index.vue"
+    },
     handSuccess(response, file, fileList) {
       this.imageurl = "/images/" + response;
       this.form.headImage = response;
+    },
+    back(){
+location = "../login"
     },
     sure() {
       assistant.push({

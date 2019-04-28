@@ -158,7 +158,7 @@ router.get("/", async function(req, res) {
 router.get("/:id", async function(req, res) {
   let id = req.params.id;
   console.log(id);
-  let data = await client.get("/services/" + id);
+  let data = await client.get("/services/" + id,{submitType: "findJoin",ref: ["shops","serverTypes"]});
   res.send(data);
 });
 

@@ -177,7 +177,7 @@ router.post("/", async function(req, res) {
     level,
     serverTypeId
   } = req.body;
-  console.log(serverType);
+  // console.log(serverType);
   let data = await client.post("/services", {
     serverDate,
     serviceName,
@@ -188,7 +188,7 @@ router.post("/", async function(req, res) {
     useTime,
     price,
     shops: { $ref: "shops", $id: shopsId },
-    serverType:{$ref:"serverTypes",$id:serverTypeId},
+    serverTypes:{$ref:"serverTypes",$id:serverTypeId},
     level
   });
   res.send(data);

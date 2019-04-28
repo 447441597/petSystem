@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-tabs type="border-card">
+    <el-tabs type="border-card" @tab-click="handleClick">
       <el-tab-pane label="服务管理">
         <Date></Date>
         <UpdateServer></UpdateServer>
@@ -14,9 +14,9 @@
           </el-col>
         </el-row>
         <el-table :data="services" style="width: 100%" row-key="_id">
-           <el-table-column label="日期" prop="serverDate" style="width:20px"></el-table-column>
+          <el-table-column label="日期" prop="serverDate" style="width:20px"></el-table-column>
           <el-table-column label="服务名" prop="serviceName" style="width:20px"></el-table-column>
-          <el-table-column label="服务类别" prop="serverType" style="width:20px"></el-table-column>
+          <el-table-column label="服务类别" prop="serverTypes.typeName" style="width:20px"></el-table-column>
           <el-table-column label="服务时间段" prop="times" style="width:20px">
             <template slot-scope="scope">
               <el-button size="mini" @click="showTime(scope.$index, scope.row)">查看</el-button>
@@ -65,11 +65,13 @@ import ServeTypeList from "./ServeTypeList";
 import AddType from "./AddType";
 import UpdateType from "./UpdateType";
 import SearchType from "./SearchType";
-import Date from './Date'
+import Date from "./Date";
 const { mapState, mapActions } = createNamespacedHelpers("services");
 
 export default {
   created() {
+    this.getShopsId();
+    console.log(this.shopsId,"7777777777777777777777777777777777777777777777777777777");
     this.getServices();
   },
   computed: {
@@ -82,7 +84,7 @@ export default {
       "setService",
       "setTimeVisible",
       "getService",
-      "setShopsID"
+      "getShopsId"
     ]),
     handleEdit(index, row) {
       console.log("修改");
@@ -110,7 +112,14 @@ export default {
     showTime(index, row) {
       this.setTimeVisible(true);
       this.getService(row._id);
-    }
+    },
+    handleClick(tab, event) {
+      if(tab.label == "服务管理"){
+        this.getServices();
+      }
+      console.log(tab, event,"切换标签页");
+      console.log(tab.label)
+    },
   },
   components: {
     AddServer,

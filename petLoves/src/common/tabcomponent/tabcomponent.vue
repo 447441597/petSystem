@@ -78,6 +78,7 @@ import { createNamespacedHelpers } from "vuex";
 import axios from "axios";
 const { mapState, mapActions, mapMutations} = createNamespacedHelpers("ordrers");
 export default {
+  props:["shopsId"],
   data() {
     return {
       dialogVisible: false,
@@ -86,13 +87,6 @@ export default {
       // orders: []
     };
   },
-  created(){
-    console.log(this.orders,'///////////////')
-  },
-  // updated(){
-  //   console.log(this.ordersData,'updataupdataupdataupdataupdataupdata')
-  //   this.orders = this.ordersData[0]
-  // },
   computed: {
     ...mapState(["pagination", "ordersData", "ordersLength", "tab","orders"])
   },
@@ -100,11 +94,13 @@ export default {
     ...mapActions(["getOrders", "getOrdersStatus"]),
     ...mapMutations(["setOrsers"]),
     unfinished() {
+      console.log(this.shopsId,"shopsID///////////////")
       // 未完成订单
       if (this.tab == "服务订单") {
         let playload = {
           ordersType: 1,
-          sta: 1
+          sta: 1,
+          id:this.shopsId
         };
         this.getOrdersStatus(playload); 
       }
@@ -115,11 +111,11 @@ export default {
       // console.log("完成订单")
         let playload = {
           ordersType: 2,
-          sta: 1
+          sta: 1,
+          id:this.shopsId
         };
         this.getOrdersStatus(playload);
         // this.orders = ordersData[]
-        console.log(this.ordersData,this.ordersLength,"ordersDataordersData")
       }
     },
     allOrders() {
@@ -127,7 +123,8 @@ export default {
       if (this.tab == "服务订单") {
         let playload = {
           ordersType: 0,
-          sta: 1
+          sta: 1,
+          id:this.shopsId
         };
         this.getOrdersStatus(playload);
       }
@@ -167,10 +164,10 @@ export default {
             }
           }).then(data => {
             let playload = {
-              ordersType: 1
+              ordersType: 1,
+              id:this.shopsId
             };
             this.getOrders(playload);
-            console.log(data, "修改后的");
           });
         }
       });

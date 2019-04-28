@@ -20,12 +20,13 @@ export default {
     serverTypes: [],
     levels: [],
     dialogFormVisible: false,
-    timeVisible: false
+    timeVisible: false,
+    shopsId:""
   },
   mutations: {
     getServices(state, services) {
       state.services = services;
-      console.log(state);
+      console.log(services,"关联类型后打印出来的");
     },
     getPagination(state, pagination) {
       state.pagination = pagination;
@@ -34,6 +35,7 @@ export default {
       state.serverTypes = serverTypes;
     },
     getLevel(state, levels) {
+      console.log(levels,"LLLLLLLLLLLLLLLLLLLLLEEEEEEEEEEEEEEEEEEEVVVVVVVVVVVVVVVVVVVVVVVVEEEEE")
       state.levels = levels;
     },
     getTime(state, times) {
@@ -63,6 +65,9 @@ export default {
     },
     setServerDate(state,serverDate){
       state.serverDate = serverDate;
+    },
+    setShopsId(state,shopsId){
+      state.shopsId = shopsId;
     }
   },
   actions: {
@@ -86,6 +91,9 @@ export default {
         console.log(res.data, "services");
 
         console.log(res.data.rows);
+        for(let i = 0; i<res.data.rows.length;i++){
+          
+        }
         for (let i = 0; i < res.data.rows.length; i++) {
           let str = " ";
           for (let j = 0; j < res.data.rows[i].time.length; j++) {
@@ -109,11 +117,13 @@ export default {
       });
     },
     getLevel({ commit }, shopId) {
+      // console.log("")
       axios({
         method: "get",
         url: "/shops/" + shopId
       }).then(res => {
-        console.log(res.data, "assistant");
+        console.log("")
+        console.log(res.data.assistant, "assistant");
         commit("getLevel", res.data.assistant);
       });
     },
@@ -147,6 +157,16 @@ export default {
     setServerDate({commit},date){
       console.log(date,"date");
       commit("setServerDate",date);
+    },
+    getShopsId({commit},shopsId){
+      axios({
+        method:"get",
+        url:"/getSession"
+      }).then((res) => {
+        console.log(res.data.shopsId,"session");
+        commit("setShopsId",res.data.shopsId);
+      })
+      
     }
   }
 };

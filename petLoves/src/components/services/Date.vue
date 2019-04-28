@@ -1,6 +1,6 @@
 <template>
-  <div class="block">
-    <span class="demonstration">日期</span>
+  <div class="block" style="margin:40px 0">
+    <span class="demonstration">选择日期</span>
     <el-date-picker
       v-model="serverDate"
       type="date"
@@ -40,6 +40,6 @@ export default {
 
 <style>
 .demonstration {
-  margin: 20px 20px;
+  margin: 20px 60px;
 }
 </style>

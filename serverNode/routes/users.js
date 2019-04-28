@@ -88,13 +88,13 @@ router.post("/login", async function (req, res) {
     phone,
     pwd,
   } = req.body;
+  console.log(req.body)
   let data = await client.post("/login", {
     phone,
     pwd
   });
   if (data.phone) {
      req.session.user = data;
-
     res.send(data);
 
   } else {

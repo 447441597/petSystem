@@ -6,7 +6,7 @@ const multiparty = require('multiparty');
 const path = require('path');
 // 统计商品销售额路由
 router.get('/getMoney', async function (req, res) {
-  console.log('进来了.................')
+  // console.log('进来了.................')
   let date = new Date();
   let date1 = JSON.stringify(date).substring(0, 11);
   date1 = date1.slice(6, 8)
@@ -14,23 +14,24 @@ router.get('/getMoney', async function (req, res) {
   let info = [];
   let resData = {};
   data.map((i) => {
-    if (i.status == "订单已完成") {
+    if (i.status === "订单已完成") {
       info.push(i);
     }
   })
   let arr = []
   let temp = 0;
   let obj = {}
-  // console.log(info)
+  // console.log(info,'2222222222222')
   // for(let i=0;i<arr.length;i++){
   //   let key = arr[i].time;
 
   // }
   for (let i = 0; i < 6; i++) {
-    console.log(date1)
+    // console.log(date1)
     for (let j = 0; j < info.length; j++) {
       if (info[j].time.indexOf(date1) > 3) {
-        console.log('object')
+        console.log(info[j].time,'33333333333')
+        console.log(info[i].money,'2222222222222')
         arr.push({
           time: info[j].time,
           price: info[i].money
@@ -108,7 +109,7 @@ router.get('/fw', async function (req, res) {
 
   // }
   for (let i = 0; i < 6; i++) {
-    console.log(date1)
+    // console.log(date1)
     for (let j = 0; j < info.length; j++) {
       if (info[j].time.indexOf(date1) > 3) {
         console.log(info[i],"898989")
@@ -193,6 +194,12 @@ router.get('/data', async function (req, res) {
   res.send(data);
 });
 
+//根据ID查询
+router.get('/:id', async function (req, res) {
+  let id = req.params.id;
+  let data = await client.get('/goods/' + id);
+  res.send(data)
+});
 //增加商品
 router.post('/add', async function (req, res) {
   let {

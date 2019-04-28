@@ -39,13 +39,13 @@ export default {
 
 methods: {
         showChart() {
-            console.log("chart");
+            // console.log("chart");
             let myChart = echarts.init(this.$refs.myChart);
                 axios({
                     url: "/goods/getMoney",
                     method: "get"
                 }).then(res => {
-                    console.log(res,"===================")
+                    console.log(res.data,'商品的销售数据')
                     let series = {}
                     let ass = []
                       let date = new Date();
@@ -112,16 +112,14 @@ methods: {
     }
 }
 </script>
-
-<<<<<<< HEAD
 <style scoped>
 .total {
     width: 100%;
     height: 700px;
 }
 </style>
-=======
+
+
 <style>
 
 </style>
->>>>>>> main

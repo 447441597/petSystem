@@ -53,6 +53,10 @@ export default {
 
     del(index, row) {
       console.log(row._id);
+<<<<<<< HEAD
+=======
+      //根据id查询用户是否有shopsid,将它存储
+>>>>>>> e7799c06a60108f7ebd17c5ec020dfcee2deba65
       axios({
         method: "get",
         url: "/users/" + row._id

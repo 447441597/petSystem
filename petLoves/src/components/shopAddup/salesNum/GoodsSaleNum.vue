@@ -56,7 +56,11 @@ export default {
         method: "get",
         url: "/getSession"
       }).then(res => {
+<<<<<<< HEAD
         console.log(res.data, "1312312313315112121");
+=======
+        // console.log(res.data, "1312312313315112121");
+>>>>>>> e7799c06a60108f7ebd17c5ec020dfcee2deba65
         this.shopid = res.data.shopsId;
       });
       // console.log(this.shopid, "sadfbnsadfnbsadgnmsadfghm");
@@ -66,7 +70,11 @@ export default {
           url: "/orders/all",
           method: "get"
         }).then(res => {
+<<<<<<< HEAD
           // console.log(res, "res");
+=======
+          console.log(res, "res.......................");
+>>>>>>> e7799c06a60108f7ebd17c5ec020dfcee2deba65
           for (let j = 1; j <= 12; j++) {
             let n = "0";
             if (j >= 10) {
@@ -106,9 +114,16 @@ export default {
             let str = 2019 + "-" + n + j;
             let num = 0;
             for (let i = 0; i < res.data.length; i++) {
+<<<<<<< HEAD
               console.log(res.data.length, "12313231");
               let time = res.data[i].time.substring(0, 7);
               if (res.data[i].status == "订单已完成") {
+=======
+              console.log(res.data, "12313231");
+              let time = res.data[i].time.substring(0, 7);
+              if (res.data[i].status == "订单已完成") {
+                
+>>>>>>> e7799c06a60108f7ebd17c5ec020dfcee2deba65
                 if (res.data[i].shops._id == this.shopid && time == str) {
                   num++;
                 }
@@ -116,7 +131,11 @@ export default {
             }
             this.shopData.push(num);
           }
+<<<<<<< HEAD
           console.log(this.shopData, "11111111111111111111");
+=======
+          // console.log(this.shopData, "11111111111111111111");
+>>>>>>> e7799c06a60108f7ebd17c5ec020dfcee2deba65
           for (k; k < this.shopData.length; k++) {
             if (k >= 2 && k <= 4) {
               this.spring += this.shopData[k];
@@ -136,6 +155,7 @@ export default {
           url: "/orders/all",
           method: "get"
         }).then(res => {
+<<<<<<< HEAD
           console.log(res, "res");
            console.log(res.data.length,"--------------------------------")
            let time = ""
@@ -172,6 +192,21 @@ export default {
             // }
           }
           // console.log(this.shopsData, "11111111111111111111");
+=======
+          console.log(res, "res++++++++----------------");
+          // let data = res.data;
+          // let time = '';
+          // let num = 0;
+          // data.map((i)=>{
+          //   time = i.time.substring(0,4);
+          //   this.year.push(time);
+          // })
+          // this.year.map((j)=>{
+          //   if(j == data[j].time.substring(0,4) && this.shopid == data._id){
+              
+          //   }
+          // })
+>>>>>>> e7799c06a60108f7ebd17c5ec020dfcee2deba65
           myChart.setOption(this.yearOptions, true);
         });
       }
@@ -214,7 +249,11 @@ export default {
     jiduOptions() {
       return {
         title: {
+<<<<<<< HEAD
           text: "年销售统计图",
+=======
+          text: "季度销售统计图",
+>>>>>>> e7799c06a60108f7ebd17c5ec020dfcee2deba65
           subtext: "",
           x: "center"
         },
@@ -253,7 +292,11 @@ export default {
     yearOptions() {
       return {
         title: {
+<<<<<<< HEAD
           text: "季度销售统计图",
+=======
+          text: "年销售统计图",
+>>>>>>> e7799c06a60108f7ebd17c5ec020dfcee2deba65
           subtext: "",
           x: "center"
         },

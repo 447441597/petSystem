@@ -16,6 +16,8 @@ import Updata from './updata'
 import Datalist from './datalist'
 import Search from './search'
 import Page from './page'
+import { createNamespacedHelpers } from "vuex";
+const { mapActions, mapState } = createNamespacedHelpers("goods");
 export default {
   components: {
     Add,
@@ -29,8 +31,14 @@ export default {
 
     };
   },
+    computed: {
+    ...mapState(["shopsId"]),
+  },
   methods: {
-   
+    ...mapActions(["getshopsId"]),
+  },
+    created() {
+    this.getshopsId()
   }
 };
 </script>

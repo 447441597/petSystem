@@ -9,6 +9,7 @@ export default {
         updt:{},
         updatadialog:false,
         pagination:{},
+        shopsId:""
     },
     mutations: {
         setshow(state, data) {
@@ -28,6 +29,10 @@ export default {
         setPagination(state, pagination) {
             state.pagination = pagination
         },
+        setShopsId(state,data){
+            // console.log(data,'data')
+            state.shopsId=data
+        }
     },
     actions:{
         getshow({commit}, payload = {},) {
@@ -63,6 +68,16 @@ export default {
         },
         setVisible1({commit}){
             commit("setVisible1",false)
+        },
+        getshopsId({commit}){
+            axios({
+                method:'get',
+                url:'/getSession'
+            }).then((res)=>{
+                // console.log(res.data.shopsId,'999999')
+                commit("setShopsId",res.data.shopsId)
+
+            })
         }
     }
    

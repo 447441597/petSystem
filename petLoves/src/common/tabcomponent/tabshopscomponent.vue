@@ -80,6 +80,7 @@ import axios from "axios";
 import { createNamespacedHelpers  } from "vuex";
 const { mapState, mapActions, mapMutations} = createNamespacedHelpers("ordrers");
 export default {
+  props:["shopsId"],
   data() {
     return {
       dialogVisible: false,
@@ -102,7 +103,8 @@ export default {
       if (this.tab == "商品订单") {
         let playload = {
           ordersType: 1,
-          sta: 0
+          sta: 0,
+          id:this.shopsId
         };
         this.getOrdersStatus(playload);
       }
@@ -112,7 +114,8 @@ export default {
       if (this.tab == "商品订单") {
         let playload = {
           ordersType: 2,
-          sta: 0
+          sta: 0,
+          id:this.shopsId
         };
         this.getOrdersStatus(playload);
       }
@@ -122,7 +125,8 @@ export default {
       if (this.tab == "商品订单") {
         let playload = {
           ordersType: 0,
-          sta: 0
+          sta: 0,
+          id:this.shopsId
         };
         this.getOrdersStatus(playload);
       }
@@ -162,7 +166,8 @@ export default {
             }
           }).then(data => {
             let playload = {
-              ordersType: 0
+              ordersType: 0,
+              id:this.shopsId
             };
             this.getOrders(playload);
             console.log(data, "修改后的");

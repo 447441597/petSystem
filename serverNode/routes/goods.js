@@ -197,7 +197,9 @@ router.get('/data', async function (req, res) {
 //根据ID查询
 router.get('/:id', async function (req, res) {
   let id = req.params.id;
+  console.log(id,"==============================")
   let data = await client.get('/goods/' + id);
+  console.log(data,'--------------------------------')
   res.send(data)
 });
 //增加商品

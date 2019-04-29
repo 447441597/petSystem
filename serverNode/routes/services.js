@@ -150,7 +150,11 @@ router.get("/", async function(req, res) {
     ref: ["shops","serverTypes"],
     ...which
   });
+<<<<<<< HEAD
   console.log(data);
+=======
+  // console.log(data,"查询所有的数据111111111111111111111111111111111111111111111");
+>>>>>>> 9204c67f09367a6477bb9e8af821e955922147bf
   res.send(data);
 });
 
@@ -165,7 +169,7 @@ router.get("/:id", async function(req, res) {
 //增加服务
 router.post("/", async function(req, res) {
   let {
-    serverDate,
+    productionDate,
     serviceName,
     type,
     time,
@@ -179,7 +183,7 @@ router.post("/", async function(req, res) {
   } = req.body;
   // console.log(serverType);
   let data = await client.post("/services", {
-    serverDate,
+    productionDate,
     serviceName,
     type,
     time,

@@ -2,7 +2,7 @@
   <div class="block" style="margin:40px 0">
     <span class="demonstration">选择日期</span>
     <el-date-picker
-      v-model="serverDate"
+      v-model="productionDate"
       type="date"
       placeholder="选择日期"
       format="yyyy 年 MM 月 dd 日"
@@ -19,20 +19,20 @@ const { mapState, mapActions } = createNamespacedHelpers("services");
 export default {
   data() {
     return {
-    serverDate:""
+    productionDate:""
     };
   },
   computed: {
-    ...mapState(["serverDate"]),
-    serverDate: {
+    ...mapState(["productionDate"]),
+    productionDate: {
   
     }
   },
   methods: {
-      ...mapActions(["setServerDate"]),
+      ...mapActions(["setproductionDate"]),
       setDate(){
-          this.setServerDate(this.serverDate);
-          console.log(this.serverDate,"setDate")
+          this.setproductionDate(this.productionDate);
+          console.log(this.productionDate,"setDate")
       }
   }
 };

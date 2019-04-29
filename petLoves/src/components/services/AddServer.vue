@@ -92,7 +92,7 @@ export default {
     // console.log(this.services,"添加")
   },
   computed: {
-    ...mapState(["serverTypes", "services", "levels", "serverDate", "shopsId"])
+    ...mapState(["serverTypes", "services", "levels", "productionDate", "shopsId"])
   },
   methods: {
     ...mapActions(["getTypes", "getServices", "getLevel"]),
@@ -101,7 +101,7 @@ export default {
       console.log(shopsId);
       console.log(this.shopsId, "hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh");
       
-      if (this.serverDate) {
+      if (this.productionDate) {
         (this.dialogFormVisible = true), this.getTypes();
         this.getLevel(shopsId);
         console.log(
@@ -137,14 +137,14 @@ export default {
     addService() {
       console.log(this.service, "插入的数据");
       this.dialogFormVisible = false;
-      let serverDate = this.serverDate;
-      console.log(serverDate, "11111111");
+      let productionDate = this.productionDate;
+      console.log(productionDate, "11111111");
 
       axios({
         method: "post",
         url: "/services",
         data: {
-          serverDate: serverDate,
+          productionDate: productionDate,
           price: this.service.price,
           serviceName: this.service.serviceName,
           serverTypeId: this.service.serverType,

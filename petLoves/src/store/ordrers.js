@@ -62,6 +62,7 @@ export default {
       let ordersType = playload.ordersType || 0;
       let type = playload.type || "";
       let value = playload.value || "";
+      let id = playload.id || '';
       axios({
         method: "get",
         url: "/orders",
@@ -70,7 +71,8 @@ export default {
           rows,
           ordersType,
           type,
-          value
+          value,
+          id
         }
       }).then(res => {
         console.log(res.data, "请求会的数据");
@@ -88,6 +90,7 @@ export default {
       let rows = 5;
       let ordersType = playload.ordersType || 0;
       let sta = playload.sta;
+      let shopsId = playload.id || "";
       axios({
         method: "get",
         url: "/orders/status",
@@ -95,7 +98,8 @@ export default {
           page,
           rows,
           ordersType,
-          sta 
+          sta ,
+          shopsId
         }
       }).then(res => {
         console.log(res.data, "请求来的状态数据");

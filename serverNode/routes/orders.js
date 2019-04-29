@@ -213,17 +213,6 @@ router.get("/status", async function(req, res) {
 // 增加订单
 router.post("/", async function(req, res) {
   let orders = req.body;
-<<<<<<< HEAD
-  console.log("增加订单", orders);
-  let data = await client.post("/orders", {
-    orders,
-    // goods: {
-    //   $ref: "goods",
-    //   $id: goodsid
-    // }
-  });
-  res.send("增加订单");
-=======
   let info = {
     petOwns: {
       $ref: "petOwns",
@@ -250,7 +239,6 @@ router.post("/", async function(req, res) {
   // console.log("增加订单", req.body);
   let data = await client.post("/orders", info);
   res.send(data);
->>>>>>> main
 });
 
 // 取消订单

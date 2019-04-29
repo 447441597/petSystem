@@ -66,11 +66,7 @@ export default {
           url: "/orders/all",
           method: "get"
         }).then(res => {
-<<<<<<< HEAD
           console.log(res, "res");
-=======
-          console.log(res, "res.......................");
->>>>>>> main
           for (let j = 1; j <= 12; j++) {
             let n = "0";
             if (j >= 10) {

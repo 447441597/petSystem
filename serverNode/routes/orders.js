@@ -20,7 +20,7 @@ router.get("/all", async function(req, res) {
     ref: ["petOwns", "services", "shops", "goods"],
     ...option
   });
-  res.send(data1); 
+  res.send(data1);
 });
 
 router.get("/", async function(req, res) {
@@ -182,7 +182,13 @@ router.get("/status", async function(req, res) {
 router.post("/", async function(req, res) {
   let orders = req.body;
   console.log("增加订单", orders);
-  let data = await client.post("/orders", { orders });
+  let data = await client.post("/orders", {
+    orders,
+    // goods: {
+    //   $ref: "goods",
+    //   $id: goodsid
+    // }
+  });
   res.send("增加订单");
 });
 

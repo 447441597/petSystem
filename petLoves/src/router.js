@@ -11,13 +11,10 @@ import ShopManage from './components/shopManage'
 import Goods from './components/goods'
 import Services from './components/services'
 import Orders from './components/orders'
-<<<<<<< HEAD
 import Message from './components/apply/message.vue'
 
 // import ShopAddup from './components/shopAddup'
-=======
 import ShopAddup from './components/shopAddup'
->>>>>>> main
 import GoodsRatio from './components/addUp/salesMoney/GoodsRatio'
 import ServicesRatio from './components/addUp/salesMoney/ServicesRatio'
 import GoodsMoneyRatio from './components/addUp/salesMoneyRatio/GoodsMoneyRatio'
@@ -39,7 +36,7 @@ export default new Router({
     { path: "/register", component: Register },
     { path: "/login", component: Login },
     { path: "/apply", component: Apply },
-    
+    { path: "/salesMoneyRatio", component: SalesMoneyRatio },
     { path: "/message", component: Message },
     {
       path: "/manage",
@@ -80,7 +77,8 @@ export default new Router({
         {
           path:"/manage/MapRatio",
           component:MapRatio
-        }
+        },
+        
       ]
     },
     {
@@ -114,7 +112,11 @@ export default new Router({
         {
           path:"/shopManage/ServiceMoney",
           component:ServiceMoney
-        }
+        },
+        {
+          path:"/shopManage/ShopAddup",
+          component:ShopAddup
+        },
       ]
     }
   ]

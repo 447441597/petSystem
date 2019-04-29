@@ -4,19 +4,19 @@
           <el-step title="正在审核中"></el-step>
           <el-step title="已审核"></el-step>
          </el-steps>  
-         <div style="width:90%;text-align:center">       
-        <template style="width:100%;text-align:center" v-if="num==1">
+        <div style="width:90%;text-align:center">       
+           <template style="width:100%;text-align:center" v-if="num==1">
            <div style="margin-bottom:40px;margin-top:30px ">提交成功，正在审核你的店铺，请耐心等待</div>
            <el-button type="primary"    @click="back" size="mini" style="margin-bottom:20px">返回登录</el-button>
-        </template>
-         <template style="width:100%;text-align:center" v-else-if="num==2">
+           </template>
+           <template style="width:100%;text-align:center" v-else-if="num==2">
            <div style="margin-bottom:40px;margin-top:30px ">恭喜你，门店申请成功</div>
            <el-button type="primary" @click="go" size="mini" style="margin-bottom:20px">进入门店</el-button>
-        </template>
-        <template style="width:100%;text-align:center" v-else>
+           </template>
+           <template style="width:100%;text-align:center" v-else>
            <div style="margin-bottom:40px;margin-top:30px ">对不起，您申请的门店审核不通过</div>
             <el-button type="primary" @click="back" size="mini"  style="margin-bottom:20px">返回登录</el-button>
-        </template>
+           </template>
         
         </div>
       </div>

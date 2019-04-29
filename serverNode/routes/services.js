@@ -135,7 +135,7 @@ router.get("/", async function(req, res) {
   let rows = req.query.rows; //接收到的行数
   let type = req.query.type;
   let value = req.query.value;
-
+  console.log("################################33333",type,value)
   if (type && value) {
     which = {
       [type]: value //$regex:value主要作用是模糊查询，相当于正则表达式一样
@@ -150,7 +150,7 @@ router.get("/", async function(req, res) {
     ref: ["shops","serverTypes"],
     ...which
   });
-  console.log(data,"查询所有的数据111111111111111111111111111111111111111111111");
+  console.log(data);
   res.send(data);
 });
 

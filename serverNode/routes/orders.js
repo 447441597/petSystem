@@ -23,9 +23,73 @@ router.get("/all", async function(req, res) {
   res.send(data1);
 });
 
+<<<<<<< HEAD
 router.get("/", async function(req, res) {
   let { page, rows, type, value, ordersType } = req.query;
   // console.log(ordersType, "请求所有订单信息");
+=======
+// 购物车------------------------------------------------------
+//增加
+router.post("/shopping", async function(req, res) {
+  let info = req.body;
+  let isTrue = false;
+  let test = {};
+  let temp1 = await client.get("/zyz");
+  let temp = [];
+  temp1.map(i => {
+    if (i.goods && i.shops) {
+      temp.push(i);
+    }
+  });
+  console.log(temp, "temp");
+  if (info.status == "服务") {
+    let data = await client.post("/zyz", info);
+    res.send(data);
+  } else {
+    //商品
+    temp.map(i => {
+      if (
+        i.goods.name == info.goods.name &&
+        i.goods.images == info.goods.images
+      ) {
+        isTrue = true;
+        i.goods.num = ~~i.goods.num + ~~info.goods.num;
+        test = i;
+      }
+    });
+    if (isTrue) {
+      let id = test._id;
+      // console.log(id, "===================");
+      delete test._id;
+      let data11 = await client.put("/zyz/" + id, test);
+      // console.log(data11,"/////////////////////////")
+      res.send(data11);
+    } else {
+      // console.log('object')
+      let data = await client.post("/zyz", info);
+      res.send(data);
+    }
+  }
+});
+//查询全部
+router.get("/shopping", async function(req, res) {
+  let data = await client.get("/zyz");
+  // console.log(data, "购物车");
+  res.send(data);
+});
+//删除
+router.delete("/shopping/:id", async function(req, res) {
+  let id = req.params.id;
+  console.log(id, "删除购物车");
+  let data = client.delete("/zyz/" + id);
+  res.send(data);
+});
+// 购物车------------------------------------------------------
+
+router.get("/", async function(req, res) {
+  let { page, rows, type, value, ordersType } = req.query;
+  // console.log(req.query, "请求所有订单信息");
+>>>>>>> main
   let option = {};
   let data = [];
   if (type && value) {
@@ -181,6 +245,7 @@ router.get("/status", async function(req, res) {
 // 增加订单
 router.post("/", async function(req, res) {
   let orders = req.body;
+<<<<<<< HEAD
   console.log("增加订单", orders);
   let data = await client.post("/orders", {
     orders,
@@ -190,6 +255,61 @@ router.post("/", async function(req, res) {
     // }
   });
   res.send("增加订单");
+=======
+  console.log(orders, "增加订单");
+  if (!orders.services.id) {
+    let info = {
+      petOwns: {
+        $ref: "petOwns",
+        $id: orders.petOwns.id
+      },
+      shops: {
+        $ref: "shops",
+        $id: orders.shops.id
+      },
+      goods: {
+        $ref: "shops",
+        $id: orders.goods.id
+      },
+      services: {
+        $ref: "services",
+        $id: "5cc55639bd6d651bf00b9563"
+      },
+      money: orders.money,
+      status: orders.status,
+      evaluate: orders.evaluate,
+      time: orders.time,
+      users: orders.users
+    };
+  } else {
+    let info = {
+      petOwns: {
+        $ref: "petOwns",
+        $id: orders.petOwns.id
+      },
+      shops: {
+        $ref: "shops",
+        $id: orders.shops.id
+      },
+      goods: {
+        $ref: "shops",
+        $id: "5cc51dc4bd6d651bf00b955c"
+      },
+      services: {
+        $ref: "services",
+        $id: orders.services.id
+      },
+      money: orders.money,
+      status: orders.status,
+      evaluate: orders.evaluate,
+      time: orders.time,
+      users: orders.users
+    };
+  }
+  // console.log("增加订单", req.body);
+  let data = await client.post("/orders", info);
+  res.send(data);
+>>>>>>> main
 });
 
 // 取消订单

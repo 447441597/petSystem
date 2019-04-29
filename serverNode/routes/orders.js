@@ -20,8 +20,14 @@ router.get("/all", async function(req, res) {
     ref: ["petOwns", "services", "shops", "goods"],
     ...option
   });
-  res.send(data1); 
+  data1.map(i => {
+    // console.log(i,"-------")
+  });
+  res.send(data1);
 });
+
+// 购物车
+router.get("/shopping", async function(req, res) {});
 
 router.get("/", async function(req, res) {
   let { page, rows, type, value, ordersType } = req.query;
@@ -43,8 +49,11 @@ router.get("/", async function(req, res) {
     //请求商品订单
     for (let i = 0; i < data1.rows.length; i++) {
       // console.log(data1.rows[i].shops, "data1[i]");
-      console.log(data1.rows[i].shops._id,'----------------',shopsId)
-      if (data1.rows[i].status.indexOf("订单") > -1 && shopsId == data1.rows[i].shops._id) {
+      console.log(data1.rows[i].shops._id, "----------------", shopsId);
+      if (
+        data1.rows[i].status.indexOf("订单") > -1 &&
+        shopsId == data1.rows[i].shops._id
+      ) {
         data.push(data1.rows[i]);
       }
     }
@@ -55,8 +64,11 @@ router.get("/", async function(req, res) {
   } else if (ordersType == 1) {
     //请求服务订单
     for (let i = 0; i < data1.rows.length; i++) {
-      console.log(data1.rows[i].shops._id,'----------------',shopsId)
-      if (data1.rows[i].status.indexOf("服务") > -1 && shopsId == data1.rows[i].shops._id) {
+      console.log(data1.rows[i].shops._id, "----------------", shopsId);
+      if (
+        data1.rows[i].status.indexOf("服务") > -1 &&
+        shopsId == data1.rows[i].shops._id
+      ) {
         // console.log(data1.rows[i].services, "data1[i]");
         data.push(data1.rows[i]);
       }
@@ -69,7 +81,7 @@ router.get("/", async function(req, res) {
 });
 
 router.get("/status", async function(req, res) {
-  let { page, rows, type, value, ordersType, sta, shopsId} = req.query;
+  let { page, rows, type, value, ordersType, sta, shopsId } = req.query;
   console.log(req.query, "请求订单信息");
   let option = {};
   if (type && value) {
@@ -87,7 +99,10 @@ router.get("/status", async function(req, res) {
   if (sta == 1) {
     //服务
     for (let i = 0; i < data1.length; i++) {
-      if (data1[i].status.indexOf("服务") > -1 && shopsId == data1[i].shops._id) {
+      if (
+        data1[i].status.indexOf("服务") > -1 &&
+        shopsId == data1[i].shops._id
+      ) {
         // console.log(data1.rows[i].services, "data1[i]");
         data.push(data1[i]);
       }
@@ -140,7 +155,10 @@ router.get("/status", async function(req, res) {
     // console.log(data1,"商品")
     for (let i = 0; i < data1.length; i++) {
       // console.log(data1.rows[i], "data1[i]");
-      if (data1[i].status.indexOf("订单") > -1 && shopsId == data1[i].shops._id) {
+      if (
+        data1[i].status.indexOf("订单") > -1 &&
+        shopsId == data1[i].shops._id
+      ) {
         data.push(data1[i]);
       }
     }
@@ -154,10 +172,10 @@ router.get("/status", async function(req, res) {
         maxpage: data1.maxpage,
         maxpage: data1.maxpage
       };
-      res.send(resData)
+      res.send(resData);
     } else if (ordersType == 1) {
       //未完成
-      console.log(data,'未完成商品')
+      console.log(data, "未完成商品");
       for (let i = 0; i < data.length; i++) {
         if (data[i].status.indexOf("未完成") > -1) {
           dataInfo.push(data[i]);
@@ -192,9 +210,32 @@ router.get("/status", async function(req, res) {
 // 增加订单
 router.post("/", async function(req, res) {
   let orders = req.body;
-  console.log("增加订单", orders);
-  let data = await client.post("/orders", { orders });
-  res.send("增加订单");
+  let info = {
+    petOwns: {
+      $ref: "petOwns",
+      $id: orders.petOwns.id
+    },
+    shops: {
+      $ref: "shops",
+      $id: orders.shops.id
+    },
+    goods: {
+      $ref: "shops",
+      $id: orders.goods.id
+    },
+    services: {
+      $ref: "services",
+      $id: "5cc55639bd6d651bf00b9563",
+    },
+    money: orders.money,
+    status: orders.status,
+    evaluate: orders.evaluate,
+    time: orders.time,
+    users: orders.users
+  };
+  // console.log("增加订单", req.body);
+  let data = await client.post("/orders", info);
+  res.send(data);
 });
 
 // 取消订单
@@ -299,7 +340,7 @@ router.get("/city", async function(req, res) {
     resData.push(info);
     info = [];
   });
-  console.log(resData,'经纬度')
+  console.log(resData, "经纬度");
   res.send(resData);
 });
 module.exports = router;

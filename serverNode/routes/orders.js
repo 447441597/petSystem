@@ -4,10 +4,7 @@ const client = require("ykt-http-client");
 client.url("127.0.0.1:8080");
 
 let info = [];
-<<<<<<< HEAD
 let ordersInfo={}
-=======
->>>>>>> f02d05a8057126c00d626aeed3890b3f89e8900a
 router.get("/all", async function(req, res) {
   let { page, rows, type, value } = req.query;
   // console.log(ordersType, "请求所有订单信息");
@@ -250,11 +247,8 @@ router.post("/", async function(req, res) {
   let ordersInfo={};
   console.log(orders, "增加订单");
   if (!orders.services.id) {
-<<<<<<< HEAD
     console.log("商品")
-=======
     //商品
->>>>>>> f02d05a8057126c00d626aeed3890b3f89e8900a
     ordersInfo = {
       petOwns: {
         $ref: "petOwns",
@@ -279,11 +273,8 @@ router.post("/", async function(req, res) {
       users: orders.users
     };
   } else {
-<<<<<<< HEAD
     console.log("服务")
-=======
     //服务
->>>>>>> f02d05a8057126c00d626aeed3890b3f89e8900a
     ordersInfo = {
       petOwns: {
         $ref: "petOwns",
@@ -308,12 +299,9 @@ router.post("/", async function(req, res) {
       users: orders.users
     };
   }
-<<<<<<< HEAD
     console.log(ordersInfo,"info")
     // console.log("增加订单", req.body);
-=======
   console.log("增加订单",ordersInfo);
->>>>>>> f02d05a8057126c00d626aeed3890b3f89e8900a
   let data = await client.post("/orders", ordersInfo);
   res.send(data);
 });

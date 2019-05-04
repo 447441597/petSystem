@@ -92,12 +92,23 @@ router.delete('/de/:id', async function (req, res) {
   res.send(data);
 });
 
+
 // 购物车
 router.post("/shopping", async function(req, res) {
   let orders = req.body
-  console.log(orders,"1111111111111")
+  // console.log(orders,"1111111111111")
   // console.log("取消订单", id);
   let data = await client.post("/lwj",{orders});
+  res.send(data);
+});
+
+//评论
+router.put("/eva/:id", async function(req, res) {
+  let id = req.params.id;
+  let evaluate = req.body.evaluate
+  console.log(evaluate,"1111111111111",id)
+  // console.log("取消订单", id);
+  let data = await client.put("/orders/"+id,{evaluate});
   res.send(data);
 });
 
@@ -109,6 +120,12 @@ router.get('/:id', async function (req, res) {
   console.log(data,"safsadadwdatujrioyjeihuhwetuih")
 })
 
+router.get('/lookSer/:id', async function (req, res) {
+  let id = req.params.id;
+  let data = await client.get('/orders/' + id);
+  res.send(data);
+  console.log(data,"safsadadwdatujrioyjeihuhwetuih")
+})
 
 // 修改
 router.put('/:id', async function (req, res) {

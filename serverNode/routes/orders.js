@@ -4,7 +4,7 @@ const client = require("ykt-http-client");
 client.url("127.0.0.1:8080");
 
 let info = [];
-
+let ordersInfo={}
 router.get("/all", async function(req, res) {
   let { page, rows, type, value } = req.query;
   // console.log(ordersType, "请求所有订单信息");
@@ -23,11 +23,6 @@ router.get("/all", async function(req, res) {
   res.send(data1);
 });
 
-<<<<<<< HEAD
-router.get("/", async function(req, res) {
-  let { page, rows, type, value, ordersType } = req.query;
-  // console.log(ordersType, "请求所有订单信息");
-=======
 // 购物车------------------------------------------------------
 //增加
 router.post("/shopping", async function(req, res) {
@@ -89,7 +84,6 @@ router.delete("/shopping/:id", async function(req, res) {
 router.get("/", async function(req, res) {
   let { page, rows, type, value, ordersType } = req.query;
   // console.log(req.query, "请求所有订单信息");
->>>>>>> main
   let option = {};
   let data = [];
   if (type && value) {
@@ -245,20 +239,10 @@ router.get("/status", async function(req, res) {
 // 增加订单
 router.post("/", async function(req, res) {
   let orders = req.body;
-<<<<<<< HEAD
-  console.log("增加订单", orders);
-  let data = await client.post("/orders", {
-    orders,
-    // goods: {
-    //   $ref: "goods",
-    //   $id: goodsid
-    // }
-  });
-  res.send("增加订单");
-=======
   console.log(orders, "增加订单");
   if (!orders.services.id) {
-    let info = {
+    console.log("商品")
+    ordersInfo = {
       petOwns: {
         $ref: "petOwns",
         $id: orders.petOwns.id
@@ -268,7 +252,7 @@ router.post("/", async function(req, res) {
         $id: orders.shops.id
       },
       goods: {
-        $ref: "shops",
+        $ref: "goods",
         $id: orders.goods.id
       },
       services: {
@@ -282,7 +266,8 @@ router.post("/", async function(req, res) {
       users: orders.users
     };
   } else {
-    let info = {
+    console.log("服务")
+    ordersInfo = {
       petOwns: {
         $ref: "petOwns",
         $id: orders.petOwns.id
@@ -292,7 +277,7 @@ router.post("/", async function(req, res) {
         $id: orders.shops.id
       },
       goods: {
-        $ref: "shops",
+        $ref: "goods",
         $id: "5cc51dc4bd6d651bf00b955c"
       },
       services: {
@@ -306,10 +291,10 @@ router.post("/", async function(req, res) {
       users: orders.users
     };
   }
-  // console.log("增加订单", req.body);
-  let data = await client.post("/orders", info);
+    console.log(ordersInfo,"info")
+    // console.log("增加订单", req.body);
+  let data = await client.post("/orders", ordersInfo);
   res.send(data);
->>>>>>> main
 });
 
 // 取消订单

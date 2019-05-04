@@ -89,8 +89,11 @@
 
 <script>
 import axios from "axios";
+import { createNamespacedHelpers } from "vuex";
+const { mapState, mapActions } = createNamespacedHelpers("services");
 export default {
   created() {
+    this.getShopsId();
     this.getsession();
     console.log("进入生命周期");
   },
@@ -103,6 +106,7 @@ export default {
   },
 
   methods: {
+    ...mapActions(["getShopsId"]),
     getsession() {
       axios({
         method: "get",

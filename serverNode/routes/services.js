@@ -4,6 +4,104 @@ const client = require("ykt-http-client");
 client.url("localhost:8080");
 
 let which;
+
+//查询该商店所有的商品
+
+router.get("/goods", async function(req, res) {
+  let page = req.query.page || ""; //接收到的页码数
+  let rows = req.query.rows || ""; //接收到的行数
+  let type = req.query.type || "";
+  let value = req.query.value || "";
+  let shopsId = req.query.shopsId || "";
+  console.log("################################33333", type, value);
+  if (type && value) {
+    which = {
+      [type]: value //$regex:value主要作用是模糊查询，相当于正则表达式一样
+    };
+  } else {
+    which = {};
+  }
+
+  let data = await client.get("/goods", {
+    page,
+    rows,
+    submitType: "findJoin",
+    ref: ["shops"],
+    ...which
+  });
+  console.log(
+    data,
+    "9999999999999999999999999999999999999999999999999,所有的商品信息"
+  );
+  let result = [];
+  for (let i = 0; i < data.length; i++) {
+    if (data[i].shops._id == shopsId) {
+      result.push(data[i]);
+    }
+  }
+  res.send(result);
+});
+
+//查询该商店的所有服务商品
+
+//根据ID查询宠主信息
+router.get("/petOwns/:id", async function(req, res) {
+  let id = req.params.id;
+  console.log(id);
+  let data = await client.get("/petOwns/" + id, {
+    submitType: "findJoin",
+    ref: ["vipcard"]
+  });
+  res.send(data);
+});
+
+//生成订单
+router.post("/orders", async function(req, res) {
+  console.log("生成订单");
+  let order = req.body;
+  console.log(req.body);
+  let data = await client.post("/orders", order);
+  console.log(data);
+  res.send(data);
+});
+
+//查询所有订单
+router.get("/orders", async function(req, res) {
+  let page = req.query.page || ""; //接收到的页码数
+  let rows = req.query.rows || ""; //接收到的行数
+  let type = req.query.type || "";
+  let value = req.query.value || "";
+  console.log("################################33333", type, value);
+  if (type && value) {
+    which = {
+      [type]: value //$regex:value主要作用是模糊查询，相当于正则表达式一样
+    };
+  } else {
+    which = {};
+  }
+  let data = await client.get("/orders", {
+    page,
+    rows,
+    submitType: "findJoin",
+    ref: ["shops", "services", "goods"],
+    ...which
+  });
+  console.log(data);
+  res.send(data);
+});
+
+//修改订单
+router.put("/orders/:id", async function(req, res) {
+  console.log("修改订单");
+  let id = req.params.id;
+  let order = req.body;
+  // console.log(serverType);
+  let data = await client.put("/orders/" + id, order);
+  res.send(data);
+  console.log(data);
+});
+
+//增加订单
 router.get("/servicesNum", async function(req, res) {
   let { shopsId } = req.query;
   let sta = 1;
@@ -121,21 +219,20 @@ router.get("/servicesNum", async function(req, res) {
     resultData.push(arr);
   }
   console.log(resultData);
-  res.send({ 
-    resultData:resultData,
-    serviceNames:serviceNames
-   });
+  res.send({
+    resultData: resultData,
+    serviceNames: serviceNames
+  });
   console.log(monthNum, "monthNum");
 });
-
-
-
+//查询所有服务或者某个店铺的所有服务
 router.get("/", async function(req, res) {
   let page = req.query.page; //接收到的页码数
   let rows = req.query.rows; //接收到的行数
   let type = req.query.type;
   let value = req.query.value;
-  console.log("################################33333",type,value)
+  let shopsId = req.query.shopsId || "";
+  console.log("################################33333", type, value,shopsId);
   if (type && value) {
     which = {
       [type]: value //$regex:value主要作用是模糊查询，相当于正则表达式一样
@@ -147,22 +244,31 @@ router.get("/", async function(req, res) {
     page,
     rows,
     submitType: "findJoin",
-    ref: ["shops","serverTypes"],
+    ref: ["shops", "serverTypes"],
     ...which
   });
-<<<<<<< HEAD
-  console.log(data);
-=======
-  // console.log(data,"查询所有的数据111111111111111111111111111111111111111111111");
->>>>>>> 9204c67f09367a6477bb9e8af821e955922147bf
-  res.send(data);
+  let result = [];
+  if (shopsId) {
+    for (let i = 0; i < data.length; i++) {
+      if (data[i].shops._id == shopsId) {
+        result.push(data[i]);
+      }
+    }
+    res.send(result);
+  } else {
+    console.log(data);
+    res.send(data);
+  }
 });
 
 //根据ID查询服务
 router.get("/:id", async function(req, res) {
   let id = req.params.id;
   console.log(id);
-  let data = await client.get("/services/" + id,{submitType: "findJoin",ref: ["shops","serverTypes"]});
+  let data = await client.get("/services/" + id, {
+    submitType: "findJoin",
+    ref: ["shops", "serverTypes"]
+  });
   res.send(data);
 });
 
@@ -192,7 +298,7 @@ router.post("/", async function(req, res) {
     useTime,
     price,
     shops: { $ref: "shops", $id: shopsId },
-    serverTypes:{$ref:"serverTypes",$id:serverTypeId},
+    serverTypes: { $ref: "serverTypes", $id: serverTypeId },
     level
   });
   res.send(data);

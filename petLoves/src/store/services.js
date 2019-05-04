@@ -67,16 +67,18 @@ export default {
       state.serverDate = serverDate;
     },
     setShopsId(state,shopsId){
+      console.log("设置商店的ID",shopsId)
       state.shopsId = shopsId;
     }
   },
   actions: {
     getServices({ commit }, getPage = {}) {
+      let shopsId = this.state.shopsId || "";
       let page = getPage.page || 1;
       let rows = getPage.eachpage || 5;
       let type = this.state.services.type || "";
       let value = this.state.services.value || "";
-      console.log("type,value", type, value);
+      console.log("type,value,shopsId5555555555555555555555555555555555555555555555555", type, value,shopsId);
       console.log("xixi", this.state);
       axios({
         method: "get",
@@ -85,7 +87,8 @@ export default {
           page,
           rows,
           type,
-          value
+          value,
+          shopsId
         }
       }).then(res => {
         console.log(res.data, "services");

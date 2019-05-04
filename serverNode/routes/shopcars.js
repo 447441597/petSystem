@@ -19,7 +19,7 @@ router.get('/',async function(req,res){
       page,
       rows,
       submitType: "findJoin",
-      ref: ["petOwns","goods"],
+      ref: ["petOwns","goods","services"],
       ...which
     });
     console.log(data);
@@ -29,52 +29,104 @@ router.get('/',async function(req,res){
 //根据ID查询
 router.get("/:id",async function(req,res){
     let id = req.params.id;
-    let data = await client.get("/services/" + id,{submitType: "findJoin",ref: ["petOwns","goods"]});
+    let data = await client.get("/shopcars/" + id,{submitType: "findJoin",ref: ["petOwns","goods","services"]});
     res.send(data);
+    console.log("根据id查询购物车数据*************************************************************")
 })
 
+//添加服务到购物车
+router.post("/services",async function(req,res){
+  let {
+    totalMoney,
+     count,
+     petOwnId,
+      sigelPrice,
+      serviceId,
+      serviceName
+    } = req.body;
+    let data = await client.post("/shopcars", {
+      count,
+      totalMoney,
+      serviceId:serviceId,
+      serviceName:serviceName,
+      sigelPrice:sigelPrice,
+      petOwns: { $ref: "petOwns", $id: petOwnId },
+      services:{$ref:"services",$id:serviceId}
+    });
+    res.send(data);
+    console.log(data);
+});
 
-//添加购物车
+//添加购物车商品
 router.post("/",async function(req,res){
     let {
+      totalMoney,
        count,
        petOwnId,
-       goodId,
-       goodsName,
         sigelPrice
       } = req.body;
+      let { goodId,goodsName} = req.body || "";
       let data = await client.post("/shopcars", {
         count,
+        totalMoney,
         goodsName:goodsName,
         sigelPrice:sigelPrice,
         goodId:goodId,
         petOwns: { $ref: "petOwns", $id: petOwnId },
-        goods:{$ref:"goods",$id:goodId}
+        goods:{$ref:"goods",$id:goodId},
       });
       res.send(data);
       console.log(data);
 });
 
-//修改购物车
+//修改购物车中的服务
+router.put("/services/:id",async function(req,res){
+  console.log("修改")
+  let id = req.params.id
+  let {
+    totalMoney,
+      serviceName,
+      sigelPrice,
+      count,
+      petOwnId,
+      serviceId
+     } = req.body;
+     // console.log(serverType);
+     let data = await client.put("/shopcars/"+id, {
+      totalMoney,
+      serviceName,
+      sigelPrice,
+       count,
+       petOwns: {$ref: "petOwns", $id: petOwnId },
+       services:{$ref:"services",$id:serviceId}
+     });
+     res.send(data);
+     console.log(data);
+})
+//修改购物车中的商品
 router.put("/:id",async function(req,res){
     console.log("修改")
     let id = req.params.id
     let {
+      totalMoney,
         goodsName,
+        serviceName,
         sigelPrice,
         count,
         petOwnId,
-        goodId
+        goodId,
+        serviceId
        } = req.body;
        console.log(count,petOwnId,goodId);
        // console.log(serverType);
        let data = await client.put("/shopcars/"+id, {
+        totalMoney,
         goodsName,
         sigelPrice,
          count,
          goodId:goodId,
          petOwns: {$ref: "petOwns", $id: petOwnId },
-         goods:{$ref:"goods",$id:goodId}
+         goods:{$ref:"goods",$id:goodId},
        });
        res.send(data);
        console.log(data);

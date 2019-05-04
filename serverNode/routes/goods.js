@@ -198,7 +198,7 @@ router.get('/data', async function (req, res) {
 router.get('/:id', async function (req, res) {
   let id = req.params.id;
   console.log(id,"==============================")
-  let data = await client.get('/goods/' + id);
+  let data = await client.get('/goods/' + id,{submitType: "findJoin",ref: ["shops"]});
   console.log(data,'--------------------------------')
   res.send(data)
 });

@@ -18,11 +18,6 @@
       width="180">
     </el-table-column>
     <el-table-column
-      prop="shops.name"
-      label="门店"
-      width="180">
-    </el-table-column>
-    <el-table-column
       prop="status"
       label="状态">
     </el-table-column>
@@ -46,18 +41,19 @@
   </el-pagination>
 
   <el-dialog
-  title="商品信息"
+  title="服务信息"
   :visible.sync="dialogVisible"
   width="30%">
   <div v-if="info">
+    <h3>客户信息</h3>
     <p><span>客户姓名：</span><span>{{info.petOwns.truename}}</span></p>
     <p><span>客户电话：</span><span>{{info.petOwns.phone}}</span></p>    
     <p><span>宠物名字：</span><span>{{info.petOwns.nickname}}</span></p>
     <p><span>店铺名字：</span><span>{{info.shops.name}}</span></p>
     <p><span>店铺位置：</span><span>{{info.petOwns.address}}</span></p>
     <h3>服务信息</h3>
-    <p><span>内容：</span><span>{{info.services.name}}</span></p>
-    <p><span>时长：</span><span>{{info.services.time}}</span></p>
+    <p><span>内容：</span><span>{{info.services.serviceName}}</span></p>
+    <p><span>时长：</span><span>{{info.services.useTime}}</span></p>
     <p><span>价格：</span><span>{{info.services.price}}</span></p>
     <h4>用户评价</h4>
     <p>{{info.evaluate}}</p>
@@ -94,7 +90,7 @@ export default {
     ...mapActions(["getOrders", "getOrdersStatus"]),
     ...mapMutations(["setOrsers"]),
     unfinished() {
-      console.log(this.shopsId,"shopsID///////////////")
+      // console.log(this.shopsId,"shopsID///////////////")
       // 未完成订单
       if (this.tab == "服务订单") {
         let playload = {
@@ -130,17 +126,12 @@ export default {
       }
     },
     pageChange(i) {
-      console.log(i, "i");
-      // console.log(this.pagination)
-
-      // console.log(playload, "playload");
-      // this.getOrders(playload);
-      // this.orders = this.ordersData[i - 1];
+      // console.log(i, "i");
       this.setOrsers(i);
-      console.log(this.orders, "}}}}}}}}}}}}}}");
+      // console.log(this.orders, "}}}}}}}}}}}}}}");
     },
     handleClick(row) {
-      // console.log(row,'详细信息');
+      console.log(row,'详细信息');
       this.info = row;
       // console.log(this.info)
       this.dialogVisible = true;

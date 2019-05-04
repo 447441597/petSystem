@@ -3,6 +3,23 @@ var router = express.Router();
 var client = require('ykt-http-client');
 client.url("127.0.0.1:8080");
 
+// 修改
+router.put('/info/:id',async function(req,res){
+  let info = req.body;
+  let id = req.params.id;
+  console.log(id,info)
+  let data = await client.put('/petOwns/'+id,info)
+  res.send(data)
+})
+
+// 根据id查询
+router.get('/info/:id',async function(req,res){
+  let id = req.params.id;
+  console.log(id)
+  let data = await client.get('/petOwns/'+id);
+  console.log(data);
+  res.send(data)
+})
 
 //查询
 router.get('/', async (req, res) => {

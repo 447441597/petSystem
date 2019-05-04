@@ -262,6 +262,7 @@ router.delete('/:id', async (req, res) => {
 router.get('/:id', async function (req, res) {
   let id = req.params.id;
   let data = await client.get('/goods/' + id);
+  console.log(data,"qeeeeeeeeeeeeee")
   res.send(data)
 });
 

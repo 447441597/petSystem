@@ -16,11 +16,6 @@
       width="180">
     </el-table-column>
     <el-table-column
-      prop="shops.name"
-      label="门店"
-      width="180">
-    </el-table-column>
-    <el-table-column
       prop="status"
       label="状态">
     </el-table-column>
@@ -44,17 +39,18 @@
 
 
   <el-dialog
-  title="服务信息"
+  title="商品信息"
   :visible.sync="dialogVisible"
   width="30%">
   <div v-if="info">
+    <h3>客户信息</h3>
     <p><span>客户姓名：</span><span>{{info.petOwns.truename}}</span></p>
         <p><span>客户电话：</span><span>{{info.petOwns.phone}}</span></p>    
     <p><span>宠物名字：</span><span>{{info.petOwns.nickname}}</span></p>
     <p><span>店铺名字：</span><span>{{info.shops.name}}</span></p>
     <p><span>店铺位置：</span><span>{{info.petOwns.address}}</span></p>
     <h3>商品信息</h3>
-    <p><span>名字：</span><span>{{info.goods.type}}</span></p>
+    <p><span>名字：</span><span>{{info.goods.goodsName}}</span></p>
     <p><span>产地：</span><span>{{info.goods.addr}}</span></p>
     <p><span>成分：</span><span>{{info.goods.material}}</span></p>
     <p><span>适合于：</span><span>{{info.goods.exGuige}}</span></p>

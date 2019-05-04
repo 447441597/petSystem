@@ -109,6 +109,8 @@ export default {
       this.setShop(id);
     },
     handleDelete(index, row) {
+      // console.log(this.userId,"aaaaaaaaaaaaaaaaaaaa")
+      console.log(row,"qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq")
       let id = row._id;
       this.$confirm(`门店名称:${row.storeName}`, "删除提示", {
         confirmButtonText: "确定",
@@ -121,10 +123,14 @@ export default {
             method: "delete",
             url: "/shops/" + id
           }).then(res => {
+            console.log(id,"++++++++++++++++++++++++++++++")
             this.getok();
             this.$message("删除成功");
             // axios({
-
+            //   method:"get",
+            //   url:"/getSession"
+            // }).then((info)=>{
+            //   console.log(info,"000000000000000000000000000")
             // })
           });
         })

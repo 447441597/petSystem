@@ -73,12 +73,13 @@ export default {
   },
   actions: {
     getServices({ commit }, getPage = {}) {
-      let shopsId = this.state.shopsId || "";
+      // let shopsId = this.state.shopsId || "";
+      let shopsId = getPage.shopsId || "";
       let page = getPage.page || 1;
       let rows = getPage.eachpage || 5;
       let type = this.state.services.type || "";
       let value = this.state.services.value || "";
-      console.log("type,value,shopsId5555555555555555555555555555555555555555555555555", type, value,shopsId);
+      console.log("shopsId:",shopsId);
       console.log("xixi", this.state);
       axios({
         method: "get",
@@ -91,12 +92,10 @@ export default {
           shopsId
         }
       }).then(res => {
-        console.log(res.data, "services");
-
-        console.log(res.data.rows);
-        for(let i = 0; i<res.data.rows.length;i++){
-          
-        }
+        console.log(res.data.rows, "services");
+        // for(let i = 0 ;i<res.data.rows.length;i++){
+        //   if(res.data.rows[i].shops._id == sho)
+        // }
         for (let i = 0; i < res.data.rows.length; i++) {
           let str = " ";
           for (let j = 0; j < res.data.rows[i].time.length; j++) {
@@ -168,7 +167,10 @@ export default {
       }).then((res) => {
         console.log(res.data.shopsId,"session");
         commit("setShopsId",res.data.shopsId);
+        this.getServices(res.data.shopsId);
       })
+      // console.log("获取ID")
+      // commit("setShopsId",shopsId);
       
     }
   }

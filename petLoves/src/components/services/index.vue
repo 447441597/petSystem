@@ -70,9 +70,9 @@ const { mapState, mapActions } = createNamespacedHelpers("services");
 
 export default {
   created() {
-    // this.getShopsId();
+    this.getShopsId();
     console.log(this.shopsId,"7777777777777777777777777777777777777777777777777777777");
-    this.getServices();
+    this.getServices({shopsId:this.shopsId});
   },
   computed: {
     ...mapState(["services", "pagination", "times", "shopsId"])

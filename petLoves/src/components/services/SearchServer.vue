@@ -4,7 +4,7 @@
       <el-select v-model="selectType" slot="prepend" placeholder="请选择">
         <el-option label="服务名" value="serviceName"></el-option>
         <el-option label="品类" value="serverType"></el-option>
-        <el-option label="时间" value="time"></el-option>
+        <el-option label="时间" value="serverDate"></el-option>
         <el-option label="适用规格" value="applyGuige"></el-option>
         <el-option label="服务规格" value="serverGuige"></el-option>
         <el-option label="员工等级" value="level"></el-option>

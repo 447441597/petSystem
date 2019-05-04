@@ -7,7 +7,7 @@ client.url("127.0.0.1:8080");
 router.put('/info/:id',async function(req,res){
   let info = req.body;
   let id = req.params.id;
-  console.log(id,info)
+  console.log(id,info,"############################################################################")
   let data = await client.put('/petOwns/'+id,info)
   res.send(data)
 })
